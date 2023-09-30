@@ -1,11 +1,13 @@
 package com.slinger.bodygoals.model;
 
-import android.text.format.DateFormat;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import java8.util.Lists;
 
 public class SessionLog {
 
@@ -21,17 +23,24 @@ public class SessionLog {
 
         Session session = new Session(goal);
 
-        String dayString = DateFormat.format(DAY, session.getDate()).toString();
-        String yearString = DateFormat.format(YEAR, session.getDate()).toString();
+        CalendarWeekIdentifier calendarWeekIdentifier = CalendarWeekIdentifier.from(session.getDate());
 
-        int day = Integer.parseInt(dayString);
-        int year = Integer.parseInt(yearString);
-
-        CalendarWeekIdentifier calendarWeekIdentifier = CalendarWeekIdentifier.of(day, year);
-
-        if (loggedSessions.get(calendarWeekIdentifier) == null)
-            loggedSessions.put(CalendarWeekIdentifier.of(day, year), new ArrayList<>());
+        loggedSessions.computeIfAbsent(calendarWeekIdentifier, k -> new ArrayList<>());
 
         loggedSessions.get(calendarWeekIdentifier).add(session);
+    }
+
+    public Set<CalendarWeekIdentifier> getLoggedWeeks() {
+        return Collections.unmodifiableSet(loggedSessions.keySet());
+    }
+
+    public List<Session> getSessionsCopy(CalendarWeekIdentifier calendarWeekIdentifier) {
+
+        List<Session> sessions = loggedSessions.get(calendarWeekIdentifier);
+
+        if (sessions == null)
+            return Lists.of();
+
+        return Collections.unmodifiableList(sessions);
     }
 }

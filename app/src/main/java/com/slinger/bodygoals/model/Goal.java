@@ -9,8 +9,12 @@ public class Goal {
     private final int frequency;
     private final List<MuscleGroup> mouscleGroups = new ArrayList<>();
 
-    public Goal(String name, int frequency) {
+    private Goal(String name, int frequency) {
         this.name = name;
         this.frequency = frequency;
+    }
+
+    public static Goal of(String name, int frequency) {
+        return new Goal(name, frequency);
     }
 }

@@ -16,7 +16,7 @@ public class SessionLogTest {
 
         Calendar calendar = Calendar.getInstance();
 
-        CalendarWeekIdentifier calendarWeekIdentifier = CalendarWeekIdentifier.from(calendar.getTime());
+        CalendarWeek calendarWeek = CalendarWeek.from(calendar.getTime());
 
         /* When */
         sessionLog.logSession(Goal.of("Push", 2));
@@ -25,6 +25,6 @@ public class SessionLogTest {
 
         /* Then */
         assertEquals(1, sessionLog.getLoggedWeeks().size());
-        assertEquals(3, sessionLog.getSessionsCopy(calendarWeekIdentifier).size());
+        assertEquals(3, sessionLog.getSessionsCopy(calendarWeek).size());
     }
 }

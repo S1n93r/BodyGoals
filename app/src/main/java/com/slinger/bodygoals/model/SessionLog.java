@@ -11,32 +11,26 @@ import java8.util.Lists;
 
 public class SessionLog {
 
-    private static final String DAY_OF_WEEK = "EEEE";
-    private static final String DAY = "dd";
-    private static final String MONTH_TEXT = "MMM";
-    private static final String MONTH = "MM";
-    private static final String YEAR = "yyyy";
-
-    private final Map<CalendarWeekIdentifier, List<Session>> loggedSessions = new HashMap<>();
+    private final Map<CalendarWeek, List<Session>> loggedSessions = new HashMap<>();
 
     public void logSession(Goal goal) {
 
         Session session = new Session(goal);
 
-        CalendarWeekIdentifier calendarWeekIdentifier = CalendarWeekIdentifier.from(session.getDate());
+        CalendarWeek calendarWeek = CalendarWeek.from(session.getDate());
 
-        loggedSessions.computeIfAbsent(calendarWeekIdentifier, k -> new ArrayList<>());
+        loggedSessions.computeIfAbsent(calendarWeek, k -> new ArrayList<>());
 
-        loggedSessions.get(calendarWeekIdentifier).add(session);
+        loggedSessions.get(calendarWeek).add(session);
     }
 
-    public Set<CalendarWeekIdentifier> getLoggedWeeks() {
+    public Set<CalendarWeek> getLoggedWeeks() {
         return Collections.unmodifiableSet(loggedSessions.keySet());
     }
 
-    public List<Session> getSessionsCopy(CalendarWeekIdentifier calendarWeekIdentifier) {
+    public List<Session> getSessionsCopy(CalendarWeek calendarWeek) {
 
-        List<Session> sessions = loggedSessions.get(calendarWeekIdentifier);
+        List<Session> sessions = loggedSessions.get(calendarWeek);
 
         if (sessions == null)
             return Lists.of();

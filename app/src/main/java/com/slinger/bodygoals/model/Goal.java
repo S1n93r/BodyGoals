@@ -1,13 +1,16 @@
 package com.slinger.bodygoals.model;
 
-public abstract class Goal {
+import java.util.ArrayList;
+import java.util.List;
 
-    private final int id;
+public class Goal {
 
     private final String name;
+    private final int frequency;
+    private final List<MuscleGroup> mouscleGroups = new ArrayList<>();
 
-    public Goal(int id, String name) {
-        this.id = id;
+    public Goal(String name, int frequency) {
         this.name = name;
+        this.frequency = frequency;
     }
 }

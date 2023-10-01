@@ -82,11 +82,17 @@
         android:id="@+id/overallBox"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
         android:orientation="horizontal"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendar_week_Text">
+        app:layout_constraintTop_toBottomOf="@+id/title_text">
+
+        <ProgressBar
+            android:id="@+id/overall_progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/overallText"
@@ -94,12 +100,6 @@
             android:layout_height="wrap_content"
             android:text="@string/overall"
             android:textSize="18sp" />
-
-        <ProgressBar
-            android:id="@+id/overall_progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
     </LinearLayout>
 

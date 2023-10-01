@@ -18,12 +18,13 @@
     <string name="save">Save</string>
     <string name="what_goals">What?</string>
     <string name="when_done">When?</string>
+    <string name="weekly_log_entry">[%1$s] %2$s</string>
     <!-- Buttons -->
     <string name="previous_week">&lt;</string>
     <string name="next_week">&gt;</string>
-    <string name="button_weekly_log">Weekly\nLog</string>
-    <string name="button_add_goal">Add\nGoal</string>
-    <string name="button_add_session">Add\nSession</string>
+    <string name="button_weekly_log">Weekly Log</string>
+    <string name="button_add_goal">Add Goal</string>
+    <string name="button_add_session">Add Session</string>
     <string name="button_overview">Overview</string>
     <string name="datetime_placeholder">[datetime]</string>
     <!-- ComboBoxes -->

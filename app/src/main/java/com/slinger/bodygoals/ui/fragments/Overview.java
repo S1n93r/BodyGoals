@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentOverviewBinding;
+import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.ui.ViewModel;
 
 import androidx.annotation.NonNull;
@@ -65,18 +66,19 @@ public class Overview extends Fragment {
     }
 
     private void registerLiveDataObserver() {
+        viewModel.getSelectedCalendarWeek().observe(this, this::updateCalendarWeekLabel);
+    }
 
-        viewModel.getSelectedCalendarWeek().observe(this, calendarWeek -> {
+    /* TODO: Component and logic for calendar week switching exists twice. Build custom component. */
+    private void updateCalendarWeekLabel(CalendarWeek calendarWeek) {
+        String calendarWeekString = String.format(getResources().getString(R.string.calendar_week_place_holder),
+                calendarWeek.getWeek());
 
-            String calendarWeekString = String.format(getResources().getString(R.string.calendar_week_place_holder),
-                    calendarWeek.getWeek());
+        binding.calendarWeekText.setText(calendarWeekString);
 
-            binding.calendarWeekTextView.setText(calendarWeekString);
+        String calendarWeekYearString = String.format(getResources().getString(R.string.calendar_week_year_place_holder),
+                calendarWeek.getYear());
 
-            String calendarWeekYearString = String.format(getResources().getString(R.string.calendar_week_year_place_holder),
-                    calendarWeek.getYear());
-
-            binding.calendarWeekYearTextView.setText(calendarWeekYearString);
-        });
+        binding.calendarWeekYearText.setText(calendarWeekYearString);
     }
 }

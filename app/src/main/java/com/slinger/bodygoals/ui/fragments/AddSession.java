@@ -104,6 +104,8 @@ public class AddSession extends Fragment {
 
         viewModel.getUserGoals().observe(this, goals -> {
 
+            binding.goalList.removeAllViews();
+
             for (Goal goal : goals) {
 
                 if (getContext() == null)

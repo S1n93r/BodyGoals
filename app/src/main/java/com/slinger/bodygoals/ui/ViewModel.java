@@ -13,6 +13,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import java8.util.Lists;
 
 public class ViewModel extends androidx.lifecycle.ViewModel {
 
@@ -86,5 +87,15 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         } else {
             throw new IllegalStateException("User should not be 'null', as it was initialized with test user.");
         }
+    }
+
+    public List<Session> getSessions(CalendarWeek calendarWeek) {
+
+        User user = currentUser.getValue();
+
+        if (user == null)
+            return Lists.of();
+
+        return user.getSessionLog().getSessionsCopy(calendarWeek);
     }
 }

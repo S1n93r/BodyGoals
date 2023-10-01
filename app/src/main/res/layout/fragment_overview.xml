@@ -7,7 +7,7 @@
     tools:context=".ui.fragments.Overview">
 
     <TextView
-        android:id="@+id/titleTextView"
+        android:id="@+id/title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -25,20 +25,20 @@
         android:layout_marginStart="16dp"
         android:text="@string/previous_week"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/title_text" />
 
     <View
         android:layout_height="1dp"
         android:layout_width="90dp"
         android:layout_marginTop="24dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toStartOf="@+id/calendarWeekTextView"
+        app:layout_constraintEnd_toStartOf="@+id/calendar_week_Text"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/button_previous_week"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/title_text" />
 
     <TextView
-        android:id="@+id/calendarWeekTextView"
+        android:id="@+id/calendar_week_Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -46,17 +46,17 @@
         app:layout_constraintEnd_toStartOf="@+id/button_next_week"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/button_previous_week"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/title_text" />
 
     <TextView
-        android:id="@+id/calendarWeekYearTextView"
+        android:id="@+id/calendar_week_year_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/calendar_week_year_place_holder"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarWeekTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/calendar_week_Text" />
 
     <View
         android:id="@+id/view"
@@ -66,8 +66,8 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toStartOf="@+id/button_next_week"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/calendarWeekTextView"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+        app:layout_constraintStart_toEndOf="@+id/calendar_week_Text"
+        app:layout_constraintTop_toBottomOf="@+id/title_text" />
 
     <Button
         android:id="@+id/button_next_week"
@@ -76,7 +76,7 @@
         android:layout_marginEnd="16dp"
         android:text="@string/next_week"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/title_text" />
 
     <LinearLayout
         android:id="@+id/overallBox"
@@ -86,7 +86,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarWeekTextView">
+        app:layout_constraintTop_toBottomOf="@+id/calendar_week_Text">
 
         <TextView
             android:id="@+id/overallText"
@@ -96,7 +96,7 @@
             android:textSize="18sp" />
 
         <ProgressBar
-            android:id="@+id/overallProgressBar"
+            android:id="@+id/overall_progressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -117,9 +117,9 @@
             android:id="@+id/button_to_weekly_log"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="8dp"
             android:text="@string/button_weekly_log"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/button_to_add_goal"
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@string/button_add_goal"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/button_to_add_session"
@@ -135,7 +135,22 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@string/button_add_session"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
     </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/goal_progress_bars_list"
+        android:layout_width="300dp"
+        android:layout_height="440dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/overallBox">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

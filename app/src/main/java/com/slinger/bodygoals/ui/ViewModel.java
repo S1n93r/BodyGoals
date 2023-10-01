@@ -79,7 +79,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         else
             throw new IllegalStateException("User should not be 'null', as it was initialized with test user.");
     }
-
+    
     public void addSessions(List<Session> sessions) {
 
         if (currentUser.getValue() != null) {

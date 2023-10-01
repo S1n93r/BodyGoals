@@ -69,7 +69,7 @@ public class Overview extends Fragment {
     private void registerLiveDataObserver() {
         viewModel.getSelectedCalendarWeek().observe(this, calendarWeek -> {
             updateCalendarWeekLabel(calendarWeek);
-            updateWeeklyLogList(calendarWeek);
+            updateGoalProgressBars(calendarWeek);
         });
     }
 
@@ -86,7 +86,8 @@ public class Overview extends Fragment {
         binding.calendarWeekYearText.setText(calendarWeekYearString);
     }
 
-    private void updateWeeklyLogList(CalendarWeek calendarWeek) {
+    /* TODO: Overall progress needs to be updates as well but caps out on 100% per sub progress. */
+    private void updateGoalProgressBars(CalendarWeek calendarWeek) {
 
         Map<Goal, Integer> goalNameToProgressMap = viewModel.getCurrentProgress(calendarWeek);
 

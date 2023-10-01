@@ -2,9 +2,11 @@ package com.slinger.bodygoals.ui;
 
 import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Goal;
+import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.model.User;
 
 import java.util.Calendar;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -43,9 +45,20 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     }
 
     public void addGoal(@NonNull Goal goal) {
+        if (currentUser.getValue() != null)
+            currentUser.getValue().addGoal(goal);
+        else
+            throw new IllegalStateException("User should not be 'null', as it was initialized with test user.");
+    }
+
+    public void addSessions(List<Session> sessions) {
 
         if (currentUser.getValue() != null) {
-            currentUser.getValue().addGoal(goal);
+
+            for (Session session : sessions)
+                currentUser.getValue().getSessionLog().logSession(session);
+
+            /* TODO: Remove test-sout */
             System.out.println(currentUser.getValue().getGoalsCopy());
         } else {
             throw new IllegalStateException("User should not be 'null', as it was initialized with test user.");

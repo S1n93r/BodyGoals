@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/overview"
+        android:text="@string/title_overview"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -106,26 +106,35 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/button_to_weekly_log"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            android:layout_marginStart="56dp"
-            android:text="@string/weekly_log"
+            android:layout_marginStart="32dp"
+            android:text="@string/button_weekly_log"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/button_to_add_goal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            android:text="@string/add_goal"
+            android:layout_marginStart="4dp"
+            android:text="@string/button_add_goal"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button_to_add_session"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/button_add_session"
             android:textSize="20sp" />
     </LinearLayout>
 

@@ -13,9 +13,7 @@ public class SessionLog {
 
     private final Map<CalendarWeek, List<Session>> loggedSessions = new HashMap<>();
 
-    public void logSession(Goal goal) {
-
-        Session session = new Session(goal);
+    public void logSession(Session session) {
 
         CalendarWeek calendarWeek = CalendarWeek.from(session.getDate());
 

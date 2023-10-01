@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/OverviewFragment"
         android:name="com.slinger.bodygoals.ui.fragments.Overview"
-        android:label="@string/overview"
+        android:label="@string/title_overview"
         tools:layout="@layout/fragment_overview">
         <action
             android:id="@+id/action_OverviewFragment_to_WeeklyLogFragment"
@@ -16,11 +16,14 @@
         <action
             android:id="@+id/action_OverviewFragment_to_AddGoalFragment"
             app:destination="@id/AddGoalFragment" />
+        <action
+            android:id="@+id/action_OverviewFragment_to_AddSessionFragment"
+            app:destination="@id/AddSessionFragment" />
     </fragment>
     <fragment
         android:id="@+id/WeeklyLogFragment"
         android:name="com.slinger.bodygoals.ui.fragments.WeeklyLog"
-        android:label="@string/weekly_log"
+        android:label="@string/title_weekly_log"
         tools:layout="@layout/fragment_weekly_log">
         <action
             android:id="@+id/action_WeeklyLogFragment_to_OverviewFragment"
@@ -29,10 +32,19 @@
     <fragment
         android:id="@+id/AddGoalFragment"
         android:name="com.slinger.bodygoals.ui.fragments.AddGoal"
-        android:label="@string/add_goal"
+        android:label="@string/title_add_goal"
         tools:layout="@layout/fragment_weekly_log">
         <action
             android:id="@+id/action_AddGoalFragment_to_OverviewFragment"
+            app:destination="@id/OverviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/AddSessionFragment"
+        android:name="com.slinger.bodygoals.ui.fragments.AddSession"
+        android:label="@string/title_add_session"
+        tools:layout="@layout/fragment_weekly_log">
+        <action
+            android:id="@+id/action_AddSessionFragment_to_OverviewFragment"
             app:destination="@id/OverviewFragment" />
     </fragment>
 </navigation>

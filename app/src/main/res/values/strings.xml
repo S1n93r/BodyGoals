@@ -4,9 +4,10 @@
     <!-- Strings used for fragments for navigation -->
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="overview">Overview</string>
-    <string name="weekly_log">Weekly Log</string>
-    <string name="add_goal">Add Goal</string>
+    <string name="title_overview">Overview</string>
+    <string name="title_weekly_log">Weekly Log</string>
+    <string name="title_add_goal">Add Goal</string>
+    <string name="title_add_session">Add Session</string>
     <!-- Labels -->
     <string name="overall">Overall</string>
     <string name="calendar_week_place_holder">CW %1$d</string>
@@ -15,9 +16,15 @@
     <string name="goal_x_per_week">x / week</string>
     <string name="muscle_groups">Muscle groups</string>
     <string name="save">Save</string>
+    <string name="what_goals">What?</string>
+    <string name="when_done">When?</string>
     <!-- Buttons -->
     <string name="previous_week">&lt;</string>
     <string name="next_week">&gt;</string>
+    <string name="button_weekly_log">Weekly\nLog</string>
+    <string name="button_add_goal">Add\nGoal</string>
+    <string name="button_add_session">Add\nSession</string>
+    <string name="button_overview">Overview</string>
     <!-- ComboBoxes -->
     <string name="cb_shoulders">Shoulders</string>
     <string name="cb_triceps">Triceps</string>

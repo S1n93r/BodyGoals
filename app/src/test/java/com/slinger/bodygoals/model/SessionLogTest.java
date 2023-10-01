@@ -19,9 +19,9 @@ public class SessionLogTest {
         CalendarWeek calendarWeek = CalendarWeek.from(calendar.getTime());
 
         /* When */
-        sessionLog.logSession(Goal.of("Push", 2));
-        sessionLog.logSession(Goal.of("Pull", 2));
-        sessionLog.logSession(Goal.of("Legs", 2));
+        sessionLog.logSession(new Session(Goal.of("Push", 2), calendar.getTime()));
+        sessionLog.logSession(new Session(Goal.of("Pull", 2), calendar.getTime()));
+        sessionLog.logSession(new Session(Goal.of("Legs", 2), calendar.getTime()));
 
         /* Then */
         assertEquals(1, sessionLog.getLoggedWeeks().size());

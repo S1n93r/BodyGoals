@@ -51,6 +51,9 @@ public class Overview extends Fragment {
         binding.buttonToAddGoal.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)
                 .navigate(R.id.action_OverviewFragment_to_AddGoalFragment));
 
+        binding.buttonToAddSession.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)
+                .navigate(R.id.action_OverviewFragment_to_AddSessionFragment));
+
         binding.buttonPreviousWeek.setOnClickListener(weeklyLogView -> viewModel.selectPreviousWeek());
         binding.buttonNextWeek.setOnClickListener(weeklyLogView -> viewModel.selectNextWeek());
     }

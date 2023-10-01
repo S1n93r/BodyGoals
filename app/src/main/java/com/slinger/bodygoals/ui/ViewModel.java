@@ -7,6 +7,7 @@ import com.slinger.bodygoals.model.User;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             new MutableLiveData<>(CalendarWeek.from(Calendar.getInstance().getTime()));
 
     private final MutableLiveData<List<Goal>> userGoals = new MutableLiveData<>(new ArrayList<>());
+
+    private final MutableLiveData<Date> sessionDate = new MutableLiveData<>(Calendar.getInstance().getTime());
 
     public ViewModel() {
         registerLiveDataObserver();
@@ -41,6 +44,14 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     public LiveData<CalendarWeek> getSelectedCalendarWeek() {
         return selectedCalendarWeek;
+    }
+
+    public LiveData<Date> getSessionDate() {
+        return sessionDate;
+    }
+
+    public void setSessionDate(Date date) {
+        sessionDate.setValue(date);
     }
 
     public void selectPreviousWeek() {

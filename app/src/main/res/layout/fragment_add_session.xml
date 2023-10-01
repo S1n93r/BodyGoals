@@ -51,25 +51,14 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="88dp"
-        android:layout_height="40dp"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
         android:layout_marginTop="52dp"
         android:layout_weight="1"
         android:text="@string/when_done"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
-
-    <EditText
-        android:id="@+id/goalNameText"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_weight="1"
-        android:inputType="text"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
     <TextView
@@ -78,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/what_goals"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:layout_marginTop="128dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
@@ -99,5 +88,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
+
+    <TextView
+        android:id="@+id/selectedDateTimeText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="@string/datetime_placeholder"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

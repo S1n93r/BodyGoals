@@ -10,8 +10,11 @@ import com.slinger.bodygoals.databinding.FragmentAddSessionBinding;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.ui.ViewModel;
+import com.slinger.bodygoals.ui.components.DatePickerFragment;
 import com.slinger.bodygoals.ui.components.GoalCheckBox;
 
+import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +24,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import java8.util.Lists;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
@@ -30,6 +32,8 @@ public class AddSession extends Fragment {
     private ViewModel viewModel;
 
     private FragmentAddSessionBinding binding;
+
+    private final DatePickerFragment datePickerFragment = new DatePickerFragment();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,18 +57,19 @@ public class AddSession extends Fragment {
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonToOverview.setOnClickListener(addGoalView -> navigateToOverview());
+        binding.buttonToOverview.setOnClickListener(addSessionView -> navigateToOverview());
 
-        binding.buttonSave.setOnClickListener(addGoalView -> {
+        binding.buttonSave.setOnClickListener(addSessionView -> {
 
-            /* TODO: Grab goals from component that shows all available goals. */
-            List<Goal> goals = Lists.of();
-
-            viewModel.addSessions(collectSessionsFromUI(goals));
+            viewModel.addSessions(collectSessionsFromUI());
             navigateToOverview();
         });
+
+        binding.selectedDateTimeText.setOnClickListener(addSessionView ->
+                datePickerFragment.show(getParentFragmentManager(), "timePicker"));
     }
 
     private void navigateToOverview() {
@@ -77,12 +82,23 @@ public class AddSession extends Fragment {
         binding = null;
     }
 
-    private List<Session> collectSessionsFromUI(List<Goal> goalList) {
+    private List<Session> collectSessionsFromUI() {
+
+        List<Goal> goals = new ArrayList<>(binding.goalList.getChildCount());
+
+        for (int i = 0; i < binding.goalList.getChildCount(); i++) {
+
+            GoalCheckBox goalCheckBox = (GoalCheckBox) binding.goalList.getChildAt(i);
+
+            if (goalCheckBox.isChecked())
+                goals.add(goalCheckBox.getGoal());
+        }
 
         /* TODO: Here we have to grab the date from a date picker component. */
+        /* TODO: https://developer.android.com/develop/ui/views/components/pickers#java*/
         Date date = Calendar.getInstance().getTime();
 
-        return StreamSupport.stream(goalList)
+        return StreamSupport.stream(goals)
                 .map(goal -> new Session(goal, date))
                 .collect(Collectors.toList());
     }
@@ -101,6 +117,13 @@ public class AddSession extends Fragment {
 
                 binding.goalList.addView(checkBox);
             }
+        });
+
+        viewModel.getSessionDate().observe(this, date -> {
+
+            DateFormat dateFormat = DateFormat.getInstance();
+
+            binding.selectedDateTimeText.setText(dateFormat.format(date));
         });
     }
 }

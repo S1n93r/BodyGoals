@@ -25,6 +25,7 @@
     <string name="button_add_goal">Add\nGoal</string>
     <string name="button_add_session">Add\nSession</string>
     <string name="button_overview">Overview</string>
+    <string name="datetime_placeholder">[datetime]</string>
     <!-- ComboBoxes -->
     <string name="cb_shoulders">Shoulders</string>
     <string name="cb_triceps">Triceps</string>

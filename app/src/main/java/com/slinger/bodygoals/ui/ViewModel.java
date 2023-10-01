@@ -1,10 +1,12 @@
 package com.slinger.bodygoals.ui;
 
 import com.slinger.bodygoals.model.CalendarWeek;
+import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.User;
 
 import java.util.Calendar;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -38,5 +40,15 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
         if (calendarWeek != null)
             selectedCalendarWeek.setValue(CalendarWeek.nextWeek(calendarWeek));
+    }
+
+    public void addGoal(@NonNull Goal goal) {
+
+        if (currentUser.getValue() != null) {
+            currentUser.getValue().addGoal(goal);
+            System.out.println(currentUser.getValue().getGoalsCopy());
+        } else {
+            throw new IllegalStateException("User should not be 'null', as it was initialized with test user.");
+        }
     }
 }

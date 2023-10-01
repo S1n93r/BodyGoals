@@ -25,7 +25,8 @@ public class Overview extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel = new ViewModelProvider(this).get(ViewModel.class);
+        if (getActivity() != null)
+            viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
 
         registerLiveDataObserver();
     }

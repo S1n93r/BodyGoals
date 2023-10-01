@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentAddGoalBinding;
+import com.slinger.bodygoals.model.Goal;
+import com.slinger.bodygoals.model.MuscleGroup;
 import com.slinger.bodygoals.ui.ViewModel;
 
 import androidx.annotation.NonNull;
@@ -25,7 +27,8 @@ public class AddGoal extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel = new ViewModelProvider(this).get(ViewModel.class);
+        if (getActivity() != null)
+            viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
     }
 
     @Override
@@ -42,13 +45,74 @@ public class AddGoal extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonToOverview.setOnClickListener(overviewView -> NavHostFragment.findNavController(AddGoal.this)
-                .navigate(R.id.action_AddGoalFragment_to_OverviewFragment));
+        binding.buttonToOverview.setOnClickListener(addGoalView -> navigateToOverview());
+
+        binding.buttonSave.setOnClickListener(addGoalView -> {
+            viewModel.addGoal(collectGoalFromUI());
+            navigateToOverview();
+        });
+    }
+
+    private void navigateToOverview() {
+        NavHostFragment.findNavController(AddGoal.this).navigate(R.id.action_AddGoalFragment_to_OverviewFragment);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private Goal collectGoalFromUI() {
+
+        String frequencyString = binding.frequencyTextView.getText().toString();
+        int frequency = Integer.parseInt(frequencyString);
+
+        String goalName = binding.goalNameText.getText().toString();
+
+        boolean absChecked = binding.cbAbs.isChecked();
+        boolean bicepsChecked = binding.cbBiceps.isChecked();
+        boolean calvesChecked = binding.cbCalves.isChecked();
+        boolean chestChecked = binding.cbChest.isChecked();
+        boolean forearmsChecked = binding.cbForearms.isChecked();
+        boolean harmStringsChecked = binding.cbHarmstring.isChecked();
+        boolean latsChecked = binding.cbLats.isChecked();
+        boolean quadsChecked = binding.cbQuads.isChecked();
+        boolean shouldersChecked = binding.cbShoulders.isChecked();
+        boolean tricepsChecked = binding.cbTriceps.isChecked();
+
+        Goal goal = Goal.of(goalName, frequency);
+
+        if (absChecked)
+            goal.addMuscleGroup(new MuscleGroup("Abs"));
+
+        if (bicepsChecked)
+            goal.addMuscleGroup(new MuscleGroup("Biceps"));
+
+        if (calvesChecked)
+            goal.addMuscleGroup(new MuscleGroup("Calves"));
+
+        if (chestChecked)
+            goal.addMuscleGroup(new MuscleGroup("Chest"));
+
+        if (forearmsChecked)
+            goal.addMuscleGroup(new MuscleGroup("Forearms"));
+
+        if (harmStringsChecked)
+            goal.addMuscleGroup(new MuscleGroup("Harm Strings"));
+
+        if (latsChecked)
+            goal.addMuscleGroup(new MuscleGroup("Lats"));
+
+        if (quadsChecked)
+            goal.addMuscleGroup(new MuscleGroup("Quads"));
+
+        if (shouldersChecked)
+            goal.addMuscleGroup(new MuscleGroup("Shoulders"));
+
+        if (tricepsChecked)
+            goal.addMuscleGroup(new MuscleGroup("Abs"));
+
+        return goal;
     }
 }

@@ -1,4 +1,4 @@
-package com.slinger.bodygoals.ui;
+package com.slinger.bodygoals.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

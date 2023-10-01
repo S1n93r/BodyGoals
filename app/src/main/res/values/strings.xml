@@ -2,17 +2,31 @@
     <string name="app_name">BodyGoals</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="overview">Overview</string>
     <string name="weekly_log">Weekly Log</string>
+    <string name="add_goal">Add Goal</string>
     <!-- Labels -->
     <string name="overall">Overall</string>
     <string name="calendar_week_place_holder">CW %1$d</string>
     <string name="calendar_week_year_place_holder">(%1$d)</string>
-    <!-- Buttons-->
+    <string name="goal_frequency">Frequency</string>
+    <string name="goal_x_per_week">x / week</string>
+    <string name="muscle_groups">Muscle groups</string>
+    <string name="save">Save</string>
+    <!-- Buttons -->
     <string name="previous_week">&lt;</string>
     <string name="next_week">&gt;</string>
+    <!-- ComboBoxes -->
+    <string name="cb_shoulders">Shoulders</string>
+    <string name="cb_triceps">Triceps</string>
+    <string name="cb_biceps">Biceps</string>
+    <string name="cb_lats">Lats</string>
+    <string name="cb_chest">Chest</string>
+    <string name="cb_abs">Abs</string>
+    <string name="cb_quads">Quads</string>
+    <string name="cb_harm_strings">Harm Strings</string>
+    <string name="cb_calves">Calves</string>
+    <string name="cb_forearms">Forearms</string>
 </resources>

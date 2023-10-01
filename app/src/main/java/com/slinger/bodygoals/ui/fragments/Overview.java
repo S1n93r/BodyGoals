@@ -1,4 +1,4 @@
-package com.slinger.bodygoals.ui;
+package com.slinger.bodygoals.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentOverviewBinding;
+import com.slinger.bodygoals.ui.ViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +17,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 public class Overview extends Fragment {
 
-    private OverviewViewModel viewModel;
+    private ViewModel viewModel;
 
     private FragmentOverviewBinding binding;
 
@@ -24,7 +25,7 @@ public class Overview extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel = new ViewModelProvider(this).get(OverviewViewModel.class);
+        viewModel = new ViewModelProvider(this).get(ViewModel.class);
 
         registerLiveDataObserver();
     }
@@ -43,8 +44,11 @@ public class Overview extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonToWeeklyLog.setOnClickListener(weeklyLogView -> NavHostFragment.findNavController(Overview.this)
+        binding.buttonToWeeklyLog.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)
                 .navigate(R.id.action_OverviewFragment_to_WeeklyLogFragment));
+
+        binding.buttonToAddGoal.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)
+                .navigate(R.id.action_OverviewFragment_to_AddGoalFragment));
 
         binding.buttonPreviousWeek.setOnClickListener(weeklyLogView -> viewModel.selectPreviousWeek());
         binding.buttonNextWeek.setOnClickListener(weeklyLogView -> viewModel.selectNextWeek());

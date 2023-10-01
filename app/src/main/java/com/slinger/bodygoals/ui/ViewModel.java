@@ -7,9 +7,8 @@ import java.util.Calendar;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class OverviewViewModel extends ViewModel {
+public class ViewModel extends androidx.lifecycle.ViewModel {
 
     private final MutableLiveData<User> currentUser =
             new MutableLiveData<>(new User("Sl1ng3r"));

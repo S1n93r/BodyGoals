@@ -1,14 +1,20 @@
 package com.slinger.bodygoals.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentOverviewBinding;
 import com.slinger.bodygoals.model.CalendarWeek;
+import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.ui.ViewModel;
+
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,14 +39,9 @@ public class Overview extends Fragment {
     }
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
-
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentOverviewBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -66,7 +67,10 @@ public class Overview extends Fragment {
     }
 
     private void registerLiveDataObserver() {
-        viewModel.getSelectedCalendarWeek().observe(this, this::updateCalendarWeekLabel);
+        viewModel.getSelectedCalendarWeek().observe(this, calendarWeek -> {
+            updateCalendarWeekLabel(calendarWeek);
+            updateWeeklyLogList(calendarWeek);
+        });
     }
 
     /* TODO: Component and logic for calendar week switching exists twice. Build custom component. */
@@ -80,5 +84,34 @@ public class Overview extends Fragment {
                 calendarWeek.getYear());
 
         binding.calendarWeekYearText.setText(calendarWeekYearString);
+    }
+
+    private void updateWeeklyLogList(CalendarWeek calendarWeek) {
+
+        Map<Goal, Integer> goalNameToProgressMap = viewModel.getCurrentProgress(calendarWeek);
+
+        binding.goalProgressBarsList.removeAllViews();
+
+        for (Goal goal : goalNameToProgressMap.keySet()) {
+
+            Integer progressAbsolute = goalNameToProgressMap.get(goal);
+
+            if (progressAbsolute == null)
+                throw new IllegalStateException("");
+
+            /* TODO: This should be solved via dedicated class. */
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View labeledProgressBar = inflater.inflate(R.layout.component_labeled_progress, null);
+
+            TextView goalNameText = (TextView) labeledProgressBar.findViewById(R.id.goal_name_text);
+            ProgressBar goalProgressBar = (ProgressBar) labeledProgressBar.findViewById(R.id.goal_progress_bar);
+
+            int progress = (int) Math.round((double) progressAbsolute / (double) goal.getFrequency() * 100);
+
+            goalProgressBar.setProgress(progress);
+            goalNameText.setText(goal.getName());
+
+            binding.goalProgressBarsList.addView(labeledProgressBar);
+        }
     }
 }

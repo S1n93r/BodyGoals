@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 import java8.util.Lists;
+import java8.util.Maps;
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 
 public class SessionLog {
 
@@ -34,5 +37,31 @@ public class SessionLog {
             return Lists.of();
 
         return Collections.unmodifiableList(sessions);
+    }
+
+    public Map<Goal, Integer> getCurrentProgress(CalendarWeek calendarWeek) {
+
+        List<Session> sessions = loggedSessions.get(calendarWeek);
+
+        if (sessions == null)
+            return Maps.of();
+
+        Set<Goal> goals = StreamSupport.stream(sessions)
+                .map(Session::getGoal)
+                .collect(Collectors.toSet());
+
+        Map<Goal, Integer> goalNameToProgressMap = new HashMap<>(goals.size());
+
+        for (Goal goal : goals) {
+
+            goalNameToProgressMap.putIfAbsent(goal, 0);
+
+            for (Session session : sessions)
+                if (goal.getName().equals(session.getGoal().getName()))
+                    goalNameToProgressMap.put(goal, goalNameToProgressMap.get(goal) + 1);
+
+        }
+
+        return goalNameToProgressMap;
     }
 }

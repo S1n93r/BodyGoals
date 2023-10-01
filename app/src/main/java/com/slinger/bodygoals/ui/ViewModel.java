@@ -9,11 +9,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import java8.util.Lists;
+import java8.util.Maps;
 
 public class ViewModel extends androidx.lifecycle.ViewModel {
 
@@ -97,5 +99,15 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             return Lists.of();
 
         return user.getSessionLog().getSessionsCopy(calendarWeek);
+    }
+
+    public Map<Goal, Integer> getCurrentProgress(CalendarWeek calendarWeek) {
+
+        User user = currentUser.getValue();
+
+        if (user == null)
+            return Maps.of();
+
+        return user.getSessionLog().getCurrentProgress(calendarWeek);
     }
 }

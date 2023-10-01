@@ -44,11 +44,22 @@
         android:layout_marginTop="15dp"
         android:text="@string/calendar_week_place_holder"
         app:layout_constraintEnd_toStartOf="@+id/button_next_week"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/button_previous_week"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
+    <TextView
+        android:id="@+id/calendarWeekYearTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/calendar_week_year_place_holder"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarWeekTextView" />
+
     <View
+        android:id="@+id/view"
         android:layout_width="90dp"
         android:layout_height="1dp"
         android:layout_marginTop="24dp"

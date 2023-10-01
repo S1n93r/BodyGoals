@@ -23,9 +23,30 @@ public class CalendarWeek {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.get(Calendar.DAY_OF_MONTH);
 
-        return CalendarWeek.of(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR));
+        return CalendarWeek.of(calendar.get(Calendar.WEEK_OF_YEAR), calendar.get(Calendar.YEAR));
+    }
+
+    public static CalendarWeek previousWeek(CalendarWeek calendarWeek) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.WEEK_OF_YEAR, calendarWeek.getWeek());
+        calendar.set(Calendar.YEAR, calendarWeek.getYear());
+
+        calendar.add(Calendar.WEEK_OF_YEAR, -1);
+
+        return CalendarWeek.from(calendar.getTime());
+    }
+
+    public static CalendarWeek nextWeek(CalendarWeek calendarWeek) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.WEEK_OF_YEAR, calendarWeek.getWeek());
+        calendar.set(Calendar.YEAR, calendarWeek.getYear());
+
+        calendar.add(Calendar.WEEK_OF_YEAR, 1);
+
+        return CalendarWeek.from(calendar.getTime());
     }
 
     public int getWeek() {

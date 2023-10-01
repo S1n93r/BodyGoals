@@ -3,11 +3,10 @@ package com.slinger.bodygoals.model;
 public class User {
 
     private final String name;
-    private final SessionLog sessionLog;
+    private final SessionLog sessionLog = new SessionLog();
 
-    public User(String name, SessionLog sessionLog) {
+    public User(String name) {
         this.name = name;
-        this.sessionLog = sessionLog;
     }
 
     public String getName() {

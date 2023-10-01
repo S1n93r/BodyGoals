@@ -18,7 +18,7 @@ public class WeeklyLog extends Fragment {
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
 
@@ -30,13 +30,8 @@ public class WeeklyLog extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonToOverview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(WeeklyLog.this)
-                        .navigate(R.id.action_WeeklyLogFragment_to_OverviewFragment);
-            }
-        });
+        binding.buttonToOverview.setOnClickListener(overviewView -> NavHostFragment.findNavController(WeeklyLog.this)
+                .navigate(R.id.action_WeeklyLogFragment_to_OverviewFragment));
     }
 
     @Override

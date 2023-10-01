@@ -10,7 +10,8 @@
     <string name="weekly_log">Weekly Log</string>
     <!-- Labels -->
     <string name="overall">Overall</string>
-    <string name="calendar_week_place_holder">CW XX</string>
+    <string name="calendar_week_place_holder">CW %1$d</string>
+    <string name="calendar_week_year_place_holder">(%1$d)</string>
     <!-- Buttons-->
     <string name="previous_week">&lt;</string>
     <string name="next_week">&gt;</string>

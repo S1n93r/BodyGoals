@@ -6,15 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.slinger.bodygoals.R;
-import com.slinger.bodygoals.databinding.FragmentFirstBinding;
+import com.slinger.bodygoals.databinding.FragmentOverviewBinding;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-public class FirstFragment extends Fragment {
+public class Overview extends Fragment {
 
-    private FragmentFirstBinding binding;
+    private FragmentOverviewBinding binding;
 
     @Override
     public View onCreateView(
@@ -22,7 +22,7 @@ public class FirstFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentFirstBinding.inflate(inflater, container, false);
+        binding = FragmentOverviewBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }
@@ -30,11 +30,11 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
+        binding.buttonToWeeklyLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                NavHostFragment.findNavController(Overview.this)
+                        .navigate(R.id.action_OverviewFragment_to_WeeklyLogFragment);
             }
         });
     }

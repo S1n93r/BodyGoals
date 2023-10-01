@@ -10,6 +10,7 @@ import com.slinger.bodygoals.databinding.FragmentAddSessionBinding;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.ui.ViewModel;
+import com.slinger.bodygoals.ui.components.GoalCheckBox;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +37,8 @@ public class AddSession extends Fragment {
 
         if (getActivity() != null)
             viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
+
+        registerLiveDataObserver();
     }
 
     @Override
@@ -82,5 +85,22 @@ public class AddSession extends Fragment {
         return StreamSupport.stream(goalList)
                 .map(goal -> new Session(goal, date))
                 .collect(Collectors.toList());
+    }
+
+    private void registerLiveDataObserver() {
+
+        viewModel.getUserGoals().observe(this, goals -> {
+
+            for (Goal goal : goals) {
+
+                if (getContext() == null)
+                    throw new IllegalStateException("Context is null. Check why.");
+
+                GoalCheckBox checkBox = new GoalCheckBox(getContext());
+                checkBox.setGoal(goal);
+
+                binding.goalList.addView(checkBox);
+            }
+        });
     }
 }

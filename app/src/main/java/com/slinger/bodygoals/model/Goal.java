@@ -21,4 +21,12 @@ public class Goal {
     public static Goal of(String name, int frequency) {
         return new Goal(name, frequency);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getFrequency() {
+        return frequency;
+    }
 }

@@ -15,7 +15,6 @@ import com.slinger.bodygoals.ui.components.GoalCheckBox;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -94,9 +93,7 @@ public class AddSession extends Fragment {
                 goals.add(goalCheckBox.getGoal());
         }
 
-        /* TODO: Here we have to grab the date from a date picker component. */
-        /* TODO: https://developer.android.com/develop/ui/views/components/pickers#java*/
-        Date date = Calendar.getInstance().getTime();
+        Date date = viewModel.getSessionDate().getValue();
 
         return StreamSupport.stream(goals)
                 .map(goal -> new Session(goal, date))

@@ -83,9 +83,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
             for (Session session : sessions)
                 currentUser.getValue().getSessionLog().logSession(session);
-
-            /* TODO: Remove test-sout */
-            System.out.println(currentUser.getValue().getGoalsCopy());
         } else {
             throw new IllegalStateException("User should not be 'null', as it was initialized with test user.");
         }

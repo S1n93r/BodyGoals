@@ -50,10 +50,11 @@ public class ViewModel extends AndroidViewModel {
         database = Room.databaseBuilder(application, BodyGoalDatabase.class, "body-goals-database").build();
 
         executor.execute(() -> {
-            
+
             User user = database.userDao().findByName("Sl1ng3r");
 
-            handler.post(() -> currentUser.setValue(user));
+            if (user != null)
+                handler.post(() -> currentUser.setValue(user));
         });
     }
 

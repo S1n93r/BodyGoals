@@ -66,9 +66,18 @@ public class AddGoal extends Fragment {
     private Goal collectGoalFromUI() {
 
         String frequencyString = binding.frequencyTextView.getText().toString();
+
+        /* TODO: Turn into user feedback */
+        if (frequencyString.isEmpty())
+            throw new IllegalStateException("Frequency can't be empty.");
+
         int frequency = Integer.parseInt(frequencyString);
 
         String goalName = binding.goalNameText.getText().toString();
+
+        /* TODO: Turn into user feedback */
+        if (goalName.isEmpty())
+            throw new IllegalStateException("Goal name can't be empty.");
 
         boolean absChecked = binding.cbAbs.isChecked();
         boolean bicepsChecked = binding.cbBiceps.isChecked();

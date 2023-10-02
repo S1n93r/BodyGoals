@@ -30,7 +30,7 @@ public class ViewModel extends AndroidViewModel {
     Handler handler = new Handler(Looper.getMainLooper());
 
     private final MutableLiveData<User> currentUser =
-            new MutableLiveData<>(new User("Sl1ng3r"));
+            new MutableLiveData<>(new User());
 
     private final MutableLiveData<CalendarWeek> selectedCalendarWeek =
             new MutableLiveData<>(CalendarWeek.from(Calendar.getInstance().getTime()));
@@ -51,7 +51,7 @@ public class ViewModel extends AndroidViewModel {
 
         executor.execute(() -> {
 
-            User user = database.userDao().findByName("Sl1ng3r");
+            User user = database.userDao().findByName(123);
 
             if (user != null)
                 handler.post(() -> currentUser.setValue(user));
@@ -165,6 +165,6 @@ public class ViewModel extends AndroidViewModel {
         currentUser.setValue(user);
 
         if (database != null)
-            executor.execute(() -> database.userDao().insertAll(user));
+            executor.execute(() -> database.userDao().update(user));
     }
 }

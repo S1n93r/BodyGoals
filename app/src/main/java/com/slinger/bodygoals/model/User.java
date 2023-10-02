@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
@@ -15,27 +15,17 @@ import androidx.room.TypeConverters;
 public class User {
 
     @PrimaryKey
-    @NonNull
-    private final String name;
+    private int userId = 123;
 
-    @ColumnInfo(name = "session_log")
-    @TypeConverters({SessionLogConverter.class})
+    @Embedded
     private SessionLog sessionLog = new SessionLog();
 
     @ColumnInfo(name = "goals")
-    @TypeConverters({GoalsConverter.class})
+    @TypeConverters({GoalListConverter.class})
     private List<Goal> goals = new ArrayList<>();
-
-    public User(@NonNull String name) {
-        this.name = name;
-    }
 
     public void addGoal(Goal goal) {
         goals.add(goal);
-    }
-
-    public String getName() {
-        return name;
     }
 
     public SessionLog getSessionLog() {
@@ -56,5 +46,13 @@ public class User {
 
     public List<Goal> getGoalsCopy() {
         return Collections.unmodifiableList(goals);
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

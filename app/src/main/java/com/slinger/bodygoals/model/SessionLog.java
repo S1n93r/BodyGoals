@@ -7,11 +7,39 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 import java8.util.Lists;
 
+@Entity
 public class SessionLog {
 
-    private final Map<CalendarWeek, List<Session>> loggedSessions = new HashMap<>();
+    @PrimaryKey
+    private int logId = 12345;
+
+    @Ignore
+    private Map<CalendarWeek, List<Session>> loggedSessions;
+
+    @ColumnInfo
+    @TypeConverters({SessionListConverter.class})
+    private List<Session> sessions = new ArrayList<>();
+
+    public void loadMap(List<Session> sessions) {
+
+        Map<CalendarWeek, List<Session>> loggedSessions = new HashMap<>();
+
+        for (Session session : sessions) {
+
+            CalendarWeek calendarWeek = CalendarWeek.from(session.getDate());
+
+            loggedSessions.computeIfAbsent(calendarWeek, cw -> new ArrayList<>());
+
+            loggedSessions.get(calendarWeek).add(session);
+        }
+    }
 
     public void logSession(Session session) {
 
@@ -57,5 +85,22 @@ public class SessionLog {
         int sessionsLogged = getSessionsLogged(calendarWeek, goal);
 
         return (int) Math.round((double) sessionsLogged / (double) goal.getFrequency() * 100);
+    }
+
+    public int getLogId() {
+        return logId;
+    }
+
+    public void setLogId(int logId) {
+        this.logId = logId;
+    }
+
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(List<Session> sessions) {
+        this.sessions = sessions;
+        loadMap(sessions);
     }
 }

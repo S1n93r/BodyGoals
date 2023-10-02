@@ -8,6 +8,7 @@ import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.ActivityMainBinding;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -15,7 +16,10 @@ import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ViewModel viewModel;
+
     private AppBarConfiguration appBarConfiguration;
+
     private ActivityMainBinding binding;
 
     @Override
@@ -30,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        viewModel = new ViewModelProvider(this).get(ViewModel.class);
     }
 
     @Override

@@ -1,5 +1,10 @@
 package com.slinger.bodygoals.ui;
 
+import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
+
+import com.slinger.bodygoals.model.BodyGoalDatabase;
 import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.Session;
@@ -9,13 +14,20 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 import java8.util.Lists;
 
-public class ViewModel extends androidx.lifecycle.ViewModel {
+public class ViewModel extends AndroidViewModel {
+
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    Handler handler = new Handler(Looper.getMainLooper());
 
     private final MutableLiveData<User> currentUser =
             new MutableLiveData<>(new User("Sl1ng3r"));
@@ -27,8 +39,22 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     private final MutableLiveData<Date> sessionDate = new MutableLiveData<>(Calendar.getInstance().getTime());
 
-    public ViewModel() {
+    private BodyGoalDatabase database;
+
+    public ViewModel(@NonNull Application application) {
+
+        super(application);
+
         registerLiveDataObserver();
+
+        database = Room.databaseBuilder(application, BodyGoalDatabase.class, "body-goals-database").build();
+
+        executor.execute(() -> {
+            
+            User user = database.userDao().findByName("Sl1ng3r");
+
+            handler.post(() -> currentUser.setValue(user));
+        });
     }
 
     private void registerLiveDataObserver() {

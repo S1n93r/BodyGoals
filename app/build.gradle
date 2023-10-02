@@ -47,9 +47,18 @@ dependencies {
 
     implementation 'net.sourceforge.streamsupport:streamsupport:1.7.4'
 
+    implementation 'com.google.code.gson:gson:2.8.7'
+
+    def room_version = "2.5.2"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    testImplementation "androidx.room:room-testing:$room_version"
+
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
-    
+
     testImplementation 'org.mockito:mockito-core:5.5.0'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

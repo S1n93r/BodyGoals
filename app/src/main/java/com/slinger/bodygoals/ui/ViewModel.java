@@ -59,7 +59,11 @@ public class ViewModel extends AndroidViewModel {
     }
 
     private void registerLiveDataObserver() {
-        currentUser.observeForever(user -> userGoals.setValue(user.getGoalsCopy()));
+        currentUser.observeForever(user -> {
+            /* TODO: Null-semantic is not nice */
+            if (user != null)
+                userGoals.setValue(user.getGoalsCopy());
+        });
     }
 
     public LiveData<User> getCurrentUser() {
@@ -105,7 +109,8 @@ public class ViewModel extends AndroidViewModel {
         else
             throw new IllegalStateException("User should not be 'null', as it was initialized with test user.");
 
-        updateGoalsWithCurrentUser();
+        /* TODO: User Immutable User */
+        updateUser();
     }
 
     public void addSessions(List<Session> sessions) {
@@ -117,6 +122,9 @@ public class ViewModel extends AndroidViewModel {
         } else {
             throw new IllegalStateException("User should not be 'null', as it was initialized with test user.");
         }
+
+        /* TODO: User Immutable User */
+        updateUser();
     }
 
     public List<Session> getSessions(CalendarWeek calendarWeek) {
@@ -149,8 +157,14 @@ public class ViewModel extends AndroidViewModel {
         return user.getSessionLog().getSessionsLogged(calendarWeek, goal);
     }
 
-    private void updateGoalsWithCurrentUser() {
-        if (currentUser.getValue() != null)
-            userGoals.setValue(currentUser.getValue().getGoalsCopy());
+    private void updateUser() {
+
+        User user = currentUser.getValue();
+
+        currentUser.setValue(null);
+        currentUser.setValue(user);
+
+        if (database != null)
+            executor.execute(() -> database.userDao().insertAll(user));
     }
 }

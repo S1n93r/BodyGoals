@@ -10,6 +10,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+/* TODO: User Immutable User */
 @Entity
 public class User {
 

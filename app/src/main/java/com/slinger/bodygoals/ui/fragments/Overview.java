@@ -14,7 +14,7 @@ import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.ui.ViewModel;
 
-import java.util.Map;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -67,6 +67,9 @@ public class Overview extends Fragment {
     }
 
     private void registerLiveDataObserver() {
+
+        viewModel.getUserGoals().observe(this, this::updateGoalProgressBars);
+
         viewModel.getSelectedCalendarWeek().observe(this, calendarWeek -> {
             updateCalendarWeekLabel(calendarWeek);
             updateGoalProgressBars(calendarWeek);
@@ -86,33 +89,58 @@ public class Overview extends Fragment {
         binding.calendarWeekYearText.setText(calendarWeekYearString);
     }
 
-    /* TODO: Overall progress needs to be updates as well but caps out on 100% per sub progress. */
-    private void updateGoalProgressBars(CalendarWeek calendarWeek) {
-
-        Map<Goal, Integer> goalNameToProgressMap = viewModel.getCurrentProgress(calendarWeek);
+    private void updateGoalProgressBars(List<Goal> goals) {
 
         binding.goalProgressBarsList.removeAllViews();
 
-        for (Goal goal : goalNameToProgressMap.keySet()) {
-
-            Integer progressAbsolute = goalNameToProgressMap.get(goal);
-
-            if (progressAbsolute == null)
-                throw new IllegalStateException("");
+        for (Goal goal : goals) {
 
             /* TODO: This should be solved via dedicated class. */
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View labeledProgressBar = inflater.inflate(R.layout.component_labeled_progress, null);
 
-            TextView goalNameText = (TextView) labeledProgressBar.findViewById(R.id.goal_name_text);
-            ProgressBar goalProgressBar = (ProgressBar) labeledProgressBar.findViewById(R.id.goal_progress_bar);
+            TextView goalNameText = labeledProgressBar.findViewById(R.id.goal_name_text);
 
-            int progress = (int) Math.round((double) progressAbsolute / (double) goal.getFrequency() * 100);
-
-            goalProgressBar.setProgress(progress);
             goalNameText.setText(goal.getName());
 
             binding.goalProgressBarsList.addView(labeledProgressBar);
         }
+    }
+
+    private void updateGoalProgressBars(CalendarWeek calendarWeek) {
+
+        List<Goal> goals = viewModel.getUserGoals().getValue();
+
+        if (goals == null)
+            return;
+
+        binding.goalProgressBarsList.removeAllViews();
+
+        int maxProgress = 0;
+        int currentProgress = 0;
+
+        /* Update sub-progress */
+        for (Goal goal : goals) {
+
+            /* TODO: This should be solved via dedicated class. */
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View labeledProgressBar = inflater.inflate(R.layout.component_labeled_progress, null);
+
+            TextView goalNameText = labeledProgressBar.findViewById(R.id.goal_name_text);
+            ProgressBar goalProgressBar = labeledProgressBar.findViewById(R.id.goal_progress_bar);
+
+            int progress = viewModel.getGoalProgress(calendarWeek, goal);
+
+            goalProgressBar.setProgress(progress);
+            goalNameText.setText(goal.getName());
+
+            maxProgress += goal.getFrequency();
+            currentProgress += Math.min(goal.getFrequency(), viewModel.getSessionsLogged(calendarWeek, goal));
+
+            binding.goalProgressBarsList.addView(labeledProgressBar);
+        }
+
+        int overallProgress = (int) Math.round((double) currentProgress / (double) maxProgress * 100);
+        binding.overallProgressBar.setProgress(overallProgress);
     }
 }

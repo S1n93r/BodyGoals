@@ -8,9 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import java8.util.Lists;
-import java8.util.Maps;
-import java8.util.stream.Collectors;
-import java8.util.stream.StreamSupport;
 
 public class SessionLog {
 
@@ -39,29 +36,26 @@ public class SessionLog {
         return Collections.unmodifiableList(sessions);
     }
 
-    public Map<Goal, Integer> getCurrentProgress(CalendarWeek calendarWeek) {
+    public int getSessionsLogged(CalendarWeek calendarWeek, Goal goal) {
 
         List<Session> sessions = loggedSessions.get(calendarWeek);
 
         if (sessions == null)
-            return Maps.of();
+            return 0;
 
-        Set<Goal> goals = StreamSupport.stream(sessions)
-                .map(Session::getGoal)
-                .collect(Collectors.toSet());
+        List<Session> sessionsMatching = new ArrayList<>();
 
-        Map<Goal, Integer> goalNameToProgressMap = new HashMap<>(goals.size());
+        for (Session session : sessions)
+            if (session.getGoal() == goal)
+                sessionsMatching.add(session);
 
-        for (Goal goal : goals) {
+        return sessionsMatching.size();
+    }
 
-            goalNameToProgressMap.putIfAbsent(goal, 0);
+    public int getGoalProgress(CalendarWeek calendarWeek, Goal goal) {
 
-            for (Session session : sessions)
-                if (goal.getName().equals(session.getGoal().getName()))
-                    goalNameToProgressMap.put(goal, goalNameToProgressMap.get(goal) + 1);
+        int sessionsLogged = getSessionsLogged(calendarWeek, goal);
 
-        }
-
-        return goalNameToProgressMap;
+        return (int) Math.round((double) sessionsLogged / (double) goal.getFrequency() * 100);
     }
 }

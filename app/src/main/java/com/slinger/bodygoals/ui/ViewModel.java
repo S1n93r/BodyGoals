@@ -9,13 +9,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import java8.util.Lists;
-import java8.util.Maps;
 
 public class ViewModel extends androidx.lifecycle.ViewModel {
 
@@ -74,12 +72,15 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     }
 
     public void addGoal(@NonNull Goal goal) {
+
         if (currentUser.getValue() != null)
             currentUser.getValue().addGoal(goal);
         else
             throw new IllegalStateException("User should not be 'null', as it was initialized with test user.");
+
+        updateGoalsWithCurrentUser();
     }
-    
+
     public void addSessions(List<Session> sessions) {
 
         if (currentUser.getValue() != null) {
@@ -101,13 +102,28 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         return user.getSessionLog().getSessionsCopy(calendarWeek);
     }
 
-    public Map<Goal, Integer> getCurrentProgress(CalendarWeek calendarWeek) {
+    public int getGoalProgress(CalendarWeek calendarWeek, Goal goal) {
 
         User user = currentUser.getValue();
 
         if (user == null)
-            return Maps.of();
+            return 0;
 
-        return user.getSessionLog().getCurrentProgress(calendarWeek);
+        return user.getSessionLog().getGoalProgress(calendarWeek, goal);
+    }
+
+    public int getSessionsLogged(CalendarWeek calendarWeek, Goal goal) {
+
+        User user = currentUser.getValue();
+
+        if (user == null)
+            return 0;
+
+        return user.getSessionLog().getSessionsLogged(calendarWeek, goal);
+    }
+
+    private void updateGoalsWithCurrentUser() {
+        if (currentUser.getValue() != null)
+            userGoals.setValue(currentUser.getValue().getGoalsCopy());
     }
 }

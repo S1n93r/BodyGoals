@@ -12,8 +12,7 @@
     <string name="overall">Overall</string>
     <string name="calendar_week_place_holder">CW %1$d</string>
     <string name="calendar_week_year_place_holder">(%1$d)</string>
-    <string name="goal_frequency">Frequency</string>
-    <string name="goal_x_per_week">x / week</string>
+    <string name="goal_frequency">Frequency per week</string>
     <string name="muscle_groups">Muscle groups</string>
     <string name="save">Save</string>
     <string name="what_goals">What?</string>

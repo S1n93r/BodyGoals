@@ -69,7 +69,7 @@
 
     <LinearLayout
         android:id="@+id/overallBox"
-        android:layout_width="300dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="88dp"
         android:orientation="horizontal"
@@ -80,7 +80,7 @@
 
         <TextView
             android:id="@+id/overallText"
-            android:layout_width="75dp"
+            android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:text="@string/overall"
             android:textSize="18sp" />

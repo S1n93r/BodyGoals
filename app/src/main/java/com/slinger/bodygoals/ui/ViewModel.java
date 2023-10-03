@@ -115,13 +115,14 @@ public class ViewModel extends AndroidViewModel {
 
     public void addSessions(List<Session> sessions) {
 
-        if (currentUser.getValue() != null) {
+        if (currentUser.getValue() == null)
+            return;
 
-            for (Session session : sessions)
-                currentUser.getValue().getSessionLog().logSession(session);
-        } else {
-            throw new IllegalStateException("User should not be 'null', as it was initialized with test user.");
-        }
+        if (currentUser.getValue().getSessionLog() == null)
+            return;
+
+        for (Session session : sessions)
+            currentUser.getValue().getSessionLog().logSession(session);
 
         /* TODO: User Immutable User */
         updateUser();
@@ -144,6 +145,9 @@ public class ViewModel extends AndroidViewModel {
         if (user == null)
             return 0;
 
+        if (user.getSessionLog() == null)
+            return 0;
+
         return user.getSessionLog().getGoalProgress(calendarWeek, goal);
     }
 
@@ -152,6 +156,9 @@ public class ViewModel extends AndroidViewModel {
         User user = currentUser.getValue();
 
         if (user == null)
+            return 0;
+
+        if (user.getSessionLog() == null)
             return 0;
 
         return user.getSessionLog().getSessionsLogged(calendarWeek, goal);
@@ -165,6 +172,6 @@ public class ViewModel extends AndroidViewModel {
         currentUser.setValue(user);
 
         if (database != null)
-            executor.execute(() -> database.userDao().update(user));
+            executor.execute(() -> database.userDao().insertAll(user));
     }
 }

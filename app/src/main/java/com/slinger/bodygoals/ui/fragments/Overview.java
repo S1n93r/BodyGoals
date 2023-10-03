@@ -14,6 +14,7 @@ import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.ui.ViewModel;
 
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -68,7 +69,15 @@ public class Overview extends Fragment {
 
     private void registerLiveDataObserver() {
 
-        viewModel.getUserGoals().observe(this, this::updateGoalProgressBars);
+        viewModel.getUserGoals().observe(this, goals -> {
+
+            CalendarWeek selectedCalendarWeek = viewModel.getSelectedCalendarWeek().getValue();
+            CalendarWeek calendarWeek = selectedCalendarWeek == null
+                    ? CalendarWeek.from(Calendar.getInstance().getTime())
+                    : selectedCalendarWeek;
+
+            updateGoalProgressBars(calendarWeek);
+        });
 
         viewModel.getSelectedCalendarWeek().observe(this, calendarWeek -> {
             updateCalendarWeekLabel(calendarWeek);
@@ -116,8 +125,8 @@ public class Overview extends Fragment {
 
         binding.goalProgressBarsList.removeAllViews();
 
-        int maxProgress = 0;
-        int currentProgress = 0;
+        int maxOverallProgress = 0;
+        int currentOverallProgress = 0;
 
         /* Update sub-progress */
         for (Goal goal : goals) {
@@ -134,13 +143,13 @@ public class Overview extends Fragment {
             goalProgressBar.setProgress(progress);
             goalNameText.setText(goal.getName());
 
-            maxProgress += goal.getFrequency();
-            currentProgress += Math.min(goal.getFrequency(), viewModel.getSessionsLogged(calendarWeek, goal));
+            maxOverallProgress += goal.getFrequency();
+            currentOverallProgress += Math.min(goal.getFrequency(), viewModel.getSessionsLogged(calendarWeek, goal));
 
             binding.goalProgressBarsList.addView(labeledProgressBar);
         }
 
-        int overallProgress = (int) Math.round((double) currentProgress / (double) maxProgress * 100);
+        int overallProgress = (int) Math.round((double) currentOverallProgress / (double) maxOverallProgress * 100);
         binding.overallProgressBar.setProgress(overallProgress);
     }
 }

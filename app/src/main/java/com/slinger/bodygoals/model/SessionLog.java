@@ -8,61 +8,57 @@ import java.util.Map;
 import java.util.Set;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Entity;
 import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import java8.util.Lists;
 
-@Entity
 public class SessionLog {
 
-    @PrimaryKey
-    private int logId = 12345;
-
     @Ignore
-    private Map<CalendarWeek, List<Session>> loggedSessions;
+    private Map<CalendarWeek, List<Session>> calenderWeekToSessionMap;
 
-    @ColumnInfo
+    @ColumnInfo(name = "logged_sessions")
     @TypeConverters({SessionListConverter.class})
-    private List<Session> sessions = new ArrayList<>();
+    private List<Session> loggedSessions = new ArrayList<>();
 
     public void loadMapIfAbsent(List<Session> sessions) {
 
-        if (loggedSessions != null)
+        if (calenderWeekToSessionMap != null)
             return;
 
-        Map<CalendarWeek, List<Session>> loggedSessions = new HashMap<>();
+        calenderWeekToSessionMap = new HashMap<>();
 
         for (Session session : sessions) {
 
             CalendarWeek calendarWeek = CalendarWeek.from(session.getDate());
 
-            loggedSessions.computeIfAbsent(calendarWeek, cw -> new ArrayList<>());
+            calenderWeekToSessionMap.computeIfAbsent(calendarWeek, cw -> new ArrayList<>());
 
-            loggedSessions.get(calendarWeek).add(session);
+            calenderWeekToSessionMap.get(calendarWeek).add(session);
         }
     }
 
     public void logSession(Session session) {
 
-        if (loggedSessions == null)
-            loggedSessions = new HashMap<>();
+        if (calenderWeekToSessionMap == null)
+            calenderWeekToSessionMap = new HashMap<>();
 
         CalendarWeek calendarWeek = CalendarWeek.from(session.getDate());
 
-        loggedSessions.computeIfAbsent(calendarWeek, k -> new ArrayList<>());
+        calenderWeekToSessionMap.computeIfAbsent(calendarWeek, k -> new ArrayList<>());
 
-        loggedSessions.get(calendarWeek).add(session);
+        calenderWeekToSessionMap.get(calendarWeek).add(session);
+
+        transferToSessionList(calenderWeekToSessionMap);
     }
 
     public Set<CalendarWeek> getLoggedWeeks() {
-        return Collections.unmodifiableSet(loggedSessions.keySet());
+        return Collections.unmodifiableSet(calenderWeekToSessionMap.keySet());
     }
 
     public List<Session> getSessionsCopy(CalendarWeek calendarWeek) {
 
-        List<Session> sessions = loggedSessions.get(calendarWeek);
+        List<Session> sessions = calenderWeekToSessionMap.get(calendarWeek);
 
         if (sessions == null)
             return Lists.of();
@@ -72,10 +68,10 @@ public class SessionLog {
 
     public int getSessionsLogged(CalendarWeek calendarWeek, Goal goal) {
 
-        if (loggedSessions == null)
+        if (calenderWeekToSessionMap == null)
             return 0;
 
-        List<Session> sessions = loggedSessions.get(calendarWeek);
+        List<Session> sessions = calenderWeekToSessionMap.get(calendarWeek);
 
         if (sessions == null)
             return 0;
@@ -83,7 +79,7 @@ public class SessionLog {
         List<Session> sessionsMatching = new ArrayList<>();
 
         for (Session session : sessions)
-            if (session.getGoal() == goal)
+            if (session.getGoal().getName().equals(goal.getName()))
                 sessionsMatching.add(session);
 
         return sessionsMatching.size();
@@ -96,20 +92,22 @@ public class SessionLog {
         return (int) Math.round((double) sessionsLogged / (double) goal.getFrequency() * 100);
     }
 
-    public int getLogId() {
-        return logId;
+    public List<Session> getLoggedSessions() {
+        return loggedSessions;
     }
 
-    public void setLogId(int logId) {
-        this.logId = logId;
+    public void setLoggedSessions(List<Session> loggedSessions) {
+        this.loggedSessions = loggedSessions;
+        loadMapIfAbsent(loggedSessions);
     }
 
-    public List<Session> getSessions() {
-        return sessions;
-    }
+    private void transferToSessionList(Map<CalendarWeek, List<Session>> calenderWeekToSessionMap) {
 
-    public void setSessions(List<Session> sessions) {
-        this.sessions = sessions;
-        loadMapIfAbsent(sessions);
+        List<Session> allSessions = new ArrayList<>();
+
+        for (List<Session> sessions : calenderWeekToSessionMap.values())
+            allSessions.addAll(sessions);
+
+        loggedSessions = allSessions;
     }
 }

@@ -18,7 +18,7 @@ public class User {
     private int userId = 123;
 
     @Embedded
-    private SessionLog sessionLog = new SessionLog();
+    private SessionLog sessionLog;
 
     @ColumnInfo(name = "goals")
     @TypeConverters({GoalListConverter.class})
@@ -33,7 +33,7 @@ public class User {
     }
 
     public void setSessionLog(SessionLog sessionLog) {
-        this.sessionLog = sessionLog;
+        this.sessionLog = sessionLog == null ? new SessionLog() : sessionLog;
     }
 
     public void setGoals(List<Goal> goals) {

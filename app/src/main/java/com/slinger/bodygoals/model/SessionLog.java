@@ -110,4 +110,12 @@ public class SessionLog {
 
         loggedSessions = allSessions;
     }
+
+    public void removeSessionsBelongingToGoal(Goal goal) {
+        
+        loggedSessions.removeIf(session -> session.getGoal().getName().equals(goal.getName()));
+
+        for (List<Session> sessions : calenderWeekToSessionMap.values())
+            sessions.removeIf(session -> session.getGoal().getName().equals(goal.getName()));
+    }
 }

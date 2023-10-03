@@ -55,4 +55,15 @@ public class User {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    public void removeGoal(Goal goal) {
+
+        removeAllLogsConnectedToGoal(goal);
+
+        goals.remove(goal);
+    }
+
+    private void removeAllLogsConnectedToGoal(Goal goal) {
+        sessionLog.removeSessionsBelongingToGoal(goal);
+    }
 }

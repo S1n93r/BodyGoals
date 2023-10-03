@@ -174,4 +174,19 @@ public class ViewModel extends AndroidViewModel {
         if (database != null)
             executor.execute(() -> database.userDao().insertAll(user));
     }
+
+    public void removeOrDisableGoal(Goal goal) {
+
+        User user = currentUser.getValue();
+
+        if (user == null)
+            return;
+
+        if (goal.isActive()) {
+            goal.setActive(false);
+        } else {
+            user.removeGoal(goal);
+            updateUser();
+        }
+    }
 }

@@ -52,7 +52,7 @@ public class Overview extends Fragment {
                 .navigate(R.id.action_OverviewFragment_to_WeeklyLogFragment));
 
         binding.buttonToAddGoal.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)
-                .navigate(R.id.action_OverviewFragment_to_AddGoalFragment));
+                .navigate(R.id.action_OverviewFragment_to_goals_list_fragment));
 
         binding.buttonToAddSession.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)
                 .navigate(R.id.action_OverviewFragment_to_AddSessionFragment));
@@ -98,6 +98,7 @@ public class Overview extends Fragment {
         binding.calendarWeekYearText.setText(calendarWeekYearString);
     }
 
+    /* TODO: Remove this method */
     private void updateGoalProgressBars(List<Goal> goals) {
 
         binding.goalProgressBarsList.removeAllViews();

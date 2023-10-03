@@ -54,7 +54,7 @@ public class AddGoal extends Fragment {
     }
 
     private void navigateToOverview() {
-        NavHostFragment.findNavController(AddGoal.this).navigate(R.id.action_AddGoalFragment_to_OverviewFragment);
+        NavHostFragment.findNavController(AddGoal.this).navigate(R.id.action_AddGoalFragment_to_goals_list_fragment);
     }
 
     @Override

@@ -10,11 +10,13 @@
     <string name="title_add_session">Add Session</string>
     <!-- Labels -->
     <string name="overall">Overall</string>
+    <string name="goals">Goals</string>
     <string name="calendar_week_place_holder">CW %1$d</string>
     <string name="calendar_week_year_place_holder">(%1$d)</string>
     <string name="goal_frequency">Frequency per week</string>
     <string name="muscle_groups">Muscle groups</string>
     <string name="save">Save</string>
+    <string name="add">Add</string>
     <string name="what_goals">What?</string>
     <string name="when_done">When?</string>
     <string name="weekly_log_entry">[%1$s] %2$s</string>
@@ -22,9 +24,10 @@
     <string name="previous_week">&lt;</string>
     <string name="next_week">&gt;</string>
     <string name="button_weekly_log">Weekly Log</string>
-    <string name="button_add_goal">Add Goal</string>
+    <string name="button_goals_list">Goals</string>
     <string name="button_add_session">Add Session</string>
     <string name="button_overview">Overview</string>
+    <string name="button_cancel">Cancel</string>
     <string name="datetime_placeholder">[datetime]</string>
     <!-- ComboBoxes -->
     <string name="cb_shoulders">Shoulders</string>
@@ -37,4 +40,6 @@
     <string name="cb_harm_strings">Harm Strings</string>
     <string name="cb_calves">Calves</string>
     <string name="cb_forearms">Forearms</string>
+    <!-- image content descriptions -->
+    <string name="button_disable_delete_description">Button to disable or delete goal.</string>
 </resources>

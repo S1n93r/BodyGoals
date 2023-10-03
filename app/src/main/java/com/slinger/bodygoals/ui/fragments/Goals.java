@@ -74,6 +74,8 @@ public class Goals extends Fragment {
 
         for (Goal goal : goals) {
 
+            /* TODO: Switch to bin-icon, when goal already deactivated. */
+            /* TODO: Gray out goal, when deactivated. */
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View goalComponent = inflater.inflate(R.layout.component_goal, null);
 

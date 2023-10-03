@@ -27,7 +27,10 @@ public class SessionLog {
     @TypeConverters({SessionListConverter.class})
     private List<Session> sessions = new ArrayList<>();
 
-    public void loadMap(List<Session> sessions) {
+    public void loadMapIfAbsent(List<Session> sessions) {
+
+        if (loggedSessions != null)
+            return;
 
         Map<CalendarWeek, List<Session>> loggedSessions = new HashMap<>();
 
@@ -42,6 +45,9 @@ public class SessionLog {
     }
 
     public void logSession(Session session) {
+
+        if (loggedSessions == null)
+            loggedSessions = new HashMap<>();
 
         CalendarWeek calendarWeek = CalendarWeek.from(session.getDate());
 
@@ -65,6 +71,9 @@ public class SessionLog {
     }
 
     public int getSessionsLogged(CalendarWeek calendarWeek, Goal goal) {
+
+        if (loggedSessions == null)
+            return 0;
 
         List<Session> sessions = loggedSessions.get(calendarWeek);
 
@@ -101,6 +110,6 @@ public class SessionLog {
 
     public void setSessions(List<Session> sessions) {
         this.sessions = sessions;
-        loadMap(sessions);
+        loadMapIfAbsent(sessions);
     }
 }

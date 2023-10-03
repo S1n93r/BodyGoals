@@ -67,8 +67,11 @@ public class AddSession extends Fragment {
             navigateToOverview();
         });
 
-        binding.selectedDateTimeText.setOnClickListener(addSessionView ->
-                datePickerFragment.show(getParentFragmentManager(), "timePicker"));
+        binding.selectedDateTimeText.setOnClickListener(addSessionView -> {
+                    if (!datePickerFragment.isAdded())
+                        datePickerFragment.show(getParentFragmentManager(), "timePicker");
+                }
+        );
     }
 
     private void navigateToOverview() {

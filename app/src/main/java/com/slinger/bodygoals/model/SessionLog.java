@@ -15,7 +15,7 @@ import java8.util.Lists;
 public class SessionLog {
 
     @Ignore
-    private Map<CalendarWeek, List<Session>> calenderWeekToSessionMap;
+    private Map<CalendarWeek, List<Session>> calenderWeekToSessionMap = new HashMap<>();
 
     @ColumnInfo(name = "logged_sessions")
     @TypeConverters({SessionListConverter.class})

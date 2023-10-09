@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentGoalsBinding;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.ui.ViewModel;
+import com.slinger.bodygoals.ui.components.GoalComponent;
 
 import java.util.List;
 
@@ -76,14 +75,10 @@ public class Goals extends Fragment {
 
             /* TODO: Switch to bin-icon, when goal already deactivated. */
             /* TODO: Gray out goal, when deactivated. */
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View goalComponent = inflater.inflate(R.layout.component_goal, null);
+            GoalComponent goalComponent = new GoalComponent(getContext());
 
-            TextView textView = goalComponent.findViewById(R.id.goal_name_text);
-            textView.setText(goal.getName());
-
-            ImageView imageView = goalComponent.findViewById(R.id.button_disable_delete);
-            imageView.setOnClickListener(view -> viewModel.removeOrDisableGoal(goal));
+            goalComponent.setGoal(goal);
+            goalComponent.registerGoalDisableOrDeactivationListener(() -> viewModel.removeOrDisableGoal(goal));
 
             binding.goalsList.addView(goalComponent);
         }

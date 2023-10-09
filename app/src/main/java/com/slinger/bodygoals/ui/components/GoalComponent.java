@@ -1,9 +1,12 @@
 package com.slinger.bodygoals.ui.components;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.slinger.bodygoals.R;
@@ -12,68 +15,52 @@ import com.slinger.bodygoals.model.Goal;
 import androidx.annotation.Nullable;
 
 /* TODO: Can be removed if component_goal.xml works. */
-public class GoalComponent extends LinearLayout {
+public class GoalComponent extends RelativeLayout {
 
     private Goal goal;
 
-    private final TextView textView;
+    private TextView textView;
 
-    private final ImageView imageView;
+    private ImageView imageView;
 
     public GoalComponent(Context context) {
 
         super(context);
 
-        textView = new TextView(context);
-        imageView = new ImageView(context);
-
-        configureComponents();
+        configureComponents(context);
     }
 
     public GoalComponent(Context context, @Nullable AttributeSet attrs) {
 
         super(context, attrs);
 
-        textView = new TextView(context, attrs);
-        imageView = new ImageView(context, attrs);
-
-        configureComponents();
+        configureComponents(context);
     }
 
     public GoalComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 
         super(context, attrs, defStyleAttr);
 
-        textView = new TextView(context, attrs, defStyleAttr);
-        imageView = new ImageView(context, attrs, defStyleAttr);
-
-        configureComponents();
+        configureComponents(context);
     }
 
     public GoalComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
 
         super(context, attrs, defStyleAttr, defStyleRes);
 
-        textView = new TextView(context, attrs, defStyleAttr, defStyleRes);
-        imageView = new ImageView(context, attrs, defStyleAttr, defStyleRes);
-
-        configureComponents();
+        configureComponents(context);
     }
 
-    private void configureComponents() {
 
-        textView.setMinWidth(200);
-        textView.setMaxWidth(200);
 
-        textView.setMinHeight(24);
-        textView.setMaxHeight(24);
+    private void configureComponents(Context context) {
 
-        textView.setTextSize(18);
+        View innerView = inflate(context, R.layout.component_goal,  null);
 
-        imageView.setMinimumHeight(24);
-        imageView.setMaxHeight(24);
+        textView = innerView.findViewById(R.id.goal_name_text);
+        imageView = innerView.findViewById(R.id.button_disable_delete);
 
-        imageView.setImageResource(R.drawable.ic_delete);
+        this.addView(innerView);
     }
 
     public void setGoal(Goal goal) {
@@ -83,7 +70,16 @@ public class GoalComponent extends LinearLayout {
         textView.setText(goal.getName());
     }
 
-    public void registerOnClickListener(Runnable runnable) {
-        imageView.setOnClickListener(view -> runnable.run());
+    public void registerGoalDisableOrDeactivationListener(Runnable runnable) {
+
+        imageView.setOnClickListener(view -> {
+
+            runnable.run();
+
+            if(!goal.isActive())
+                textView.setTextColor(Color.GRAY);
+            else
+                textView.setTextColor(Color.BLACK);
+        });
     }
 }

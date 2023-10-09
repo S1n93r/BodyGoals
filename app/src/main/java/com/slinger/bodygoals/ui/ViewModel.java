@@ -175,18 +175,36 @@ public class ViewModel extends AndroidViewModel {
             executor.execute(() -> database.userDao().insertAll(user));
     }
 
-    public void removeOrDisableGoal(Goal goal) {
+    public void disableGoal(Goal goal) {
 
         User user = currentUser.getValue();
 
         if (user == null)
             return;
 
-        if (goal.isActive()) {
-            goal.setActive(false);
-        } else {
-            user.removeGoal(goal);
-            updateUser();
-        }
+        goal.setActive(false);
+        updateUser();
+    }
+
+    public void enableGoal(Goal goal) {
+
+        User user = currentUser.getValue();
+
+        if (user == null)
+            return;
+
+        goal.setActive(true);
+        updateUser();
+    }
+
+    public void deleteGoal(Goal goal) {
+
+        User user = currentUser.getValue();
+
+        if (user == null)
+            return;
+
+        user.removeGoal(goal);
+        updateUser();
     }
 }

@@ -13,6 +13,7 @@ import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.GoalComponent;
 
 import java.util.List;
+import java.util.zip.Inflater;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,8 +54,9 @@ public class Goals extends Fragment {
         binding.buttonToOverview.setOnClickListener(addGoalView ->
                 NavHostFragment.findNavController(Goals.this).navigate(R.id.action_goals_list_fragment_to_OverviewFragment));
 
-        binding.buttonAdd.setOnClickListener(addGoalView ->
-                NavHostFragment.findNavController(Goals.this).navigate(R.id.action_goals_list_fragment_to_AddGoalFragment));
+        binding.buttonAdd.setOnClickListener(addGoalView -> {
+                    NavHostFragment.findNavController(Goals.this).navigate(R.id.action_goals_list_fragment_to_AddGoalFragment);
+                });
     }
 
     @Override
@@ -78,7 +80,9 @@ public class Goals extends Fragment {
             GoalComponent goalComponent = new GoalComponent(getContext());
 
             goalComponent.setGoal(goal);
-            goalComponent.registerGoalDisableOrDeactivationListener(() -> viewModel.removeOrDisableGoal(goal));
+            goalComponent.registerEnableGoalRunner(() -> viewModel.enableGoal(goal));
+            goalComponent.registerDisableGoalRunner(() -> viewModel.disableGoal(goal));
+            goalComponent.registerDeleteGoalRunner(() -> viewModel.deleteGoal(goal));
 
             binding.goalsList.addView(goalComponent);
         }

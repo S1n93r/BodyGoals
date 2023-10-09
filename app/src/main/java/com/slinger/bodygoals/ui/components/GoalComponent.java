@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,7 +20,11 @@ public class GoalComponent extends RelativeLayout {
 
     private TextView textView;
 
-    private ImageView imageView;
+    private ImageView imageViewEnable;
+    private ImageView imageViewDisable;
+    private ImageView imageViewDelete;
+
+    private int originalTextColor;
 
     public GoalComponent(Context context) {
 
@@ -58,7 +61,12 @@ public class GoalComponent extends RelativeLayout {
         View innerView = inflate(context, R.layout.component_goal,  null);
 
         textView = innerView.findViewById(R.id.goal_name_text);
-        imageView = innerView.findViewById(R.id.button_disable_delete);
+
+        originalTextColor = textView.getCurrentTextColor();
+
+        imageViewEnable = innerView.findViewById(R.id.button_enable);
+        imageViewDisable = innerView.findViewById(R.id.button_disable);
+        imageViewDelete = innerView.findViewById(R.id.button_delete);
 
         this.addView(innerView);
     }
@@ -67,19 +75,58 @@ public class GoalComponent extends RelativeLayout {
 
         this.goal = goal;
 
+        updateStatus(this.goal.isActive());
+
         textView.setText(goal.getName());
     }
 
-    public void registerGoalDisableOrDeactivationListener(Runnable runnable) {
+    public void registerDisableGoalRunner(Runnable runnable) {
 
-        imageView.setOnClickListener(view -> {
+        imageViewDisable.setOnClickListener(view -> {
 
             runnable.run();
 
-            if(!goal.isActive())
-                textView.setTextColor(Color.GRAY);
-            else
-                textView.setTextColor(Color.BLACK);
+            updateStatus(goal.isActive());
         });
+    }
+
+    public void registerEnableGoalRunner(Runnable runnable) {
+
+        imageViewEnable.setOnClickListener(view -> {
+
+            runnable.run();
+
+            updateStatus(goal.isActive());
+        });
+    }
+
+    public void registerDeleteGoalRunner(Runnable runnable) {
+
+        imageViewDelete.setOnClickListener(view -> {
+
+            runnable.run();
+
+            updateStatus(goal.isActive());
+        });
+    }
+
+    private void updateStatus(boolean isActive) {
+
+        if(!isActive) {
+
+            textView.setTextColor(Color.GRAY);
+
+            imageViewDelete.setVisibility(VISIBLE);
+            imageViewEnable.setVisibility(VISIBLE);
+            imageViewDisable.setVisibility(GONE);
+
+        } else {
+
+            textView.setTextColor(originalTextColor);
+
+            imageViewDelete.setVisibility(GONE);
+            imageViewEnable.setVisibility(GONE);
+            imageViewDisable.setVisibility(VISIBLE);
+        }
     }
 }

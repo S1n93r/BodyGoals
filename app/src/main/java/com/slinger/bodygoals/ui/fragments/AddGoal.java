@@ -1,9 +1,11 @@
 package com.slinger.bodygoals.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentAddGoalBinding;
@@ -34,12 +36,10 @@ public class AddGoal extends Fragment {
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
+            Bundle savedInstanceState) {
 
         binding = FragmentAddGoalBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {

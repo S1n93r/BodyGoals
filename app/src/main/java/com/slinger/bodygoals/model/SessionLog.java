@@ -66,16 +66,6 @@ public class SessionLog {
         this.loggedSessions = loggedSessions;
     }
 
-    private void transferToSessionList(Map<CalendarWeek, List<Session>> calenderWeekToSessionMap) {
-
-        List<Session> allSessions = new ArrayList<>();
-
-        for (List<Session> sessions : calenderWeekToSessionMap.values())
-            allSessions.addAll(sessions);
-
-        loggedSessions = allSessions;
-    }
-
     public void removeSessionsBelongingToGoal(Goal goal) {
         loggedSessions.removeIf(session -> session.getGoal().getName().equals(goal.getName()));
     }

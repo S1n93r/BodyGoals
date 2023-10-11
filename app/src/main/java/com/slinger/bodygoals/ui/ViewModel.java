@@ -204,6 +204,7 @@ public class ViewModel extends AndroidViewModel {
             return;
 
         user.removeGoal(goal);
+
         updateUser();
     }
 }

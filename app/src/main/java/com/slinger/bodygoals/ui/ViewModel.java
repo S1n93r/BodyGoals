@@ -39,7 +39,7 @@ public class ViewModel extends AndroidViewModel {
 
     private final MutableLiveData<Date> sessionDate = new MutableLiveData<>(Calendar.getInstance().getTime());
 
-    private BodyGoalDatabase database;
+    private final BodyGoalDatabase database;
 
     public ViewModel(@NonNull Application application) {
 
@@ -48,17 +48,10 @@ public class ViewModel extends AndroidViewModel {
         registerLiveDataObserver();
 
         database = Room.databaseBuilder(application, BodyGoalDatabase.class, "body-goals-database").build();
-
-        executor.execute(() -> {
-
-            User user = database.userDao().findByName(123);
-
-            if (user != null)
-                handler.post(() -> currentUser.setValue(user));
-        });
     }
 
     private void registerLiveDataObserver() {
+
         currentUser.observeForever(user -> {
             /* TODO: Null-semantic is not nice */
             if (user != null)
@@ -118,9 +111,6 @@ public class ViewModel extends AndroidViewModel {
         if (currentUser.getValue() == null)
             return;
 
-        if (currentUser.getValue().getSessionLog() == null)
-            return;
-
         for (Session session : sessions)
             currentUser.getValue().getSessionLog().logSession(session);
 
@@ -145,9 +135,6 @@ public class ViewModel extends AndroidViewModel {
         if (user == null)
             return 0;
 
-        if (user.getSessionLog() == null)
-            return 0;
-
         return user.getSessionLog().getGoalProgress(calendarWeek, goal);
     }
 
@@ -168,11 +155,23 @@ public class ViewModel extends AndroidViewModel {
 
         User user = currentUser.getValue();
 
+        /* TODO: There should be a immutable UserDto for ViewClasses to use. */
         currentUser.setValue(null);
         currentUser.setValue(user);
 
         if (database != null)
-            executor.execute(() -> database.userDao().insertAll(user));
+            executor.execute(() -> database.userDao().insertAll(currentUser.getValue()));
+    }
+
+    public  void loadUser() {
+
+        executor.execute(() -> {
+
+            User user = database.userDao().findByName(123);
+
+            if (user != null)
+                handler.post(() -> currentUser.setValue(user));
+        });
     }
 
     public void disableGoal(Goal goal) {

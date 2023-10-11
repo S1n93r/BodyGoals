@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         viewModel = new ViewModelProvider(this).get(ViewModel.class);
+        viewModel.loadUser();
     }
 
     @Override

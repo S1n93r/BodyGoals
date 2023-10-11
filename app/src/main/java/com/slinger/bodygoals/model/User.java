@@ -18,7 +18,7 @@ public class User {
     private int userId = 123;
 
     @Embedded
-    private SessionLog sessionLog;
+    private SessionLog sessionLog = new SessionLog();
 
     @ColumnInfo(name = "goals")
     @TypeConverters({GoalListConverter.class})
@@ -33,7 +33,7 @@ public class User {
     }
 
     public void setSessionLog(SessionLog sessionLog) {
-        this.sessionLog = sessionLog == null ? new SessionLog() : sessionLog;
+        this.sessionLog = sessionLog;
     }
 
     public void setGoals(List<Goal> goals) {
@@ -57,13 +57,6 @@ public class User {
     }
 
     public void removeGoal(Goal goal) {
-
-        removeAllLogsConnectedToGoal(goal);
-
         goals.remove(goal);
-    }
-
-    private void removeAllLogsConnectedToGoal(Goal goal) {
-        sessionLog.removeSessionsBelongingToGoal(goal);
     }
 }

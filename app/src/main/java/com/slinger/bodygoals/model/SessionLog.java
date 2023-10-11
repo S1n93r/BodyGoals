@@ -11,76 +11,42 @@ import androidx.room.ColumnInfo;
 import androidx.room.Ignore;
 import androidx.room.TypeConverters;
 import java8.util.Lists;
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 
 public class SessionLog {
-
-    @Ignore
-    private Map<CalendarWeek, List<Session>> calenderWeekToSessionMap = new HashMap<>();
 
     @ColumnInfo(name = "logged_sessions")
     @TypeConverters({SessionListConverter.class})
     private List<Session> loggedSessions = new ArrayList<>();
 
-    public void loadMapIfAbsent(List<Session> sessions) {
-
-        if (calenderWeekToSessionMap != null)
-            return;
-
-        calenderWeekToSessionMap = new HashMap<>();
-
-        for (Session session : sessions) {
-
-            CalendarWeek calendarWeek = CalendarWeek.from(session.getDate());
-
-            calenderWeekToSessionMap.computeIfAbsent(calendarWeek, cw -> new ArrayList<>());
-
-            calenderWeekToSessionMap.get(calendarWeek).add(session);
-        }
-    }
-
     public void logSession(Session session) {
-
-        if (calenderWeekToSessionMap == null)
-            calenderWeekToSessionMap = new HashMap<>();
-
-        CalendarWeek calendarWeek = CalendarWeek.from(session.getDate());
-
-        calenderWeekToSessionMap.computeIfAbsent(calendarWeek, k -> new ArrayList<>());
-
-        calenderWeekToSessionMap.get(calendarWeek).add(session);
-
-        transferToSessionList(calenderWeekToSessionMap);
+        loggedSessions.add(session);
     }
 
     public Set<CalendarWeek> getLoggedWeeks() {
-        return Collections.unmodifiableSet(calenderWeekToSessionMap.keySet());
+
+        return StreamSupport.stream(loggedSessions)
+                .map(session -> CalendarWeek.from(session.getDate()))
+                .collect(Collectors.toSet());
     }
 
     public List<Session> getSessionsCopy(CalendarWeek calendarWeek) {
 
-        List<Session> sessions = calenderWeekToSessionMap.get(calendarWeek);
-
-        if (sessions == null)
-            return Lists.of();
-
-        return Collections.unmodifiableList(sessions);
+        return StreamSupport.stream(loggedSessions)
+                .filter(session -> CalendarWeek.from(session.getDate()).equals(calendarWeek))
+                .collect(Collectors.toList());
     }
 
     public int getSessionsLogged(CalendarWeek calendarWeek, Goal goal) {
 
-        if (calenderWeekToSessionMap == null)
+        if (loggedSessions.isEmpty())
             return 0;
 
-        List<Session> sessions = calenderWeekToSessionMap.get(calendarWeek);
-
-        if (sessions == null)
-            return 0;
-
-        List<Session> sessionsMatching = new ArrayList<>();
-
-        for (Session session : sessions)
-            if (session.getGoal().getName().equals(goal.getName()))
-                sessionsMatching.add(session);
+        List<Session> sessionsMatching = StreamSupport.stream(loggedSessions)
+                .filter(session -> session.getGoal().equals(goal))
+                .filter(session -> CalendarWeek.from(session.getDate()).equals(calendarWeek))
+                .collect(Collectors.toList());
 
         return sessionsMatching.size();
     }
@@ -98,7 +64,6 @@ public class SessionLog {
 
     public void setLoggedSessions(List<Session> loggedSessions) {
         this.loggedSessions = loggedSessions;
-        loadMapIfAbsent(loggedSessions);
     }
 
     private void transferToSessionList(Map<CalendarWeek, List<Session>> calenderWeekToSessionMap) {
@@ -112,10 +77,6 @@ public class SessionLog {
     }
 
     public void removeSessionsBelongingToGoal(Goal goal) {
-        
         loggedSessions.removeIf(session -> session.getGoal().getName().equals(goal.getName()));
-
-        for (List<Session> sessions : calenderWeekToSessionMap.values())
-            sessions.removeIf(session -> session.getGoal().getName().equals(goal.getName()));
     }
 }

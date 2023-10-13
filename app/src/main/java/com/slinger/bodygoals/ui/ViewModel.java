@@ -207,4 +207,14 @@ public class ViewModel extends AndroidViewModel {
 
         updateUser();
     }
+
+    public void removeLogEntry(Session session) {
+
+        if(currentUser.getValue() == null)
+            return;
+
+        currentUser.getValue().getSessionLog().removeLogSession(session);
+
+        updateUser();
+    }
 }

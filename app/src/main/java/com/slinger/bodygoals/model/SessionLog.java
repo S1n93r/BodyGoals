@@ -1,16 +1,12 @@
 package com.slinger.bodygoals.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Ignore;
 import androidx.room.TypeConverters;
-import java8.util.Lists;
+
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
@@ -68,5 +64,9 @@ public class SessionLog {
 
     public void removeSessionsBelongingToGoal(Goal goal) {
         loggedSessions.removeIf(session -> session.getGoal().getName().equals(goal.getName()));
+    }
+
+    public void removeLogSession(Session session) {
+        loggedSessions.remove(session);
     }
 }

@@ -60,12 +60,12 @@ public class GoalComponent extends RelativeLayout {
 
         View innerView = inflate(context, R.layout.component_goal,  null);
 
-        textView = innerView.findViewById(R.id.goal_name_text);
+        textView = innerView.findViewById(R.id.log_entry_text);
 
         originalTextColor = textView.getCurrentTextColor();
 
         imageViewEnable = innerView.findViewById(R.id.button_enable);
-        imageViewDisable = innerView.findViewById(R.id.button_disable);
+        imageViewDisable = innerView.findViewById(R.id.delete_log_entry_button);
         imageViewDelete = innerView.findViewById(R.id.button_delete);
 
         this.addView(innerView);

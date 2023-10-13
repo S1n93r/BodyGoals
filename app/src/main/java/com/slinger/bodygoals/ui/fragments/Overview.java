@@ -109,7 +109,7 @@ public class Overview extends Fragment {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View labeledProgressBar = inflater.inflate(R.layout.component_labeled_progress, null);
 
-            TextView goalNameText = labeledProgressBar.findViewById(R.id.goal_name_text);
+            TextView goalNameText = labeledProgressBar.findViewById(R.id.log_entry_text);
 
             goalNameText.setText(goal.getName());
 
@@ -136,7 +136,7 @@ public class Overview extends Fragment {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View labeledProgressBar = inflater.inflate(R.layout.component_labeled_progress, null);
 
-            TextView goalNameText = labeledProgressBar.findViewById(R.id.goal_name_text);
+            TextView goalNameText = labeledProgressBar.findViewById(R.id.log_entry_text);
             ProgressBar goalProgressBar = labeledProgressBar.findViewById(R.id.goal_progress_bar);
 
             int progress = viewModel.getGoalProgress(calendarWeek, goal);

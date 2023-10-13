@@ -4,15 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentWeeklyLogBinding;
 import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.ui.ViewModel;
+import com.slinger.bodygoals.ui.components.LogEntryComponent;
 
-import java.text.DateFormat;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -92,16 +91,15 @@ public class WeeklyLog extends Fragment {
 
         for (Session session : sessions) {
 
-            DateFormat dateFormat = DateFormat.getInstance();
-            String dateString = dateFormat.format(session.getDate());
+            LogEntryComponent logEntryComponent  = new LogEntryComponent(getContext());
 
-            String weeklyLogEntry = String.format(getResources().getString(R.string.weekly_log_entry),
-                    dateString, session.getGoal().getName());
+            logEntryComponent.setSession(session);
+            logEntryComponent.registerDisableGoalRunner(() -> {
+                viewModel.removeLogEntry(session);
+                updateWeeklyLogList(calendarWeek);
+            });
 
-            TextView textView = new TextView(getContext());
-            textView.setText(weeklyLogEntry);
-
-            binding.weeklySessionsList.addView(textView);
+            binding.weeklySessionsList.addView(logEntryComponent);
         }
     }
 }

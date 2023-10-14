@@ -129,6 +129,7 @@ public class Overview extends Fragment {
         int maxOverallProgress = 0;
         int currentOverallProgress = 0;
 
+        /* TODO: Overview should be based on logged sessions, not goals. */
         /* Update sub-progress */
         for (Goal goal : goals) {
 

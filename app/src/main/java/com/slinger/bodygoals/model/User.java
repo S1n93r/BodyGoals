@@ -58,6 +58,5 @@ public class User {
 
     public void removeGoal(Goal goal) {
         goals.remove(goal);
-        sessionLog.removeSessionsBelongingToGoal(goal);
     }
 }

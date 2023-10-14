@@ -58,7 +58,7 @@ public class LogEntryComponent extends RelativeLayout {
 
         View innerView = inflate(context, R.layout.component_log_entry,  null);
 
-        textView = innerView.findViewById(R.id.log_entry_text);
+        textView = innerView.findViewById(R.id.overview_entry_text);
 
         originalTextColor = textView.getCurrentTextColor();
 

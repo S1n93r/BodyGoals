@@ -8,10 +8,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.model.Goal;
-
-import androidx.annotation.Nullable;
 
 /* TODO: Can be removed if component_goal.xml works. */
 public class GoalComponent extends RelativeLayout {
@@ -60,7 +60,7 @@ public class GoalComponent extends RelativeLayout {
 
         View innerView = inflate(context, R.layout.component_goal,  null);
 
-        textView = innerView.findViewById(R.id.log_entry_text);
+        textView = innerView.findViewById(R.id.overview_entry_text);
 
         originalTextColor = textView.getCurrentTextColor();
 

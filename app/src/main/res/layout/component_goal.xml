@@ -7,7 +7,7 @@
     tools:context=".ui.fragments.Overview">
 
     <TextView
-        android:id="@+id/log_entry_text"
+        android:id="@+id/overview_entry_text"
         android:layout_width="200dp"
         android:layout_height="32dp"
         android:text="@string/overall"

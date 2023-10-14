@@ -1,27 +1,25 @@
 package com.slinger.bodygoals.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import com.slinger.bodygoals.R;
-import com.slinger.bodygoals.databinding.FragmentOverviewBinding;
-import com.slinger.bodygoals.model.CalendarWeek;
-import com.slinger.bodygoals.model.Goal;
-import com.slinger.bodygoals.ui.ViewModel;
-
-import java.util.Calendar;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+
+import com.slinger.bodygoals.R;
+import com.slinger.bodygoals.databinding.FragmentOverviewBinding;
+import com.slinger.bodygoals.model.CalendarWeek;
+import com.slinger.bodygoals.model.Goal;
+import com.slinger.bodygoals.ui.ViewModel;
+import com.slinger.bodygoals.ui.components.OverviewEntryComponent;
+
+import java.util.Calendar;
+import java.util.List;
 
 public class Overview extends Fragment {
 
@@ -110,26 +108,19 @@ public class Overview extends Fragment {
         int maxOverallProgress = 0;
         int currentOverallProgress = 0;
 
-        /* TODO: Overview should be based on logged sessions, not goals. */
-        /* Update sub-progress */
         for (Goal goal : goals) {
 
-            /* TODO: This should be solved via dedicated class. */
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View labeledProgressBar = inflater.inflate(R.layout.component_labeled_progress, null);
-
-            TextView goalNameText = labeledProgressBar.findViewById(R.id.log_entry_text);
-            ProgressBar goalProgressBar = labeledProgressBar.findViewById(R.id.goal_progress_bar);
+            OverviewEntryComponent overviewEntryComponent = new OverviewEntryComponent(getContext());
 
             int progress = viewModel.getGoalProgress(calendarWeek, goal);
 
-            goalProgressBar.setProgress(progress);
-            goalNameText.setText(goal.getName());
+            overviewEntryComponent.setProgress(progress);
+            overviewEntryComponent.setText(goal.getName());
 
             maxOverallProgress += goal.getFrequency();
             currentOverallProgress += Math.min(goal.getFrequency(), viewModel.getSessionsLogged(calendarWeek, goal));
 
-            binding.goalProgressBarsList.addView(labeledProgressBar);
+            binding.goalProgressBarsList.addView(overviewEntryComponent);
         }
 
         int overallProgress = (int) Math.round((double) currentOverallProgress / (double) maxOverallProgress * 100);

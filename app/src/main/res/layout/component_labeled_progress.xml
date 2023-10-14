@@ -7,7 +7,7 @@
     tools:context=".ui.fragments.Overview">
 
     <TextView
-        android:id="@+id/log_entry_text"
+        android:id="@+id/overview_entry_text"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/overall"
@@ -15,7 +15,7 @@
         android:textAlignment="viewStart" />
 
     <ProgressBar
-        android:id="@+id/goal_progress_bar"
+        android:id="@+id/overview_entry_progress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="200dp"
         android:layout_height="match_parent" />

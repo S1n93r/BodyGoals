@@ -1,23 +1,28 @@
 package com.slinger.bodygoals.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-
-import com.slinger.bodygoals.R;
-import com.slinger.bodygoals.databinding.FragmentAddGoalBinding;
-import com.slinger.bodygoals.model.Goal;
-import com.slinger.bodygoals.model.MuscleGroup;
-import com.slinger.bodygoals.ui.ViewModel;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+
+import com.slinger.bodygoals.R;
+import com.slinger.bodygoals.databinding.FragmentAddGoalBinding;
+import com.slinger.bodygoals.model.Goal;
+import com.slinger.bodygoals.model.MuscleGroup;
+import com.slinger.bodygoals.ui.ViewModel;
+import com.slinger.bodygoals.ui.exceptions.NoFrequencyException;
+import com.slinger.bodygoals.ui.exceptions.NoGoalNameException;
+import com.slinger.bodygoals.ui.exceptions.NoMuscleGroupException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddGoal extends Fragment {
 
@@ -48,8 +53,21 @@ public class AddGoal extends Fragment {
         binding.buttonToOverview.setOnClickListener(addGoalView -> navigateToOverview());
 
         binding.buttonSave.setOnClickListener(addGoalView -> {
-            viewModel.addGoal(collectGoalFromUI());
-            navigateToOverview();
+
+            try {
+
+                viewModel.addGoal(collectGoalFromUI());
+                navigateToOverview();
+
+            }catch (IllegalStateException e){
+
+                if(e instanceof NoFrequencyException)
+                    Toast.makeText(getContext(), R.string.toast_no_frequency, Toast.LENGTH_SHORT).show();
+                else if(e instanceof NoGoalNameException)
+                    Toast.makeText(getContext(), R.string.toast_no_goal_name, Toast.LENGTH_SHORT).show();
+                else if(e instanceof NoMuscleGroupException)
+                    Toast.makeText(getContext(), R.string.toast_no_muscle_groups, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -63,21 +81,19 @@ public class AddGoal extends Fragment {
         binding = null;
     }
 
-    private Goal collectGoalFromUI() {
+    private Goal collectGoalFromUI() throws NoFrequencyException {
 
         String frequencyString = binding.frequencyTextView.getText().toString();
 
-        /* TODO: Turn into user feedback */
-        if (frequencyString.isEmpty())
-            throw new IllegalStateException("Frequency can't be empty.");
-
-        int frequency = Integer.parseInt(frequencyString);
-
         String goalName = binding.goalNameText.getText().toString();
 
-        /* TODO: Turn into user feedback */
         if (goalName.isEmpty())
-            throw new IllegalStateException("Goal name can't be empty.");
+            throw new NoGoalNameException();
+        
+        if (frequencyString.isEmpty())
+            throw new NoFrequencyException();
+
+        int frequency = Integer.parseInt(frequencyString);
 
         boolean absChecked = binding.cbAbs.isChecked();
         boolean bicepsChecked = binding.cbBiceps.isChecked();
@@ -92,35 +108,42 @@ public class AddGoal extends Fragment {
 
         Goal goal = Goal.of(goalName, frequency);
 
+        List<MuscleGroup> selectedMuscleGroups = new ArrayList<>();
+        
         if (absChecked)
-            goal.addMuscleGroup(new MuscleGroup("Abs"));
+            selectedMuscleGroups.add(new MuscleGroup("Abs"));
 
         if (bicepsChecked)
-            goal.addMuscleGroup(new MuscleGroup("Biceps"));
+            selectedMuscleGroups.add(new MuscleGroup("Biceps"));
 
         if (calvesChecked)
-            goal.addMuscleGroup(new MuscleGroup("Calves"));
+            selectedMuscleGroups.add(new MuscleGroup("Calves"));
 
         if (chestChecked)
-            goal.addMuscleGroup(new MuscleGroup("Chest"));
+            selectedMuscleGroups.add(new MuscleGroup("Chest"));
 
         if (forearmsChecked)
-            goal.addMuscleGroup(new MuscleGroup("Forearms"));
+            selectedMuscleGroups.add(new MuscleGroup("Forearms"));
 
         if (harmStringsChecked)
-            goal.addMuscleGroup(new MuscleGroup("Harm Strings"));
+            selectedMuscleGroups.add(new MuscleGroup("Harm Strings"));
 
         if (latsChecked)
-            goal.addMuscleGroup(new MuscleGroup("Lats"));
+            selectedMuscleGroups.add(new MuscleGroup("Lats"));
 
         if (quadsChecked)
-            goal.addMuscleGroup(new MuscleGroup("Quads"));
+            selectedMuscleGroups.add(new MuscleGroup("Quads"));
 
         if (shouldersChecked)
-            goal.addMuscleGroup(new MuscleGroup("Shoulders"));
+            selectedMuscleGroups.add(new MuscleGroup("Shoulders"));
 
         if (tricepsChecked)
-            goal.addMuscleGroup(new MuscleGroup("Abs"));
+            selectedMuscleGroups.add(new MuscleGroup("Abs"));
+
+        if(selectedMuscleGroups.isEmpty())
+            throw new NoMuscleGroupException();
+
+        selectedMuscleGroups.forEach(goal::addMuscleGroup);
 
         return goal;
     }

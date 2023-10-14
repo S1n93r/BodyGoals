@@ -75,7 +75,6 @@ public class Goals extends Fragment {
 
         for (Goal goal : goals) {
 
-            /* TODO: Gray out goal, when deactivated. */
             GoalComponent goalComponent = new GoalComponent(getContext());
 
             goalComponent.setGoal(goal);

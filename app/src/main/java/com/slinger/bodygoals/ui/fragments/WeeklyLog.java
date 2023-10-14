@@ -5,6 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentWeeklyLogBinding;
 import com.slinger.bodygoals.model.CalendarWeek;
@@ -13,12 +19,6 @@ import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.LogEntryComponent;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 
 public class WeeklyLog extends Fragment {
 
@@ -72,6 +72,7 @@ public class WeeklyLog extends Fragment {
 
     /* TODO: Component and logic for calendar week switching exists twice. Build custom component. */
     private void updateCalendarWeekLabel(CalendarWeek calendarWeek) {
+
         String calendarWeekString = String.format(getResources().getString(R.string.calendar_week_place_holder),
                 calendarWeek.getWeek());
 
@@ -91,7 +92,7 @@ public class WeeklyLog extends Fragment {
 
         for (Session session : sessions) {
 
-            LogEntryComponent logEntryComponent  = new LogEntryComponent(getContext());
+            LogEntryComponent logEntryComponent = new LogEntryComponent(getContext());
 
             logEntryComponent.setSession(session);
             logEntryComponent.registerDisableGoalRunner(() -> {

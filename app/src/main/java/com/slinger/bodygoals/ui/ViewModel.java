@@ -4,6 +4,12 @@ import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
+
 import com.slinger.bodygoals.model.BodyGoalDatabase;
 import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Goal;
@@ -17,11 +23,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.room.Room;
 import java8.util.Lists;
 
 public class ViewModel extends AndroidViewModel {
@@ -102,7 +103,6 @@ public class ViewModel extends AndroidViewModel {
         else
             throw new IllegalStateException("User should not be 'null', as it was initialized with test user.");
 
-        /* TODO: User Immutable User */
         updateUser();
     }
 
@@ -114,7 +114,6 @@ public class ViewModel extends AndroidViewModel {
         for (Session session : sessions)
             currentUser.getValue().getSessionLog().logSession(session);
 
-        /* TODO: User Immutable User */
         updateUser();
     }
 

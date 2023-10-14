@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 
 import com.slinger.bodygoals.R;
 
-/* TODO: Can be removed if component_goal.xml works. */
 public class OverviewEntryComponent extends RelativeLayout {
 
     private TextView textView;

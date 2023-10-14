@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.model.Goal;
 
-/* TODO: Can be removed if component_goal.xml works. */
 public class GoalComponent extends RelativeLayout {
 
     private Goal goal;

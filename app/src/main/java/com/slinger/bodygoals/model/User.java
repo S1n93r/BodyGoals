@@ -1,16 +1,15 @@
 package com.slinger.bodygoals.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-/* TODO: User Immutable User */
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Entity
 public class User {
 

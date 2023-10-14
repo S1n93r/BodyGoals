@@ -98,25 +98,6 @@ public class Overview extends Fragment {
         binding.calendarWeekYearText.setText(calendarWeekYearString);
     }
 
-    /* TODO: Remove this method */
-    private void updateGoalProgressBars(List<Goal> goals) {
-
-        binding.goalProgressBarsList.removeAllViews();
-
-        for (Goal goal : goals) {
-
-            /* TODO: This should be solved via dedicated class. */
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View labeledProgressBar = inflater.inflate(R.layout.component_labeled_progress, null);
-
-            TextView goalNameText = labeledProgressBar.findViewById(R.id.log_entry_text);
-
-            goalNameText.setText(goal.getName());
-
-            binding.goalProgressBarsList.addView(labeledProgressBar);
-        }
-    }
-
     private void updateGoalProgressBars(CalendarWeek calendarWeek) {
 
         List<Goal> goals = viewModel.getUserGoals().getValue();

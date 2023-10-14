@@ -75,7 +75,6 @@ public class Goals extends Fragment {
 
         for (Goal goal : goals) {
 
-            /* TODO: Switch to bin-icon, when goal already deactivated. */
             /* TODO: Gray out goal, when deactivated. */
             GoalComponent goalComponent = new GoalComponent(getContext());
 

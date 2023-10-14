@@ -53,8 +53,13 @@ public class WeeklyLog extends Fragment {
         binding.buttonToOverview.setOnClickListener(overviewView -> NavHostFragment.findNavController(WeeklyLog.this)
                 .navigate(R.id.action_WeeklyLogFragment_to_OverviewFragment));
 
-        binding.buttonPreviousWeek.setOnClickListener(weeklyLogView -> viewModel.selectPreviousWeek());
-        binding.buttonNextWeek.setOnClickListener(weeklyLogView -> viewModel.selectNextWeek());
+        /* Switch calendar week component */
+        binding.switchCalendarWeekComponent.setLifecycleOwner(this);
+
+        binding.switchCalendarWeekComponent.setCalendarWeekLiveData(viewModel.getSelectedCalendarWeek());
+        
+        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousWeek());
+        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextWeek());
     }
 
     @Override
@@ -64,24 +69,7 @@ public class WeeklyLog extends Fragment {
     }
 
     private void registerLiveDataObserver() {
-        viewModel.getSelectedCalendarWeek().observe(this, calendarWeek -> {
-            updateCalendarWeekLabel(calendarWeek);
-            updateWeeklyLogList(calendarWeek);
-        });
-    }
-
-    /* TODO: Component and logic for calendar week switching exists twice. Build custom component. */
-    private void updateCalendarWeekLabel(CalendarWeek calendarWeek) {
-
-        String calendarWeekString = String.format(getResources().getString(R.string.calendar_week_place_holder),
-                calendarWeek.getWeek());
-
-        binding.calendarWeekText.setText(calendarWeekString);
-
-        String calendarWeekYearString = String.format(getResources().getString(R.string.calendar_week_year_place_holder),
-                calendarWeek.getYear());
-
-        binding.calendarWeekYearText.setText(calendarWeekYearString);
+        viewModel.getSelectedCalendarWeek().observe(this, this::updateWeeklyLogList);
     }
 
     private void updateWeeklyLogList(CalendarWeek calendarWeek) {

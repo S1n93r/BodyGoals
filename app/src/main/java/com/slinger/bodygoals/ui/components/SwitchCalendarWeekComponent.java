@@ -3,7 +3,7 @@ package com.slinger.bodygoals.ui.components;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,46 +16,38 @@ import com.slinger.bodygoals.model.CalendarWeek;
 
 public class SwitchCalendarWeekComponent extends ConstraintLayout {
 
-    private final LifecycleOwner lifecycleOwner;
+    private LifecycleOwner lifecycleOwner;
 
     private TextView weekText;
     private TextView yearText;
 
-    private ImageView toPreviousWeekButton;
-    private ImageView toNextWeekButton;
+    private Button toPreviousWeekButton;
+    private Button toNextWeekButton;
 
-    public SwitchCalendarWeekComponent(Context context, LifecycleOwner lifecycleOwner) {
+    public SwitchCalendarWeekComponent(Context context) {
 
         super(context);
 
-        this.lifecycleOwner = lifecycleOwner;
-
         configureComponents(context);
     }
 
-    public SwitchCalendarWeekComponent(Context context, @Nullable AttributeSet attrs, LifecycleOwner lifecycleOwner) {
+    public SwitchCalendarWeekComponent(Context context, @Nullable AttributeSet attrs) {
 
         super(context, attrs);
 
-        this.lifecycleOwner = lifecycleOwner;
-
         configureComponents(context);
     }
 
-    public SwitchCalendarWeekComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr, LifecycleOwner lifecycleOwner) {
+    public SwitchCalendarWeekComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 
         super(context, attrs, defStyleAttr);
 
-        this.lifecycleOwner = lifecycleOwner;
-
         configureComponents(context);
     }
 
-    public SwitchCalendarWeekComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes, LifecycleOwner lifecycleOwner) {
+    public SwitchCalendarWeekComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
 
         super(context, attrs, defStyleAttr, defStyleRes);
-
-        this.lifecycleOwner = lifecycleOwner;
 
         configureComponents(context);
     }
@@ -73,6 +65,10 @@ public class SwitchCalendarWeekComponent extends ConstraintLayout {
         this.addView(innerView);
     }
 
+    public void setLifecycleOwner(LifecycleOwner lifecycleOwner) {
+        this.lifecycleOwner = lifecycleOwner;
+    }
+
     private void updateTexts(CalendarWeek calendarWeek) {
 
         String calendarWeekString = String.format(getResources().getString(R.string.calendar_week_place_holder),
@@ -86,7 +82,11 @@ public class SwitchCalendarWeekComponent extends ConstraintLayout {
         yearText.setText(calendarWeekYearString);
     }
 
-    private void setCalendarWeekLiveData(LiveData<CalendarWeek> calendarWeekLiveData) {
+    public void setCalendarWeekLiveData(LiveData<CalendarWeek> calendarWeekLiveData) {
+
+        if (lifecycleOwner == null)
+            throw new IllegalStateException("Set LifeCycleOwner first!");
+
         calendarWeekLiveData.observe(lifecycleOwner, this::updateTexts);
     }
 

@@ -55,8 +55,13 @@ public class Overview extends Fragment {
         binding.buttonToAddSession.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)
                 .navigate(R.id.action_OverviewFragment_to_AddSessionFragment));
 
-        binding.buttonPreviousWeek.setOnClickListener(weeklyLogView -> viewModel.selectPreviousWeek());
-        binding.buttonNextWeek.setOnClickListener(weeklyLogView -> viewModel.selectNextWeek());
+        /* Switch calendar week component */
+        binding.switchCalendarWeekComponent.setLifecycleOwner(this);
+
+        binding.switchCalendarWeekComponent.setCalendarWeekLiveData(viewModel.getSelectedCalendarWeek());
+
+        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousWeek());
+        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextWeek());
     }
 
     @Override
@@ -77,23 +82,7 @@ public class Overview extends Fragment {
             updateGoalProgressBars(calendarWeek);
         });
 
-        viewModel.getSelectedCalendarWeek().observe(this, calendarWeek -> {
-            updateCalendarWeekLabel(calendarWeek);
-            updateGoalProgressBars(calendarWeek);
-        });
-    }
-
-    /* TODO: Component and logic for calendar week switching exists twice. Build custom component. */
-    private void updateCalendarWeekLabel(CalendarWeek calendarWeek) {
-        String calendarWeekString = String.format(getResources().getString(R.string.calendar_week_place_holder),
-                calendarWeek.getWeek());
-
-        binding.calendarWeekText.setText(calendarWeekString);
-
-        String calendarWeekYearString = String.format(getResources().getString(R.string.calendar_week_year_place_holder),
-                calendarWeek.getYear());
-
-        binding.calendarWeekYearText.setText(calendarWeekYearString);
+        viewModel.getSelectedCalendarWeek().observe(this, this::updateGoalProgressBars);
     }
 
     private void updateGoalProgressBars(CalendarWeek calendarWeek) {

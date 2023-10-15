@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval" >
-    <solid android:color="#673AB7" />
-    <stroke android:width="4dp" android:color="#411E80" />
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#ff8080" />
+    <stroke
+        android:width="4dp"
+        android:color="#804040" />
 </shape>
+
+    <!-- Green: #80ffa6 and #408053 (stroke) -->
+    <!-- Yellow: #fffb80 and #807d40 (stroke) -->
+    <!-- Red: #ff8080 and #804040 (stroke) -->

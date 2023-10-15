@@ -21,10 +21,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import java8.util.Lists;
+import java8.util.Sets;
 
 public class ViewModel extends AndroidViewModel {
 
@@ -126,6 +128,16 @@ public class ViewModel extends AndroidViewModel {
             return Lists.of();
 
         return user.getSessionLog().getSessionsCopy(calendarWeek);
+    }
+
+    public Set<Goal> getSessionGoals(CalendarWeek calendarWeek) {
+
+        User user = currentUser.getValue();
+
+        if (user == null)
+            return Sets.of();
+
+        return user.getSessionLog().getSessionGoals(calendarWeek);
     }
 
     public int getGoalProgress(CalendarWeek calendarWeek, Goal goal) {

@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_OverviewFragment_to_goals_list_fragment"
             app:destination="@id/goals_list_fragment" />
+        <action
+            android:id="@+id/action_OverviewFragment_to_CoverageFragment"
+            app:destination="@id/CoverageFragment" />
     </fragment>
     <fragment
         android:id="@+id/WeeklyLogFragment"
@@ -49,6 +52,15 @@
         <action
             android:id="@+id/action_AddSessionFragment_to_TimePickerFragment"
             app:destination="@id/TimePickerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/CoverageFragment"
+        android:name="com.slinger.bodygoals.ui.fragments.CoverageFragment"
+        android:label="@string/title_coverage"
+        tools:layout="@layout/fragment_weekly_log">
+        <action
+            android:id="@+id/action_CoverageFragment_to_OverviewFragment"
+            app:destination="@id/OverviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/TimePickerFragment"

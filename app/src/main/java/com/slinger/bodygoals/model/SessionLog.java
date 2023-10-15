@@ -1,11 +1,11 @@
 package com.slinger.bodygoals.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.TypeConverters;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import androidx.room.ColumnInfo;
-import androidx.room.TypeConverters;
 
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
@@ -34,6 +34,15 @@ public class SessionLog {
                 .collect(Collectors.toList());
     }
 
+    public Set<Goal> getSessionGoals(CalendarWeek calendarWeek) {
+
+        /* FIXME: Sorting is not working. */
+        return StreamSupport.stream(getSessionsCopy(calendarWeek))
+                .map(session -> session.getGoal())
+                .sorted()
+                .collect(Collectors.toSet());
+    }
+
     public int getSessionsLogged(CalendarWeek calendarWeek, Goal goal) {
 
         if (loggedSessions.isEmpty())
@@ -60,10 +69,6 @@ public class SessionLog {
 
     public void setLoggedSessions(List<Session> loggedSessions) {
         this.loggedSessions = loggedSessions;
-    }
-
-    public void removeSessionsBelongingToGoal(Goal goal) {
-        loggedSessions.removeIf(session -> session.getGoal().getName().equals(goal.getName()));
     }
 
     public void removeLogSession(Session session) {

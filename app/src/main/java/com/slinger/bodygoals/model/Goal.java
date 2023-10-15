@@ -3,6 +3,7 @@ package com.slinger.bodygoals.model;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -63,5 +64,9 @@ public class Goal implements Comparable<Goal> {
     @Override
     public int compareTo(Goal o) {
         return name.toLowerCase().compareTo(o.name.toLowerCase());
+    }
+
+    public List<MuscleGroup> getMuscleGroupsCopy() {
+        return Collections.unmodifiableList(muscleGroups);
     }
 }

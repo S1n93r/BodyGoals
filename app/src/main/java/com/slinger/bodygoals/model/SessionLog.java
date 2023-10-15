@@ -77,16 +77,36 @@ public class SessionLog {
         loggedSessions.remove(session);
     }
 
+    /* TODO: Dedicated class instead of map, otherwise every place has to null-check. */
     public Map<MuscleGroup, Progress> progressPerMuscleGroup(CalendarWeek calendarWeek) {
 
-        /* TODO: Finalize implementation */
         List<Session> sessions = getSessionsCopy(calendarWeek);
 
         Map<MuscleGroup, Progress> progressPerMuscleGroup = new HashMap<>();
 
-        sessions.forEach(session -> {
+        int maxFrequency = 0;
 
-        });
+        for (Session session : sessions) {
+
+            int frequency = session.getGoal().getFrequency();
+
+            if (frequency > maxFrequency)
+                maxFrequency = frequency;
+        }
+
+        for (MuscleGroup value : MuscleGroup.values())
+            progressPerMuscleGroup.put(value, Progress.of(maxFrequency, 0));
+
+        sessions.forEach(session ->
+                session.getGoal().getMuscleGroupsCopy().forEach(muscleGroup -> {
+
+                    Progress progress = progressPerMuscleGroup.get(muscleGroup);
+
+                    if (progress == null)
+                        throw new IllegalStateException("Progress should not be null here. Check.");
+
+                    progress.increaseCurrent();
+                }));
 
         return progressPerMuscleGroup;
     }

@@ -1,10 +1,11 @@
 package com.slinger.bodygoals.model;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import java.util.Calendar;
-
-import static org.junit.Assert.assertEquals;
+import java.util.Map;
 
 public class SessionLogTest {
 
@@ -80,5 +81,68 @@ public class SessionLogTest {
         assertEquals(67, sessionLog.getGoalProgress(calendarWeek, push));
         assertEquals(100, sessionLog.getGoalProgress(calendarWeek, pull));
         assertEquals(50, sessionLog.getGoalProgress(calendarWeek, legs));
+    }
+
+    @Test
+    public void coverageCorrectlyRepresentsAddedGoalsAndSessions() {
+
+        /* Given */
+        SessionLog sut = new SessionLog();
+
+        Calendar calendar = Calendar.getInstance();
+
+        CalendarWeek calendarWeek = CalendarWeek.from(calendar.getTime());
+
+        Goal push = Goal.of("Push", 3);
+        push.addMuscleGroup(MuscleGroup.CHEST);
+        push.addMuscleGroup(MuscleGroup.TRICEPS);
+
+        Goal pull = Goal.of("Pull", 2);
+        pull.addMuscleGroup(MuscleGroup.LATS);
+        pull.addMuscleGroup(MuscleGroup.BICEPS);
+
+        Goal legs = Goal.of("Legs", 2);
+        legs.addMuscleGroup(MuscleGroup.QUADS);
+        legs.addMuscleGroup(MuscleGroup.HARM_STRINGS);
+        legs.addMuscleGroup(MuscleGroup.CALVES);
+
+        sut.logSession(new Session(pull, calendar.getTime()));
+        sut.logSession(new Session(push, calendar.getTime()));
+        sut.logSession(new Session(pull, calendar.getTime()));
+        sut.logSession(new Session(legs, calendar.getTime()));
+        sut.logSession(new Session(push, calendar.getTime()));
+        sut.logSession(new Session(pull, calendar.getTime()));
+
+        /* When */
+        Map<MuscleGroup, Progress> progressPerMuscleGroup = sut.progressPerMuscleGroup(calendarWeek);
+
+        /* Then */
+        assertEquals(3, progressPerMuscleGroup.get(MuscleGroup.CHEST).getMax());
+        assertEquals(2, progressPerMuscleGroup.get(MuscleGroup.CHEST).getCurrent());
+        assertEquals(67, progressPerMuscleGroup.get(MuscleGroup.CHEST).getCurrentPercent());
+
+        assertEquals(3, progressPerMuscleGroup.get(MuscleGroup.TRICEPS).getMax());
+        assertEquals(2, progressPerMuscleGroup.get(MuscleGroup.TRICEPS).getCurrent());
+        assertEquals(67, progressPerMuscleGroup.get(MuscleGroup.TRICEPS).getCurrentPercent());
+
+        assertEquals(3, progressPerMuscleGroup.get(MuscleGroup.LATS).getMax());
+        assertEquals(3, progressPerMuscleGroup.get(MuscleGroup.LATS).getCurrent());
+        assertEquals(100, progressPerMuscleGroup.get(MuscleGroup.LATS).getCurrentPercent());
+
+        assertEquals(3, progressPerMuscleGroup.get(MuscleGroup.BICEPS).getMax());
+        assertEquals(3, progressPerMuscleGroup.get(MuscleGroup.BICEPS).getCurrent());
+        assertEquals(100, progressPerMuscleGroup.get(MuscleGroup.BICEPS).getCurrentPercent());
+
+        assertEquals(3, progressPerMuscleGroup.get(MuscleGroup.QUADS).getMax());
+        assertEquals(1, progressPerMuscleGroup.get(MuscleGroup.QUADS).getCurrent());
+        assertEquals(33, progressPerMuscleGroup.get(MuscleGroup.QUADS).getCurrentPercent());
+
+        assertEquals(3, progressPerMuscleGroup.get(MuscleGroup.HARM_STRINGS).getMax());
+        assertEquals(1, progressPerMuscleGroup.get(MuscleGroup.HARM_STRINGS).getCurrent());
+        assertEquals(33, progressPerMuscleGroup.get(MuscleGroup.HARM_STRINGS).getCurrentPercent());
+
+        assertEquals(3, progressPerMuscleGroup.get(MuscleGroup.CALVES).getMax());
+        assertEquals(1, progressPerMuscleGroup.get(MuscleGroup.CALVES).getCurrent());
+        assertEquals(33, progressPerMuscleGroup.get(MuscleGroup.CALVES).getCurrentPercent());
     }
 }

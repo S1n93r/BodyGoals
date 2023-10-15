@@ -3,7 +3,7 @@ package com.slinger.bodygoals.model;
 public class Progress {
 
     private final int max;
-    private final int current;
+    private int current;
 
     private Progress(int max, int current) {
         this.max = max;
@@ -20,5 +20,20 @@ public class Progress {
 
     public int getCurrent() {
         return current;
+    }
+
+    public int getCurrentPercent() {
+
+        double percent = Math.round((double) current / (double) max * 100.0);
+
+        return (int) percent;
+    }
+
+    public void increaseCurrent() {
+
+        if (current + 1 > max)
+            throw new IllegalStateException("Current should not be bigger then max. Check usage.");
+
+        current++;
     }
 }

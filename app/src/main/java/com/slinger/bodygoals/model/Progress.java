@@ -36,4 +36,15 @@ public class Progress {
 
         current++;
     }
+
+    public ProgressStatus getProgressStatus() {
+
+        if (current == 0)
+            return ProgressStatus.EMPTY;
+
+        if (current == max)
+            return ProgressStatus.DONE;
+
+        return ProgressStatus.IN_PROGRESS;
+    }
 }

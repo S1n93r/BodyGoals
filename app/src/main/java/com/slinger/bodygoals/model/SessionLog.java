@@ -78,6 +78,7 @@ public class SessionLog {
     }
 
     /* TODO: Dedicated class instead of map, otherwise every place has to null-check. */
+    /* FIXME: Muscle group progress is applied to wrong groups. Check here and in goals. */
     public Map<MuscleGroup, Progress> progressPerMuscleGroup(CalendarWeek calendarWeek) {
 
         List<Session> sessions = getSessionsCopy(calendarWeek);

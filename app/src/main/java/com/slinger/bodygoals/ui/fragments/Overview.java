@@ -15,11 +15,17 @@ import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentOverviewBinding;
 import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Goal;
+import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.OverviewEntryComponent;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 
 public class Overview extends Fragment {
 
@@ -87,10 +93,18 @@ public class Overview extends Fragment {
 
     private void updateGoalProgressBars(CalendarWeek calendarWeek) {
 
-        List<Goal> goals = viewModel.getUserGoals().getValue();
+        List<Goal> goalsCopy = viewModel.getUserGoals().getValue();
 
-        if (goals == null)
-            return;
+        if (goalsCopy == null)
+            throw new IllegalStateException("Live data for goals should never be null.");
+
+        Set<Goal> goals = new HashSet<>(goalsCopy);
+
+        /* FIXME: Sorting is not working. */
+        goals.addAll(StreamSupport.stream(viewModel.getSessions(calendarWeek))
+                .map(Session::getGoal)
+                .sorted()
+                .collect(Collectors.toSet()));
 
         binding.goalProgressBarsList.removeAllViews();
 

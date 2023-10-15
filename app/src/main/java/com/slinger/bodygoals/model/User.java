@@ -23,6 +23,7 @@ public class User {
     @TypeConverters({GoalListConverter.class})
     private List<Goal> goals = new ArrayList<>();
 
+    /* TODO: Make sure you can't add a goal with the same name. */
     public void addGoal(Goal goal) {
         goals.add(goal);
     }

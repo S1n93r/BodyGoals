@@ -4,8 +4,9 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class Goal {
+public class Goal implements Comparable<Goal> {
 
     private final String name;
     private final int frequency;
@@ -52,5 +53,15 @@ public class Goal {
             return false;
 
         return name.equals(((Goal) obj).getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public int compareTo(Goal o) {
+        return name.toLowerCase().compareTo(o.name.toLowerCase());
     }
 }

@@ -8,10 +8,10 @@
 
     <TextView
         android:id="@+id/overview_entry_text"
-        android:layout_width="240dp"
+        android:layout_width="280dp"
         android:layout_height="32dp"
-        android:textSize="22sp"
-        android:textAlignment="viewStart" />
+        android:textSize="14sp"
+        android:gravity="center_vertical|start" />
 
     <ImageView
         android:id="@+id/delete_log_entry_button"

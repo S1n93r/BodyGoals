@@ -6,111 +6,121 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.WeeklyLog">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_head"
         android:layout_width="64dp"
         android:layout_height="72dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="96dp"
         android:background="@drawable/body_part_oval"
+        android:contentDescription="@string/button_head"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_chest"
         android:layout_width="96dp"
         android:layout_height="80dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/body_part_oval"
+        android:contentDescription="@string/button_chest"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_head" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_core"
         android:layout_width="80dp"
         android:layout_height="120dp"
         android:layout_marginTop="-64dp"
         android:background="@drawable/body_part_oval"
         android:translationZ="-1dp"
+        android:contentDescription="@string/button_core"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_chest" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_shoulder_left"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="184dp"
         android:layout_marginEnd="-8dp"
         android:background="@drawable/body_part_oval"
         android:translationZ="-1dp"
+        android:contentDescription="@string/button_shoulder_left"
         app:layout_constraintEnd_toStartOf="@+id/button_chest"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_arm_left"
         android:layout_width="40dp"
         android:layout_height="56dp"
         android:layout_marginEnd="0dp"
         android:background="@drawable/body_part_oval"
         android:rotation="4"
+        android:contentDescription="@string/button_arm_left"
         app:layout_constraintEnd_toStartOf="@+id/button_chest"
         app:layout_constraintTop_toBottomOf="@+id/button_shoulder_left" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_forearm_left"
         android:layout_width="40dp"
         android:layout_height="72dp"
         android:layout_marginEnd="4dp"
         android:background="@drawable/body_part_oval"
+        android:contentDescription="@string/button_forearm_left"
         app:layout_constraintEnd_toStartOf="@+id/button_chest"
         app:layout_constraintTop_toBottomOf="@+id/button_arm_left" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_shoulder_right"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="-8dp"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="184dp"
         android:background="@drawable/body_part_oval"
         android:translationZ="-1dp"
+        android:contentDescription="@string/button_shoulder_right"
         app:layout_constraintStart_toEndOf="@+id/button_chest"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_arm_right"
         android:layout_width="40dp"
         android:layout_height="56dp"
         android:background="@drawable/body_part_oval"
         android:rotation="-4"
+        android:contentDescription="@string/button_arm_right"
         app:layout_constraintStart_toEndOf="@+id/button_chest"
         app:layout_constraintTop_toBottomOf="@+id/button_shoulder_right" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_forearm_right"
         android:layout_width="40dp"
         android:layout_height="72dp"
         android:layout_marginStart="4dp"
         android:background="@drawable/body_part_oval"
+        android:contentDescription="@string/button_forearm_right"
         app:layout_constraintStart_toEndOf="@+id/button_chest"
         app:layout_constraintTop_toBottomOf="@+id/button_arm_right" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_leg_left"
         android:layout_width="48dp"
         android:layout_height="120dp"
         android:layout_marginTop="-8dp"
         android:background="@drawable/body_part_oval"
         android:rotation="4"
+        android:contentDescription="@string/button_leg_left"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_core" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_calf_left"
         android:layout_width="40dp"
         android:layout_height="120dp"
@@ -118,30 +128,33 @@
         android:background="@drawable/body_part_oval"
         android:rotation="4"
         android:translationZ="-1dp"
+        android:contentDescription="@string/button_calf_left"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.408"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_leg_left" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_leg_right"
         android:layout_width="48dp"
         android:layout_height="120dp"
         android:layout_marginTop="-8dp"
         android:background="@drawable/body_part_oval"
         android:rotation="-4"
+        android:contentDescription="@string/button_leg_right"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.572"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_core" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_calf_right"
         android:layout_width="40dp"
         android:layout_height="120dp"
         android:layout_marginTop="-4dp"
         android:background="@drawable/body_part_oval"
         android:rotation="-4"
+        android:contentDescription="@string/button_calf_right"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.592"
         app:layout_constraintStart_toStartOf="parent"
@@ -158,7 +171,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

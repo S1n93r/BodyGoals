@@ -42,6 +42,19 @@
     <string name="cb_forearms">Forearms</string>
     <!-- image content descriptions -->
     <string name="button_disable_delete_description">Button to disable or delete goal.</string>
+    <string name="button_head">Head of the mannequin showing coverage</string>
+    <string name="button_chest">Chest of the mannequin showing coverage</string>
+    <string name="button_core">Core of the mannequin showing coverage</string>
+    <string name="button_shoulder_left">Left shoulder of the mannequin showing coverage</string>
+    <string name="button_arm_left">Left arm of the mannequin showing coverage</string>
+    <string name="button_forearm_left">Left forearm of the mannequin showing coverage</string>
+    <string name="button_shoulder_right">Right shoulder of the mannequin showing coverage</string>
+    <string name="button_arm_right">Right arm of the mannequin showing coverage</string>
+    <string name="button_forearm_right">Right forearm of the mannequin showing coverage</string>
+    <string name="button_leg_left">Left leg of the mannequin showing coverage</string>
+    <string name="button_calf_left">Left calf of the mannequin showing coverage</string>
+    <string name="button_leg_right">Right leg of the mannequin showing coverage</string>
+    <string name="button_calf_right">Right calf of the mannequin showing coverage</string>
     <!-- Toasts -->
     <string name="toast_no_frequency">No frequency was given</string>
     <string name="toast_no_goal_name">No goal name was given</string>

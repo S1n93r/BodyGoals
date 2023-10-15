@@ -46,4 +46,5 @@
     <string name="toast_no_frequency">No frequency was given</string>
     <string name="toast_no_goal_name">No goal name was given</string>
     <string name="toast_no_muscle_groups">No muscle groups were selected</string>
+    <string name="goal_already_exists">A goal with this name already exists</string>
 </resources>

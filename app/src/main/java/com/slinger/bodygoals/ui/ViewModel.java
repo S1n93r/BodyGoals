@@ -15,6 +15,7 @@ import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.model.User;
+import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -96,7 +97,7 @@ public class ViewModel extends AndroidViewModel {
             selectedCalendarWeek.setValue(CalendarWeek.nextWeek(calendarWeek));
     }
 
-    public void addGoal(@NonNull Goal goal) {
+    public void addGoal(@NonNull Goal goal) throws GoalAlreadyExistsException {
 
         if (currentUser.getValue() != null)
             currentUser.getValue().addGoal(goal);
@@ -162,7 +163,7 @@ public class ViewModel extends AndroidViewModel {
             executor.execute(() -> database.userDao().insertAll(currentUser.getValue()));
     }
 
-    public  void loadUser() {
+    public void loadUser() {
 
         executor.execute(() -> {
 
@@ -209,7 +210,7 @@ public class ViewModel extends AndroidViewModel {
 
     public void removeLogEntry(Session session) {
 
-        if(currentUser.getValue() == null)
+        if (currentUser.getValue() == null)
             return;
 
         currentUser.getValue().getSessionLog().removeLogSession(session);

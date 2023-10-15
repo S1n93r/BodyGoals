@@ -16,6 +16,7 @@ import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentAddGoalBinding;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.MuscleGroup;
+import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.exceptions.NoFrequencyException;
 import com.slinger.bodygoals.ui.exceptions.NoGoalNameException;
@@ -59,14 +60,16 @@ public class AddGoal extends Fragment {
                 viewModel.addGoal(collectGoalFromUI());
                 navigateToOverview();
 
-            }catch (IllegalStateException e){
+            } catch (IllegalStateException e) {
 
-                if(e instanceof NoFrequencyException)
+                if (e instanceof NoFrequencyException)
                     Toast.makeText(getContext(), R.string.toast_no_frequency, Toast.LENGTH_SHORT).show();
-                else if(e instanceof NoGoalNameException)
+                else if (e instanceof NoGoalNameException)
                     Toast.makeText(getContext(), R.string.toast_no_goal_name, Toast.LENGTH_SHORT).show();
-                else if(e instanceof NoMuscleGroupException)
+                else if (e instanceof NoMuscleGroupException)
                     Toast.makeText(getContext(), R.string.toast_no_muscle_groups, Toast.LENGTH_SHORT).show();
+                else if (e instanceof GoalAlreadyExistsException)
+                    Toast.makeText(getContext(), R.string.goal_already_exists, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -89,7 +92,7 @@ public class AddGoal extends Fragment {
 
         if (goalName.isEmpty())
             throw new NoGoalNameException();
-        
+
         if (frequencyString.isEmpty())
             throw new NoFrequencyException();
 
@@ -109,7 +112,7 @@ public class AddGoal extends Fragment {
         Goal goal = Goal.of(goalName, frequency);
 
         List<MuscleGroup> selectedMuscleGroups = new ArrayList<>();
-        
+
         if (absChecked)
             selectedMuscleGroups.add(new MuscleGroup("Abs"));
 
@@ -140,7 +143,7 @@ public class AddGoal extends Fragment {
         if (tricepsChecked)
             selectedMuscleGroups.add(new MuscleGroup("Abs"));
 
-        if(selectedMuscleGroups.isEmpty())
+        if (selectedMuscleGroups.isEmpty())
             throw new NoMuscleGroupException();
 
         selectedMuscleGroups.forEach(goal::addMuscleGroup);

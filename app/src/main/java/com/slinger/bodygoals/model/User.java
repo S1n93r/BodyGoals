@@ -6,9 +6,15 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 
 @Entity
 public class User {
@@ -23,8 +29,15 @@ public class User {
     @TypeConverters({GoalListConverter.class})
     private List<Goal> goals = new ArrayList<>();
 
-    /* TODO: Make sure you can't add a goal with the same name. */
-    public void addGoal(Goal goal) {
+    public void addGoal(Goal goal) throws GoalAlreadyExistsException {
+
+        Set<String> goalNames = StreamSupport.stream(goals)
+                .map(Goal::getName)
+                .collect(Collectors.toSet());
+
+        if (goalNames.contains(goal.getName()))
+            throw new GoalAlreadyExistsException();
+
         goals.add(goal);
     }
 

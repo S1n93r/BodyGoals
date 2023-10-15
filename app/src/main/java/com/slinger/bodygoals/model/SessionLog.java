@@ -4,7 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.TypeConverters;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import java8.util.stream.Collectors;
@@ -73,5 +75,19 @@ public class SessionLog {
 
     public void removeLogSession(Session session) {
         loggedSessions.remove(session);
+    }
+
+    public Map<MuscleGroup, Progress> progressPerMuscleGroup(CalendarWeek calendarWeek) {
+
+        /* TODO: Finalize implementation */
+        List<Session> sessions = getSessionsCopy(calendarWeek);
+
+        Map<MuscleGroup, Progress> progressPerMuscleGroup = new HashMap<>();
+
+        sessions.forEach(session -> {
+
+        });
+
+        return progressPerMuscleGroup;
     }
 }

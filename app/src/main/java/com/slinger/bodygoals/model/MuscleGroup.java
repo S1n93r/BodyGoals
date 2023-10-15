@@ -1,12 +1,21 @@
 package com.slinger.bodygoals.model;
 
-public class MuscleGroup {
+public enum MuscleGroup {
 
-    private final String name;
+    NECK,
+    CHEST,
+    LATS,
+    SHOULDERS,
+    BICEPS,
+    TRICEPS,
+    FOREARMS,
+    ABS,
+    LOWER_BACK,
+    QUADS,
+    HARM_STRINGS,
+    CALVES;
 
-    private int weeklySessionsGoal;
-
-    public MuscleGroup(String name) {
-        this.name = name;
+    public String getName() {
+        return name().charAt(0) + name().substring(1).toLowerCase();
     }
 }

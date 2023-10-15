@@ -114,34 +114,40 @@ public class AddGoal extends Fragment {
         List<MuscleGroup> selectedMuscleGroups = new ArrayList<>();
 
         if (absChecked)
-            selectedMuscleGroups.add(new MuscleGroup("Abs"));
-
-        if (bicepsChecked)
-            selectedMuscleGroups.add(new MuscleGroup("Biceps"));
-
-        if (calvesChecked)
-            selectedMuscleGroups.add(new MuscleGroup("Calves"));
+            selectedMuscleGroups.add(MuscleGroup.NECK);
 
         if (chestChecked)
-            selectedMuscleGroups.add(new MuscleGroup("Chest"));
-
-        if (forearmsChecked)
-            selectedMuscleGroups.add(new MuscleGroup("Forearms"));
-
-        if (harmStringsChecked)
-            selectedMuscleGroups.add(new MuscleGroup("Harm Strings"));
+            selectedMuscleGroups.add(MuscleGroup.CHEST);
 
         if (latsChecked)
-            selectedMuscleGroups.add(new MuscleGroup("Lats"));
-
-        if (quadsChecked)
-            selectedMuscleGroups.add(new MuscleGroup("Quads"));
+            selectedMuscleGroups.add(MuscleGroup.LATS);
 
         if (shouldersChecked)
-            selectedMuscleGroups.add(new MuscleGroup("Shoulders"));
+            selectedMuscleGroups.add(MuscleGroup.SHOULDERS);
+
+        if (bicepsChecked)
+            selectedMuscleGroups.add(MuscleGroup.BICEPS);
+
+        if (bicepsChecked)
+            selectedMuscleGroups.add(MuscleGroup.TRICEPS);
+
+        if (forearmsChecked)
+            selectedMuscleGroups.add(MuscleGroup.FOREARMS);
+
+        if (forearmsChecked)
+            selectedMuscleGroups.add(MuscleGroup.LOWER_BACK);
 
         if (tricepsChecked)
-            selectedMuscleGroups.add(new MuscleGroup("Abs"));
+            selectedMuscleGroups.add(MuscleGroup.ABS);
+
+        if (quadsChecked)
+            selectedMuscleGroups.add(MuscleGroup.QUADS);
+
+        if (harmStringsChecked)
+            selectedMuscleGroups.add(MuscleGroup.HARM_STRINGS);
+
+        if (calvesChecked)
+            selectedMuscleGroups.add(MuscleGroup.CALVES);
 
         if (selectedMuscleGroups.isEmpty())
             throw new NoMuscleGroupException();

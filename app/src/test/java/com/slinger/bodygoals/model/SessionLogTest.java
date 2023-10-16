@@ -20,9 +20,9 @@ public class SessionLogTest {
         CalendarWeek calendarWeek = CalendarWeek.from(calendar.getTime());
 
         /* When */
-        sessionLog.logSession(new Session(Goal.of("Push", 2), calendar.getTime()));
-        sessionLog.logSession(new Session(Goal.of("Pull", 2), calendar.getTime()));
-        sessionLog.logSession(new Session(Goal.of("Legs", 2), calendar.getTime()));
+        sessionLog.logSession(new Session(Goal.of("Push", 2, calendarWeek), calendar.getTime()));
+        sessionLog.logSession(new Session(Goal.of("Pull", 2, calendarWeek), calendar.getTime()));
+        sessionLog.logSession(new Session(Goal.of("Legs", 2, calendarWeek), calendar.getTime()));
 
         /* Then */
         assertEquals(1, sessionLog.getLoggedWeeks().size());
@@ -39,9 +39,9 @@ public class SessionLogTest {
 
         CalendarWeek calendarWeek = CalendarWeek.from(calendar.getTime());
 
-        Goal push = Goal.of("Push", 2);
-        Goal pull = Goal.of("Pull", 2);
-        Goal legs = Goal.of("Legs", 2);
+        Goal push = Goal.of("Push", 2, calendarWeek);
+        Goal pull = Goal.of("Pull", 2, calendarWeek);
+        Goal legs = Goal.of("Legs", 2, calendarWeek);
 
         /* When */
         sessionLog.logSession(new Session(push, calendar.getTime()));
@@ -66,9 +66,9 @@ public class SessionLogTest {
 
         CalendarWeek calendarWeek = CalendarWeek.from(calendar.getTime());
 
-        Goal push = Goal.of("Push", 3);
-        Goal pull = Goal.of("Pull", 2);
-        Goal legs = Goal.of("Legs", 2);
+        Goal push = Goal.of("Push", 3, calendarWeek);
+        Goal pull = Goal.of("Pull", 2, calendarWeek);
+        Goal legs = Goal.of("Legs", 2, calendarWeek);
 
         /* When */
         sessionLog.logSession(new Session(push, calendar.getTime()));
@@ -93,15 +93,15 @@ public class SessionLogTest {
 
         CalendarWeek calendarWeek = CalendarWeek.from(calendar.getTime());
 
-        Goal push = Goal.of("Push", 3);
+        Goal push = Goal.of("Push", 3, calendarWeek);
         push.addMuscleGroup(MuscleGroup.CHEST);
         push.addMuscleGroup(MuscleGroup.TRICEPS);
 
-        Goal pull = Goal.of("Pull", 2);
+        Goal pull = Goal.of("Pull", 2, calendarWeek);
         pull.addMuscleGroup(MuscleGroup.LATS);
         pull.addMuscleGroup(MuscleGroup.BICEPS);
 
-        Goal legs = Goal.of("Legs", 2);
+        Goal legs = Goal.of("Legs", 2, calendarWeek);
         legs.addMuscleGroup(MuscleGroup.QUADS);
         legs.addMuscleGroup(MuscleGroup.HARM_STRINGS);
         legs.addMuscleGroup(MuscleGroup.CALVES);

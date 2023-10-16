@@ -5,6 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentAddSessionBinding;
 import com.slinger.bodygoals.model.Goal;
@@ -18,21 +24,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
 public class AddSession extends Fragment {
 
+    private final DatePickerFragment datePickerFragment = new DatePickerFragment();
+
     private ViewModel viewModel;
 
     private FragmentAddSessionBinding binding;
-
-    private final DatePickerFragment datePickerFragment = new DatePickerFragment();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class AddSession extends Fragment {
             navigateToOverview();
         });
 
-        binding.selectedDateTimeText.setOnClickListener(addSessionView -> {
+        binding.selectedDateText.setOnClickListener(addSessionView -> {
                     if (!datePickerFragment.isAdded())
                         datePickerFragment.show(getParentFragmentManager(), "timePicker");
                 }
@@ -121,11 +122,11 @@ public class AddSession extends Fragment {
             }
         });
 
-        viewModel.getSessionDate().observe(this, date -> {
+        datePickerFragment.getSelectedDateLiveData().observe(this, date -> {
 
             DateFormat dateFormat = DateFormat.getInstance();
 
-            binding.selectedDateTimeText.setText(dateFormat.format(date));
+            binding.selectedDateText.setText(dateFormat.format(date));
         });
     }
 }

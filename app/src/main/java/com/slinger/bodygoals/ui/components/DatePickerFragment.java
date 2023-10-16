@@ -5,15 +5,17 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.widget.DatePicker;
 
-import com.slinger.bodygoals.ui.ViewModel;
-
-import java.util.Calendar;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+    MutableLiveData<Date> selectedDateLiveData = new MutableLiveData<>();
 
     @NonNull
     @Override
@@ -34,12 +36,14 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         if (getActivity() == null)
             throw new IllegalStateException("Activity should not be 'null'.");
 
-        ViewModel viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
-
         Calendar calendar = Calendar.getInstance();
 
         calendar.set(year, month, dayOfMonth);
 
-        viewModel.setSessionDate(calendar.getTime());
+        selectedDateLiveData.setValue(calendar.getTime());
+    }
+
+    public LiveData<Date> getSelectedDateLiveData() {
+        return selectedDateLiveData;
     }
 }

@@ -25,8 +25,8 @@ public class Goal implements Comparable<Goal> {
         muscleGroups.add(muscleGroup);
     }
 
-    public static Goal of(String name, int frequency) {
-        return new Goal(name, frequency, CalendarWeek.currentWeek());
+    public static Goal of(String name, int frequency, CalendarWeek calendarWeek) {
+        return new Goal(name, frequency, calendarWeek);
     }
 
     public String getName() {

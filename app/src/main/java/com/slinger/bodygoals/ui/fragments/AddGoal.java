@@ -14,18 +14,23 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentAddGoalBinding;
+import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.MuscleGroup;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
 import com.slinger.bodygoals.ui.ViewModel;
+import com.slinger.bodygoals.ui.components.DatePickerFragment;
 import com.slinger.bodygoals.ui.exceptions.NoFrequencyException;
 import com.slinger.bodygoals.ui.exceptions.NoGoalNameException;
 import com.slinger.bodygoals.ui.exceptions.NoMuscleGroupException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddGoal extends Fragment {
+
+    private final DatePickerFragment datePickerFragment = new DatePickerFragment();
 
     private ViewModel viewModel;
 
@@ -37,6 +42,8 @@ public class AddGoal extends Fragment {
 
         if (getActivity() != null)
             viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
+
+        registerLiveDataObserver();
     }
 
     @Override
@@ -72,6 +79,12 @@ public class AddGoal extends Fragment {
                     Toast.makeText(getContext(), R.string.goal_already_exists, Toast.LENGTH_SHORT).show();
             }
         });
+
+        binding.selectedDateText.setOnClickListener(addSessionView -> {
+                    if (!datePickerFragment.isAdded())
+                        datePickerFragment.show(getParentFragmentManager(), "timePicker");
+                }
+        );
     }
 
     private void navigateToOverview() {
@@ -111,7 +124,9 @@ public class AddGoal extends Fragment {
         boolean shouldersChecked = binding.cbShoulders.isChecked();
         boolean tricepsChecked = binding.cbTriceps.isChecked();
 
-        Goal goal = Goal.of(goalName, frequency);
+        CalendarWeek calendarWeek = CalendarWeek.from(datePickerFragment.getSelectedDateLiveData().getValue());
+
+        Goal goal = Goal.of(goalName, frequency, calendarWeek);
 
         List<MuscleGroup> selectedMuscleGroups = new ArrayList<>();
 
@@ -160,5 +175,15 @@ public class AddGoal extends Fragment {
         selectedMuscleGroups.forEach(goal::addMuscleGroup);
 
         return goal;
+    }
+
+    private void registerLiveDataObserver() {
+
+        datePickerFragment.getSelectedDateLiveData().observe(this, date -> {
+
+            String weekString = new SimpleDateFormat("w").format(date);
+
+            binding.selectedDateText.setText(weekString);
+        });
     }
 }

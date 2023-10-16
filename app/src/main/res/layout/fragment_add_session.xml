@@ -26,7 +26,7 @@
 
 
     <Button
-        android:id="@+id/buttonSave"
+        android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/when_text_view"
         android:layout_width="72dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/what_text_view"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
@@ -68,23 +68,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/what_text_view">
 
         <LinearLayout
-            android:id="@+id/goalList"
+            android:id="@+id/goal_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
 
     <TextView
-        android:id="@+id/selectedDateTimeText"
+        android:id="@+id/selected_date_text"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/datetime_placeholder"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/when_text_view"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

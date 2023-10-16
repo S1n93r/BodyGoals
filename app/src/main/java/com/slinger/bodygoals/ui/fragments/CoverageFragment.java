@@ -105,9 +105,8 @@ public class CoverageFragment extends Fragment {
                     binding.buttonChest.setBackground(fromProgressStatus(progressStatus));
                     break;
 
-                /* TODO: Needs own part. */
                 case LATS:
-//                    bodyPartImageView = binding.buttonChest;
+                    binding.buttonLats.setBackground(fromProgressStatus(progressStatus));
                     break;
 
                 case SHOULDERS:
@@ -131,11 +130,11 @@ public class CoverageFragment extends Fragment {
                     break;
 
                 case ABS:
-                    binding.buttonCore.setBackground(fromProgressStatus(progressStatus));
+                    binding.buttonAbs.setBackground(fromProgressStatus(progressStatus));
                     break;
 
                 case LOWER_BACK:
-//                    binding.buttonCore.setBackground(fromProgressStatus(progressStatus));
+                    binding.buttonLowerBack.setBackground(fromProgressStatus(progressStatus));
                     break;
 
                 case QUADS:

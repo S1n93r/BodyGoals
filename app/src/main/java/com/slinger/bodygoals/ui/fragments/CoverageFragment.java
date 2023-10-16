@@ -116,14 +116,13 @@ public class CoverageFragment extends Fragment {
                     break;
 
                 case BICEPS:
-                    binding.buttonArmLeft.setBackground(fromProgressStatus(progressStatus));
-                    binding.buttonArmRight.setBackground(fromProgressStatus(progressStatus));
+                    binding.buttonBicepsLeft.setBackground(fromProgressStatus(progressStatus));
+                    binding.buttonBicepsRight.setBackground(fromProgressStatus(progressStatus));
                     break;
 
-                /* TODO: Needs own part. */
                 case TRICEPS:
-//                    binding.buttonArmLeft.setBackground(fromProgressStatus(progressStatus));
-//                    binding.buttonArmRight.setBackground(fromProgressStatus(progressStatus));
+                    binding.buttonTricepsLeft.setBackground(fromProgressStatus(progressStatus));
+                    binding.buttonTricepsRight.setBackground(fromProgressStatus(progressStatus));
                     break;
 
                 case FOREARMS:
@@ -135,20 +134,18 @@ public class CoverageFragment extends Fragment {
                     binding.buttonCore.setBackground(fromProgressStatus(progressStatus));
                     break;
 
-                /* TODO: Needs own part. */
                 case LOWER_BACK:
 //                    binding.buttonCore.setBackground(fromProgressStatus(progressStatus));
                     break;
 
                 case QUADS:
-                    binding.buttonLegLeft.setBackground(fromProgressStatus(progressStatus));
-                    binding.buttonLegRight.setBackground(fromProgressStatus(progressStatus));
+                    binding.buttonQuadLeft.setBackground(fromProgressStatus(progressStatus));
+                    binding.buttonQuadRight.setBackground(fromProgressStatus(progressStatus));
                     break;
 
-                /* TODO: Needs own part. */
                 case HARM_STRINGS:
-//                    binding.buttonLegLeft.setBackground(fromProgressStatus(progressStatus));
-//                    binding.buttonLegRight.setBackground(fromProgressStatus(progressStatus));
+                    binding.buttonHarmStringLeft.setBackground(fromProgressStatus(progressStatus));
+                    binding.buttonHarmStringRight.setBackground(fromProgressStatus(progressStatus));
                     break;
 
                 case CALVES:

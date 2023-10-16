@@ -56,7 +56,7 @@
         android:id="@+id/button_shoulder_left"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="192dp"
         android:layout_marginEnd="-8dp"
         android:background="@drawable/body_part_oval_red"
         android:translationZ="-1dp"
@@ -65,9 +65,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/button_arm_left"
+        android:id="@+id/button_triceps_left"
         android:layout_width="40dp"
-        android:layout_height="56dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/body_part_oval_red"
+        android:contentDescription="@string/button_arm_left"
+        android:rotation="4"
+        app:layout_constraintEnd_toStartOf="@+id/button_chest"
+        app:layout_constraintTop_toBottomOf="@+id/button_shoulder_left" />
+
+    <ImageView
+        android:id="@+id/button_biceps_left"
+        android:layout_width="32dp"
+        android:layout_height="64dp"
         android:layout_marginEnd="0dp"
         android:background="@drawable/body_part_oval_red"
         android:rotation="4"
@@ -83,14 +94,14 @@
         android:background="@drawable/body_part_oval_red"
         android:contentDescription="@string/button_forearm_left"
         app:layout_constraintEnd_toStartOf="@+id/button_chest"
-        app:layout_constraintTop_toBottomOf="@+id/button_arm_left" />
+        app:layout_constraintTop_toBottomOf="@+id/button_biceps_left" />
 
     <ImageView
         android:id="@+id/button_shoulder_right"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="-8dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="192dp"
         android:background="@drawable/body_part_oval_red"
         android:translationZ="-1dp"
         android:contentDescription="@string/button_shoulder_right"
@@ -98,9 +109,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/button_arm_right"
+        android:id="@+id/button_triceps_right"
         android:layout_width="40dp"
-        android:layout_height="56dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/body_part_oval_red"
+        android:contentDescription="@string/button_arm_right"
+        android:rotation="-4"
+        app:layout_constraintStart_toEndOf="@+id/button_chest"
+        app:layout_constraintTop_toBottomOf="@+id/button_shoulder_right" />
+
+    <ImageView
+        android:id="@+id/button_biceps_right"
+        android:layout_width="32dp"
+        android:layout_height="64dp"
         android:background="@drawable/body_part_oval_red"
         android:rotation="-4"
         android:contentDescription="@string/button_arm_right"
@@ -115,18 +137,31 @@
         android:background="@drawable/body_part_oval_red"
         android:contentDescription="@string/button_forearm_right"
         app:layout_constraintStart_toEndOf="@+id/button_chest"
-        app:layout_constraintTop_toBottomOf="@+id/button_arm_right" />
+        app:layout_constraintTop_toBottomOf="@+id/button_biceps_right" />
 
     <ImageView
-        android:id="@+id/button_leg_left"
+        android:id="@+id/button_harm_string_left"
         android:layout_width="48dp"
         android:layout_height="120dp"
         android:layout_marginTop="-8dp"
         android:background="@drawable/body_part_oval_red"
-        android:rotation="4"
         android:contentDescription="@string/button_leg_left"
+        android:rotation="4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintHorizontal_bias="0.436"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_core" />
+
+    <ImageView
+        android:id="@+id/button_quad_left"
+        android:layout_width="40dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="-8dp"
+        android:background="@drawable/body_part_oval_red"
+        android:contentDescription="@string/button_leg_left"
+        android:rotation="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.424"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_core" />
 
@@ -142,18 +177,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.408"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_leg_left" />
+        app:layout_constraintTop_toBottomOf="@+id/button_quad_left" />
 
     <ImageView
-        android:id="@+id/button_leg_right"
-        android:layout_width="48dp"
+        android:id="@+id/button_harm_string_right"
+        android:layout_width="40dp"
         android:layout_height="120dp"
         android:layout_marginTop="-8dp"
         android:background="@drawable/body_part_oval_red"
         android:rotation="-4"
         android:contentDescription="@string/button_leg_right"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.572"
+        app:layout_constraintHorizontal_bias="0.556"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_core" />
+
+    <ImageView
+        android:id="@+id/button_quad_right"
+        android:layout_width="40dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="-8dp"
+        android:background="@drawable/body_part_oval_red"
+        android:rotation="-4"
+        android:contentDescription="@string/button_leg_right"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.576"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_core" />
 
@@ -168,7 +216,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.592"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_leg_left" />
+        app:layout_constraintTop_toBottomOf="@+id/button_quad_left" />
 
     <Button
         android:id="@+id/button_to_overview"

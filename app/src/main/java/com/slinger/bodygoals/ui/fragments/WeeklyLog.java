@@ -16,7 +16,7 @@ import com.slinger.bodygoals.databinding.FragmentWeeklyLogBinding;
 import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.ui.ViewModel;
-import com.slinger.bodygoals.ui.components.LogEntryComponent;
+import com.slinger.bodygoals.ui.components.LogEntry;
 
 import java.util.List;
 
@@ -80,15 +80,15 @@ public class WeeklyLog extends Fragment {
 
         for (Session session : sessions) {
 
-            LogEntryComponent logEntryComponent = new LogEntryComponent(getContext());
+            LogEntry logEntry = new LogEntry(getContext());
 
-            logEntryComponent.setSession(session);
-            logEntryComponent.registerDisableGoalRunner(() -> {
+            logEntry.setSession(session);
+            logEntry.registerDisableGoalRunner(() -> {
                 viewModel.removeLogEntry(session);
                 updateWeeklyLogList(calendarWeek);
             });
 
-            binding.weeklySessionsList.addView(logEntryComponent);
+            binding.weeklySessionsList.addView(logEntry);
         }
     }
 }

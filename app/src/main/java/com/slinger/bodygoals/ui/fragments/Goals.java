@@ -1,6 +1,5 @@
 package com.slinger.bodygoals.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +9,9 @@ import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentGoalsBinding;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.ui.ViewModel;
-import com.slinger.bodygoals.ui.components.GoalComponent;
+import com.slinger.bodygoals.ui.components.GoalEntry;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -75,14 +73,14 @@ public class Goals extends Fragment {
 
         for (Goal goal : goals) {
 
-            GoalComponent goalComponent = new GoalComponent(getContext());
+            GoalEntry goalEntry = new GoalEntry(getContext());
 
-            goalComponent.setGoal(goal);
-            goalComponent.registerEnableGoalRunner(() -> viewModel.enableGoal(goal));
-            goalComponent.registerDisableGoalRunner(() -> viewModel.disableGoal(goal));
-            goalComponent.registerDeleteGoalRunner(() -> viewModel.deleteGoal(goal));
+            goalEntry.setGoal(goal);
+            goalEntry.registerEnableGoalRunner(() -> viewModel.enableGoal(goal));
+            goalEntry.registerDisableGoalRunner(() -> viewModel.disableGoal(goal));
+            goalEntry.registerDeleteGoalRunner(() -> viewModel.deleteGoal(goal));
 
-            binding.goalsList.addView(goalComponent);
+            binding.goalsList.addView(goalEntry);
         }
     }
 }

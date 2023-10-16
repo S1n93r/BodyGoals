@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.model.Goal;
 
-public class GoalComponent extends RelativeLayout {
+public class GoalEntry extends RelativeLayout {
 
     private Goal goal;
 
@@ -25,28 +25,28 @@ public class GoalComponent extends RelativeLayout {
 
     private int originalTextColor;
 
-    public GoalComponent(Context context) {
+    public GoalEntry(Context context) {
 
         super(context);
 
         configureComponents(context);
     }
 
-    public GoalComponent(Context context, @Nullable AttributeSet attrs) {
+    public GoalEntry(Context context, @Nullable AttributeSet attrs) {
 
         super(context, attrs);
 
         configureComponents(context);
     }
 
-    public GoalComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public GoalEntry(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 
         super(context, attrs, defStyleAttr);
 
         configureComponents(context);
     }
 
-    public GoalComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public GoalEntry(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
 
         super(context, attrs, defStyleAttr, defStyleRes);
 
@@ -57,7 +57,7 @@ public class GoalComponent extends RelativeLayout {
 
     private void configureComponents(Context context) {
 
-        View innerView = inflate(context, R.layout.component_goal,  null);
+        View innerView = inflate(context, R.layout.goal_entry,  null);
 
         textView = innerView.findViewById(R.id.overview_entry_text);
 

@@ -14,45 +14,39 @@ import com.slinger.bodygoals.model.Session;
 
 import java.text.DateFormat;
 
-public class LogEntryComponent extends RelativeLayout {
-
-    private Session session;
+public class LogEntry extends RelativeLayout {
 
     private TextView textView;
 
     private ImageView imageDeleteLogEntry;
 
-    private int originalTextColor;
-
-    public LogEntryComponent(Context context) {
+    public LogEntry(Context context) {
 
         super(context);
 
         configureComponents(context);
     }
 
-    public LogEntryComponent(Context context, @Nullable AttributeSet attrs) {
+    public LogEntry(Context context, @Nullable AttributeSet attrs) {
 
         super(context, attrs);
 
         configureComponents(context);
     }
 
-    public LogEntryComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public LogEntry(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 
         super(context, attrs, defStyleAttr);
 
         configureComponents(context);
     }
 
-    public LogEntryComponent(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public LogEntry(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
 
         super(context, attrs, defStyleAttr, defStyleRes);
 
         configureComponents(context);
     }
-
-
 
     private void configureComponents(Context context) {
 
@@ -60,16 +54,12 @@ public class LogEntryComponent extends RelativeLayout {
 
         textView = innerView.findViewById(R.id.overview_entry_text);
 
-        originalTextColor = textView.getCurrentTextColor();
-
         imageDeleteLogEntry = innerView.findViewById(R.id.delete_log_entry_button);
 
         this.addView(innerView);
     }
 
     public void setSession(Session session) {
-
-        this.session = session;
 
         DateFormat dateFormat = DateFormat.getInstance();
         String dateString = dateFormat.format(session.getDate());

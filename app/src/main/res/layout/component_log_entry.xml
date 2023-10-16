@@ -14,11 +14,11 @@
         android:gravity="center_vertical|start" />
 
     <ImageView
-        android:id="@+id/delete_log_entry_button"
+        android:id="@+id/button_delete"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_weight="1"
-        android:src="@drawable/ic_cancel_2"
+        android:src="@drawable/ic_bin"
         android:contentDescription="@string/button_disable_delete_description" />
 
 </LinearLayout>

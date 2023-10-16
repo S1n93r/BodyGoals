@@ -1,7 +1,6 @@
 package com.slinger.bodygoals.ui.components;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,9 +18,9 @@ public class GoalEntry extends RelativeLayout {
 
     private TextView textView;
 
-    private ImageView imageViewEnable;
-    private ImageView imageViewDisable;
     private ImageView imageViewDelete;
+    private ImageView imageViewConfirmDelete;
+    private ImageView imageViewCancelDelete;
 
     private int originalTextColor;
 
@@ -54,18 +53,29 @@ public class GoalEntry extends RelativeLayout {
     }
 
 
-
     private void configureComponents(Context context) {
 
-        View innerView = inflate(context, R.layout.goal_entry,  null);
+        View innerView = inflate(context, R.layout.component_goal_entry, null);
 
         textView = innerView.findViewById(R.id.overview_entry_text);
 
         originalTextColor = textView.getCurrentTextColor();
 
-        imageViewEnable = innerView.findViewById(R.id.button_enable);
-        imageViewDisable = innerView.findViewById(R.id.delete_log_entry_button);
         imageViewDelete = innerView.findViewById(R.id.button_delete);
+        imageViewDelete.setOnClickListener(v -> {
+            imageViewDelete.setVisibility(GONE);
+            imageViewConfirmDelete.setVisibility(VISIBLE);
+            imageViewCancelDelete.setVisibility(VISIBLE);
+        });
+
+        imageViewConfirmDelete = innerView.findViewById(R.id.button_confirm_delete);
+
+        imageViewCancelDelete = innerView.findViewById(R.id.button_cancel_delete);
+        imageViewCancelDelete.setOnClickListener(v -> {
+            imageViewDelete.setVisibility(VISIBLE);
+            imageViewConfirmDelete.setVisibility(GONE);
+            imageViewCancelDelete.setVisibility(GONE);
+        });
 
         this.addView(innerView);
     }
@@ -74,58 +84,10 @@ public class GoalEntry extends RelativeLayout {
 
         this.goal = goal;
 
-        updateStatus(this.goal.isActive());
-
         textView.setText(goal.getName());
     }
 
-    public void registerDisableGoalRunner(Runnable runnable) {
-
-        imageViewDisable.setOnClickListener(view -> {
-
-            runnable.run();
-
-            updateStatus(goal.isActive());
-        });
-    }
-
-    public void registerEnableGoalRunner(Runnable runnable) {
-
-        imageViewEnable.setOnClickListener(view -> {
-
-            runnable.run();
-
-            updateStatus(goal.isActive());
-        });
-    }
-
     public void registerDeleteGoalRunner(Runnable runnable) {
-
-        imageViewDelete.setOnClickListener(view -> {
-
-            runnable.run();
-
-            updateStatus(goal.isActive());
-        });
-    }
-
-    private void updateStatus(boolean isActive) {
-
-        if(!isActive) {
-
-            textView.setTextColor(Color.GRAY);
-
-            imageViewDelete.setVisibility(VISIBLE);
-            imageViewEnable.setVisibility(VISIBLE);
-            imageViewDisable.setVisibility(GONE);
-
-        } else {
-
-            textView.setTextColor(originalTextColor);
-
-            imageViewDelete.setVisibility(GONE);
-            imageViewEnable.setVisibility(GONE);
-            imageViewDisable.setVisibility(VISIBLE);
-        }
+        imageViewConfirmDelete.setOnClickListener(view -> runnable.run());
     }
 }

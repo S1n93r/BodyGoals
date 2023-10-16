@@ -13,8 +13,6 @@ public class Goal implements Comparable<Goal> {
     private final int frequency;
     private final List<MuscleGroup> muscleGroups = new ArrayList<>();
 
-    private boolean isActive = true;
-
     private Goal(String name, int frequency) {
         this.name = name;
         this.frequency = frequency;
@@ -34,14 +32,6 @@ public class Goal implements Comparable<Goal> {
 
     public int getFrequency() {
         return frequency;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
     }
 
     @Override

@@ -15,31 +15,30 @@
         android:textAlignment="viewStart" />
 
 
-
-    <ImageView
-        android:id="@+id/delete_log_entry_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_weight="1"
-        android:src="@drawable/ic_cancel_2"
-        android:contentDescription="@string/button_disable_delete_description" />
-
     <ImageView
         android:id="@+id/button_delete"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_weight="1"
         android:src="@drawable/ic_bin"
-        android:contentDescription="@string/button_disable_delete_description"
-        android:visibility="gone"/>
+        android:contentDescription="@string/button_disable_delete_description" />
 
     <ImageView
-        android:id="@+id/button_enable"
+        android:id="@+id/button_confirm_delete"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_weight="1"
         android:src="@drawable/ic_check"
         android:contentDescription="@string/button_disable_delete_description"
-        android:visibility="gone"/>
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/button_cancel_delete"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_weight="1"
+        android:src="@drawable/ic_cancel_2"
+        android:contentDescription="@string/button_disable_delete_description"
+        android:visibility="gone" />
 
 </LinearLayout>

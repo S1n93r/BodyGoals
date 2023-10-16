@@ -186,28 +186,6 @@ public class ViewModel extends AndroidViewModel {
         });
     }
 
-    public void disableGoal(Goal goal) {
-
-        User user = currentUser.getValue();
-
-        if (user == null)
-            return;
-
-        goal.setActive(false);
-        updateUser();
-    }
-
-    public void enableGoal(Goal goal) {
-
-        User user = currentUser.getValue();
-
-        if (user == null)
-            return;
-
-        goal.setActive(true);
-        updateUser();
-    }
-
     public void deleteGoal(Goal goal) {
 
         User user = currentUser.getValue();

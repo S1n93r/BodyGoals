@@ -50,11 +50,11 @@ public class LogEntry extends RelativeLayout {
 
     private void configureComponents(Context context) {
 
-        View innerView = inflate(context, R.layout.component_log_entry,  null);
+        View innerView = inflate(context, R.layout.component_log_entry, null);
 
         textView = innerView.findViewById(R.id.overview_entry_text);
 
-        imageDeleteLogEntry = innerView.findViewById(R.id.delete_log_entry_button);
+        imageDeleteLogEntry = innerView.findViewById(R.id.button_delete);
 
         this.addView(innerView);
     }

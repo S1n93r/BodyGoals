@@ -18,6 +18,7 @@ import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.LogEntry;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class WeeklyLog extends Fragment {
@@ -57,7 +58,7 @@ public class WeeklyLog extends Fragment {
         binding.switchCalendarWeekComponent.setLifecycleOwner(this);
 
         binding.switchCalendarWeekComponent.setCalendarWeekLiveData(viewModel.getSelectedCalendarWeek());
-        
+
         binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousWeek());
         binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextWeek());
     }
@@ -75,6 +76,7 @@ public class WeeklyLog extends Fragment {
     private void updateWeeklyLogList(CalendarWeek calendarWeek) {
 
         List<Session> sessions = viewModel.getSessions(calendarWeek);
+        sessions.sort(Comparator.comparing(Session::getDate));
 
         binding.weeklySessionsList.removeAllViews();
 

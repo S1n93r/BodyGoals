@@ -1,9 +1,9 @@
 package com.slinger.bodygoals.model;
 
+import androidx.annotation.Nullable;
+
 import java.util.Calendar;
 import java.util.Date;
-
-import androidx.annotation.Nullable;
 
 public class CalendarWeek {
 
@@ -25,6 +25,10 @@ public class CalendarWeek {
         calendar.setTime(date);
 
         return CalendarWeek.of(calendar.get(Calendar.WEEK_OF_YEAR), calendar.get(Calendar.YEAR));
+    }
+
+    public static CalendarWeek currentWeek() {
+        return CalendarWeek.from(Calendar.getInstance().getTime());
     }
 
     public static CalendarWeek previousWeek(CalendarWeek calendarWeek) {
@@ -74,5 +78,13 @@ public class CalendarWeek {
         CalendarWeek calendarWeek = (CalendarWeek) obj;
 
         return calendarWeek.getWeek() == getWeek() && calendarWeek.getYear() == getYear();
+    }
+
+    public boolean isAfter(CalendarWeek calendarWeek) {
+
+        if (calendarWeek.year > year)
+            return true;
+
+        return calendarWeek.week > week;
     }
 }

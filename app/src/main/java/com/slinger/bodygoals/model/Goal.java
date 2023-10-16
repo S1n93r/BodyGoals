@@ -13,9 +13,12 @@ public class Goal implements Comparable<Goal> {
     private final int frequency;
     private final List<MuscleGroup> muscleGroups = new ArrayList<>();
 
-    private Goal(String name, int frequency) {
+    private final CalendarWeek creationWeek;
+
+    private Goal(String name, int frequency, CalendarWeek creationWeek) {
         this.name = name;
         this.frequency = frequency;
+        this.creationWeek = creationWeek;
     }
 
     public void addMuscleGroup(MuscleGroup muscleGroup) {
@@ -23,7 +26,7 @@ public class Goal implements Comparable<Goal> {
     }
 
     public static Goal of(String name, int frequency) {
-        return new Goal(name, frequency);
+        return new Goal(name, frequency, CalendarWeek.currentWeek());
     }
 
     public String getName() {
@@ -58,5 +61,9 @@ public class Goal implements Comparable<Goal> {
 
     public List<MuscleGroup> getMuscleGroupsCopy() {
         return Collections.unmodifiableList(muscleGroups);
+    }
+
+    public CalendarWeek getCreationWeek() {
+        return creationWeek;
     }
 }

@@ -108,6 +108,9 @@ public class Overview extends Fragment {
 
         for (Goal goal : goals) {
 
+            if (calendarWeek.isAfter(goal.getCreationWeek()))
+                continue;
+
             OverviewEntryComponent overviewEntryComponent = new OverviewEntryComponent(getContext());
 
             int progress = viewModel.getGoalProgress(calendarWeek, goal);

@@ -2,18 +2,18 @@ package com.slinger.bodygoals.model;
 
 public enum MuscleGroup {
 
-    NECK,
-    CHEST,
-    LATS,
-    SHOULDERS,
-    BICEPS,
-    TRICEPS,
-    FOREARMS,
     ABS,
-    LOWER_BACK,
-    QUADS,
+    BICEPS,
+    CALVES,
+    CHEST,
+    FOREARMS,
     HARM_STRINGS,
-    CALVES;
+    LATS,
+    LOWER_BACK,
+    NECK,
+    QUADS,
+    SHOULDERS,
+    TRICEPS;
 
     public String getName() {
         return name().charAt(0) + name().substring(1).toLowerCase();

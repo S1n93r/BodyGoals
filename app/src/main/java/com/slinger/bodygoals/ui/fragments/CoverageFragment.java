@@ -115,10 +115,9 @@ public class CoverageFragment extends Fragment {
                     binding.buttonShoulderRight.setBackground(fromProgressStatus(progressStatus));
                     break;
 
-                /* TODO: Needs own part. */
                 case BICEPS:
-//                    binding.buttonArmLeft.setBackground(fromProgressStatus(progressStatus));
-//                    binding.buttonArmRight.setBackground(fromProgressStatus(progressStatus));
+                    binding.buttonArmLeft.setBackground(fromProgressStatus(progressStatus));
+                    binding.buttonArmRight.setBackground(fromProgressStatus(progressStatus));
                     break;
 
                 /* TODO: Needs own part. */

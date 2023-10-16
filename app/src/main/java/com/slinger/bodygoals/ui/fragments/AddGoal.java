@@ -105,6 +105,8 @@ public class AddGoal extends Fragment {
         boolean forearmsChecked = binding.cbForearms.isChecked();
         boolean harmStringsChecked = binding.cbHarmstring.isChecked();
         boolean latsChecked = binding.cbLats.isChecked();
+        boolean lowerBackChecked = binding.cbLowerBack.isChecked();
+        boolean neckChecked = binding.cbNeck.isChecked();
         boolean quadsChecked = binding.cbQuads.isChecked();
         boolean shouldersChecked = binding.cbShoulders.isChecked();
         boolean tricepsChecked = binding.cbTriceps.isChecked();
@@ -113,8 +115,14 @@ public class AddGoal extends Fragment {
 
         List<MuscleGroup> selectedMuscleGroups = new ArrayList<>();
 
-        if (absChecked)
+        if (lowerBackChecked)
+            selectedMuscleGroups.add(MuscleGroup.LOWER_BACK);
+
+        if (neckChecked)
             selectedMuscleGroups.add(MuscleGroup.NECK);
+
+        if (absChecked)
+            selectedMuscleGroups.add(MuscleGroup.ABS);
 
         if (chestChecked)
             selectedMuscleGroups.add(MuscleGroup.CHEST);
@@ -128,7 +136,7 @@ public class AddGoal extends Fragment {
         if (bicepsChecked)
             selectedMuscleGroups.add(MuscleGroup.BICEPS);
 
-        if (bicepsChecked)
+        if (tricepsChecked)
             selectedMuscleGroups.add(MuscleGroup.TRICEPS);
 
         if (forearmsChecked)
@@ -136,9 +144,6 @@ public class AddGoal extends Fragment {
 
         if (forearmsChecked)
             selectedMuscleGroups.add(MuscleGroup.LOWER_BACK);
-
-        if (tricepsChecked)
-            selectedMuscleGroups.add(MuscleGroup.ABS);
 
         if (quadsChecked)
             selectedMuscleGroups.add(MuscleGroup.QUADS);

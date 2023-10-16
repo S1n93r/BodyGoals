@@ -32,7 +32,7 @@ public class Progress {
     public void increaseCurrent() {
 
         if (current + 1 > max)
-            throw new IllegalStateException("Current should not be bigger then max. Check usage.");
+            return;
 
         current++;
     }

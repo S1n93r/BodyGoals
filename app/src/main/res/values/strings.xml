@@ -33,9 +33,11 @@
     <string name="datetime_placeholder">[datetime]</string>
     <!-- ComboBoxes -->
     <string name="cb_shoulders">Shoulders</string>
+    <string name="cb_neck">Neck</string>
     <string name="cb_triceps">Triceps</string>
     <string name="cb_biceps">Biceps</string>
     <string name="cb_lats">Lats</string>
+    <string name="cb_lower_back">Lower Back</string>
     <string name="cb_chest">Chest</string>
     <string name="cb_abs">Abs</string>
     <string name="cb_quads">Quads</string>

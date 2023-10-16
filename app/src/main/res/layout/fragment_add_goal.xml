@@ -52,24 +52,11 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/cbShoulders"
+                android:id="@+id/cbAbs"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/cb_shoulders" />
-
-            <CheckBox
-                android:id="@+id/cbTriceps"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/cb_triceps" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                android:text="@string/cb_abs" />
 
             <CheckBox
                 android:id="@+id/cbBiceps"
@@ -77,50 +64,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/cb_biceps" />
-
-            <CheckBox
-                android:id="@+id/cbLats"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/cb_lats" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/cbChest"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="@string/cb_chest" />
-
-            <CheckBox
-                android:id="@+id/cbAbs"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="@string/cb_abs" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/cbQuads"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/cb_quads" />
-
-            <CheckBox
-                android:id="@+id/cbHarmstring"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="@string/cb_harm_strings" />
         </LinearLayout>
 
         <LinearLayout
@@ -136,10 +79,86 @@
                 android:text="@string/cb_calves" />
 
             <CheckBox
+                android:id="@+id/cbChest"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cb_chest" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
                 android:id="@+id/cbForearms"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/cb_forearms" />
+
+            <CheckBox
+                android:id="@+id/cbHarmstring"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/cb_harm_strings" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cbLats"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cb_lats" />
+
+            <CheckBox
+                android:id="@+id/cbLowerBack"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/cb_lower_back" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cbNeck"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cb_neck" />
+
+            <CheckBox
+                android:id="@+id/cbQuads"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/cb_quads" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cbShoulders"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cb_shoulders" />
+
+            <CheckBox
+                android:id="@+id/cbTriceps"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/cb_triceps" />
         </LinearLayout>
 
     </LinearLayout>
@@ -153,7 +172,7 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView

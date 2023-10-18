@@ -60,12 +60,17 @@ public class AddSession extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonToOverview.setOnClickListener(addSessionView -> navigateToOverview());
+        binding.buttonToOverview.setOnClickListener(addSessionView ->
+                NavHostFragment.findNavController(AddSession.this).navigate(
+                        R.id.action_AddSessionFragment_to_OverviewFragment));
 
-        binding.buttonSave.setOnClickListener(addSessionView -> {
+        binding.buttonStart.setOnClickListener(addSessionView -> {
+
+            viewModel.setPreSavedSessions(collectSessionsFromUI());
 
             viewModel.addSessions(collectSessionsFromUI());
-            navigateToOverview();
+            NavHostFragment.findNavController(AddSession.this).navigate(
+                    R.id.action_AddSessionFragment_to_run_session_fragment);
         });
 
         binding.selectedDateText.setOnClickListener(addSessionView -> {
@@ -73,10 +78,6 @@ public class AddSession extends Fragment {
                         datePickerFragment.show(getParentFragmentManager(), "timePicker");
                 }
         );
-    }
-
-    private void navigateToOverview() {
-        NavHostFragment.findNavController(AddSession.this).navigate(R.id.action_AddSessionFragment_to_OverviewFragment);
     }
 
     @Override

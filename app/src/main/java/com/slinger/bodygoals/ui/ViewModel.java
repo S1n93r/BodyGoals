@@ -45,6 +45,8 @@ public class ViewModel extends AndroidViewModel {
 
     private final BodyGoalDatabase database;
 
+    private List<Session> preSavedSessions;
+
     public ViewModel(@NonNull Application application) {
 
         super(application);
@@ -206,5 +208,13 @@ public class ViewModel extends AndroidViewModel {
         currentUser.getValue().getSessionLog().removeLogSession(session);
 
         updateUser();
+    }
+
+    public List<Session> getPreSavedSessions() {
+        return preSavedSessions;
+    }
+
+    public void setPreSavedSessions(List<Session> preSavedSessions) {
+        this.preSavedSessions = preSavedSessions;
     }
 }

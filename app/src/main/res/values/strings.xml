@@ -8,6 +8,7 @@
     <string name="title_weekly_log">Weekly Log</string>
     <string name="title_add_goal">Add Goal</string>
     <string name="title_add_session">Add Session</string>
+    <string name="title_run_session">Run Session</string>
     <string name="title_coverage">Coverage</string>
     <!-- Labels -->
     <string name="overall">Overall</string>
@@ -15,9 +16,15 @@
     <string name="calendar_week_place_holder">CW %1$d</string>
     <string name="calendar_week_year_place_holder">(%1$d)</string>
     <string name="goal_frequency">Frequency</string>
+    <string name="session_progress_percent_placeholder">[0%]</string>
+    <string name="session_progress_placeholder">[0]</string>
     <string name="start_week">Start Week</string>
     <string name="muscle_groups">Muscle groups</string>
     <string name="save">Save</string>
+    <string name="start">Start</string>
+    <string name="done">Done</string>
+    <string name="plus_text_icon">+</string>
+    <string name="slash_text_icon">/</string>
     <string name="add">Add</string>
     <string name="what_goals">What?</string>
     <string name="when_done">When?</string>
@@ -60,6 +67,8 @@
     <string name="button_calf_left">Left calf of the mannequin showing coverage</string>
     <string name="button_leg_right">Right leg of the mannequin showing coverage</string>
     <string name="button_calf_right">Right calf of the mannequin showing coverage</string>
+    <!-- Hints -->
+    <string name="hint_max_sets">Type here your set number goal</string>
     <!-- Toasts -->
     <string name="toast_no_frequency">No frequency was given</string>
     <string name="toast_no_goal_name">No goal name was given</string>

@@ -24,7 +24,7 @@ import com.slinger.bodygoals.ui.ViewModel;
 
 import java.util.Map;
 
-public class CoverageFragment extends Fragment {
+public class Coverage extends Fragment {
 
     private ViewModel viewModel;
 
@@ -53,7 +53,7 @@ public class CoverageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonToOverview.setOnClickListener(addGoalView ->
-                NavHostFragment.findNavController(CoverageFragment.this).navigate(R.id.action_CoverageFragment_to_OverviewFragment));
+                NavHostFragment.findNavController(Coverage.this).navigate(R.id.action_CoverageFragment_to_OverviewFragment));
 
         /* Switch calendar week component */
         binding.switchCalendarWeekComponent.setLifecycleOwner(this);

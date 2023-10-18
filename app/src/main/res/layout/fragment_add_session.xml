@@ -26,11 +26,11 @@
 
 
     <Button
-        android:id="@+id/button_save"
+        android:id="@+id/button_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="@string/save"
+        android:text="@string/start"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"

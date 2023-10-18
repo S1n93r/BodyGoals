@@ -97,7 +97,7 @@ public class AddSession extends Fragment {
                 goals.add(goalCheckBox.getGoal());
         }
 
-        Date date = viewModel.getSessionDate().getValue();
+        Date date = datePickerFragment.getSelectedDateLiveData().getValue();
 
         return StreamSupport.stream(goals)
                 .map(goal -> new Session(goal, date))

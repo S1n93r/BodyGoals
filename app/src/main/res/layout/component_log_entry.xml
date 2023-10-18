@@ -10,7 +10,7 @@
         android:id="@+id/overview_entry_text"
         android:layout_width="280dp"
         android:layout_height="32dp"
-        android:textSize="14sp"
+        android:textSize="22sp"
         android:gravity="center_vertical|start" />
 
     <ImageView

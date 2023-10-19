@@ -15,11 +15,12 @@ import java.util.Date;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
-    MutableLiveData<Date> selectedDateLiveData = new MutableLiveData<>();
+    MutableLiveData<Date> selectedDateLiveData = new MutableLiveData<>(Calendar.getInstance().getTime());
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         // Use the current time as the default values for the picker.
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);

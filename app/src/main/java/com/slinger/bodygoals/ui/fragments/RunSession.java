@@ -51,10 +51,13 @@ public class RunSession extends Fragment {
 
             viewModel.addSessions(viewModel.getPreSavedSessions());
 
-            binding.buttonToAddSession.setOnClickListener(addSessionView ->
-                    NavHostFragment.findNavController(RunSession.this).navigate(
-                            R.id.action_run_session_fragment_to_AddSessionFragment));
+            NavHostFragment.findNavController(RunSession.this).navigate(
+                    R.id.action_run_session_fragment_to_OverviewFragment);
         });
+
+        binding.buttonCancel.setOnClickListener(addSessionView ->
+                NavHostFragment.findNavController(RunSession.this).navigate(
+                        R.id.action_run_session_fragment_to_AddSessionFragment));
 
         binding.buttonAddSet.setOnClickListener(runSessionView -> {
 

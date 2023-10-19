@@ -68,7 +68,6 @@ public class AddSession extends Fragment {
 
             viewModel.setPreSavedSessions(collectSessionsFromUI());
 
-            viewModel.addSessions(collectSessionsFromUI());
             NavHostFragment.findNavController(AddSession.this).navigate(
                     R.id.action_AddSessionFragment_to_run_session_fragment);
         });

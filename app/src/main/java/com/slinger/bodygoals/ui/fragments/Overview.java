@@ -54,7 +54,7 @@ public class Overview extends Fragment {
         binding.buttonToAddGoal.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)
                 .navigate(R.id.action_OverviewFragment_to_goals_list_fragment));
 
-        binding.buttonToAddSession.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)
+        binding.buttonAddSession.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)
                 .navigate(R.id.action_OverviewFragment_to_AddSessionFragment));
 
         binding.buttonToCoverage.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)

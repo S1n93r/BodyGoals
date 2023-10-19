@@ -1,6 +1,8 @@
 package com.slinger.bodygoals.ui.fragments;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +20,8 @@ import com.slinger.bodygoals.ui.ViewModel;
 
 public class RunSession extends Fragment {
 
-    private final MutableLiveData<Integer> currentSets = new MutableLiveData<>();
-    private final MutableLiveData<Integer> maxSets = new MutableLiveData<>();
+    private final MutableLiveData<Integer> currentSets = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> maxSets = new MutableLiveData<>(0);
 
     private ViewModel viewModel;
 
@@ -67,6 +69,8 @@ public class RunSession extends Fragment {
             if (currentSets.getValue() < maxSets.getValue())
                 currentSets.setValue(currentSets.getValue() + 1);
         });
+
+        binding.editMaxSets.addTextChangedListener(new MaxSetsChangedWatcher());
     }
 
     @Override
@@ -82,7 +86,7 @@ public class RunSession extends Fragment {
             binding.textCurrentSets.setText(String.valueOf(currentSets));
 
             if (maxSets.getValue() != null)
-                binding.buttonDone.setActivated(maxSets.getValue().intValue() == currentSets);
+                binding.buttonDone.setEnabled(maxSets.getValue().intValue() == currentSets);
         });
 
         maxSets.observe(this, maxSets -> {
@@ -90,7 +94,27 @@ public class RunSession extends Fragment {
             if (currentSets.getValue() != null && maxSets < currentSets.getValue())
                 currentSets.setValue(maxSets);
 
-            binding.buttonDone.setActivated(maxSets == currentSets.getValue().intValue());
+            binding.buttonDone.setEnabled(maxSets == currentSets.getValue().intValue());
         });
+    }
+
+    private class MaxSetsChangedWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            maxSets.setValue(0);
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            /* TODO: Implement number guards. */
+            if (count > 0)
+                maxSets.setValue(Integer.parseInt(s.toString()));
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            /* Currently not needed. */
+        }
     }
 }

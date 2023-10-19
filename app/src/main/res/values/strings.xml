@@ -9,9 +9,11 @@
     <string name="title_add_goal">Add Goal</string>
     <string name="title_add_session">Add Session</string>
     <string name="title_run_session">Run Session</string>
+    <string name="title_yearly_summary">Yearly Summary</string>
     <string name="title_coverage">Coverage</string>
     <!-- Labels -->
     <string name="overall">Overall</string>
+    <string name="percent_placeholder">[Percent]</string>
     <string name="goals">Goals</string>
     <string name="calendar_week_place_holder">CW %1$d</string>
     <string name="calendar_week_year_place_holder">(%1$d)</string>
@@ -29,11 +31,25 @@
     <string name="what_goals">What?</string>
     <string name="when_done">When?</string>
     <string name="weekly_log_entry">[%1$s] %2$s</string>
+    <string name="january_short">Jan</string>
+    <string name="february_short">Feb</string>
+    <string name="march_short">Mar</string>
+    <string name="april_short">Apr</string>
+    <string name="may_short">May</string>
+    <string name="june_short">Jun</string>
+    <string name="july_short">Jul</string>
+    <string name="august_short">Aug</string>
+    <string name="september_short">Sep</string>
+    <string name="october_short">Oct</string>
+    <string name="november_short">Nov</string>
+    <string name="december_short">Dec</string>
+    <string name="selected_year_placeholder">[Year]</string>
     <!-- Buttons -->
     <string name="previous_week">&lt;</string>
     <string name="next_week">&gt;</string>
     <string name="button_weekly_log">Weekly Log</string>
     <string name="button_to_coverage">Coverage</string>
+    <string name="button_to_yearly_summary">Yearly</string>
     <string name="button_goals_list">Goals</string>
     <string name="button_add_session">Add Session</string>
     <string name="button_overview">Overview</string>

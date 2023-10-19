@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="calendar_tile_bright">#BF7EFC</color>
+    <color name="calendar_tile_dark">#9626FF</color>
+    <color name="calendar_dark_tile_text">#FFFFFFFF</color>
 </resources>

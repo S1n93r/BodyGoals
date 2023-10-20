@@ -16,6 +16,7 @@ import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.model.User;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
+import com.slinger.bodygoals.ui.dtos.YearlySummaryDto;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,6 +46,9 @@ public class ViewModel extends AndroidViewModel {
     private final MutableLiveData<List<Goal>> userGoals = new MutableLiveData<>(new ArrayList<>());
 
     private final MutableLiveData<Date> sessionDate = new MutableLiveData<>(Calendar.getInstance().getTime());
+
+    private final MutableLiveData<YearlySummaryDto> yearlySummaryDtoMutableLiveData =
+            new MutableLiveData<>(YearlySummaryDto.EMPTY);
 
     private final BodyGoalDatabase database;
 

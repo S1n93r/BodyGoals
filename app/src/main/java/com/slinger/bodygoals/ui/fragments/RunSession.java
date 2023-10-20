@@ -87,8 +87,18 @@ public class RunSession extends Fragment {
 
             binding.textCurrentSets.setText(String.valueOf(currentSets));
 
-            if (maxSets.getValue() != null)
-                binding.buttonDone.setEnabled(maxSets.getValue().intValue() == currentSets);
+            int maxSetsInt = maxSets.getValue() == null ? 0 : maxSets.getValue();
+
+            int sessionProgressPercentage = (int) Math.round((double) currentSets / (double) maxSetsInt * 100);
+
+            String sessionProgressPercentageString =
+                    String.format(getResources().getString(R.string.percent), sessionProgressPercentage);
+
+            binding.sessionProgressPercentText.setText(sessionProgressPercentageString);
+
+            binding.sessionProgressBar.setProgress(sessionProgressPercentage);
+
+            binding.buttonDone.setEnabled(maxSetsInt == currentSets);
         });
 
         maxSets.observe(this, maxSets -> {

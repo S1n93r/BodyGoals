@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentYearlySummaryBinding;
 import com.slinger.bodygoals.ui.ViewModel;
+import com.slinger.bodygoals.ui.components.SwitchYearComponent;
 
 public class YearlySummary extends Fragment {
 
@@ -43,7 +44,16 @@ public class YearlySummary extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonToOverview.setOnClickListener(addGoalView -> NavHostFragment.findNavController(YearlySummary.this).navigate(R.id.action_yearly_summary_fragment_to_OverviewFragment));
+        binding.buttonToOverview.setOnClickListener(addGoalView ->
+                NavHostFragment.findNavController(YearlySummary.this).navigate(R.id.action_yearly_summary_fragment_to_OverviewFragment));
+
+        SwitchYearComponent switchYearComponent = binding.switchYearComponent;
+
+        switchYearComponent.setLifecycleOwner(this);
+        switchYearComponent.setCalendarWeekLiveData(viewModel.getSelectedYear());
+        
+        switchYearComponent.registerPreviousWeekButtonAction(() -> viewModel.selectedPreviousYear());
+        switchYearComponent.registerNextWeekButtonAction(() -> viewModel.selectedNextYear());
     }
 
     @Override

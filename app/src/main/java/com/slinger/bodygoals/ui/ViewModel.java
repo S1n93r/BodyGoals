@@ -39,6 +39,9 @@ public class ViewModel extends AndroidViewModel {
     private final MutableLiveData<CalendarWeek> selectedCalendarWeek =
             new MutableLiveData<>(CalendarWeek.from(Calendar.getInstance().getTime()));
 
+    private final MutableLiveData<Integer> selectedYear =
+            new MutableLiveData<>(Calendar.getInstance().get(Calendar.YEAR));
+
     private final MutableLiveData<List<Goal>> userGoals = new MutableLiveData<>(new ArrayList<>());
 
     private final MutableLiveData<Date> sessionDate = new MutableLiveData<>(Calendar.getInstance().getTime());
@@ -216,5 +219,35 @@ public class ViewModel extends AndroidViewModel {
 
     public void setPreSavedSessions(List<Session> preSavedSessions) {
         this.preSavedSessions = preSavedSessions;
+    }
+
+    public MutableLiveData<Integer> getSelectedYear() {
+        return selectedYear;
+    }
+
+    public void selectedPreviousYear() {
+
+        if (selectedYear.getValue() == null)
+            return;
+
+        int selectedYearInt = selectedYear.getValue();
+
+        if (selectedYearInt - 1 > 1990)
+            selectedYearInt--;
+
+        selectedYear.setValue(selectedYearInt);
+    }
+
+    public void selectedNextYear() {
+
+        if (selectedYear.getValue() == null)
+            return;
+
+        int selectedYearInt = selectedYear.getValue();
+
+        if (selectedYearInt + 1 < 9999)
+            selectedYearInt++;
+
+        selectedYear.setValue(selectedYearInt);
     }
 }

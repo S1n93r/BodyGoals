@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/previous_year_button"
+        android:layout_width="64dp"
+        android:layout_height="48dp"
+        android:text="@string/previous_week" />
+
+    <View
+        android:layout_width="90dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="24dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/selected_year_text"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="@string/year_placeholder" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="90dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="24dp"
+        android:background="?android:attr/listDivider" />
+
+    <Button
+        android:id="@+id/next_year_button"
+        android:layout_width="64dp"
+        android:layout_height="48dp"
+        android:text="@string/next_week" />
+
+</LinearLayout>

@@ -14,6 +14,7 @@
     <!-- Labels -->
     <string name="overall">Overall</string>
     <string name="percent_placeholder">[Percent]</string>
+    <string name="year_placeholder">[Year]</string>
     <string name="goals">Goals</string>
     <string name="calendar_week_place_holder">CW %1$d</string>
     <string name="calendar_week_year_place_holder">(%1$d)</string>

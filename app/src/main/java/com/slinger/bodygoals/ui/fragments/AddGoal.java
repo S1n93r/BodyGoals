@@ -158,9 +158,6 @@ public class AddGoal extends Fragment {
         if (forearmsChecked)
             selectedMuscleGroups.add(MuscleGroup.FOREARMS);
 
-        if (forearmsChecked)
-            selectedMuscleGroups.add(MuscleGroup.LOWER_BACK);
-
         if (quadsChecked)
             selectedMuscleGroups.add(MuscleGroup.QUADS);
 

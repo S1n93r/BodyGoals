@@ -3,7 +3,9 @@ package com.slinger.bodygoals.model;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,20 +15,20 @@ public class Goal implements Comparable<Goal> {
     private final int frequency;
     private final List<MuscleGroup> muscleGroups = new ArrayList<>();
 
-    private final CalendarWeek creationWeek;
+    private final Date creationDate;
 
-    private Goal(String name, int frequency, CalendarWeek creationWeek) {
+    public Goal(String name, int frequency, Date creationDate) {
         this.name = name;
         this.frequency = frequency;
-        this.creationWeek = creationWeek;
+        this.creationDate = creationDate;
     }
 
     public void addMuscleGroup(MuscleGroup muscleGroup) {
         muscleGroups.add(muscleGroup);
     }
 
-    public static Goal of(String name, int frequency, CalendarWeek calendarWeek) {
-        return new Goal(name, frequency, calendarWeek);
+    public static Goal of(String name, int frequency, Date creationDate) {
+        return new Goal(name, frequency, creationDate);
     }
 
     public String getName() {
@@ -63,7 +65,15 @@ public class Goal implements Comparable<Goal> {
         return Collections.unmodifiableList(muscleGroups);
     }
 
-    public CalendarWeek getCreationWeek() {
-        return creationWeek;
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public int getCreationWeek() {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(creationDate);
+
+        return calendar.get(Calendar.WEEK_OF_YEAR);
     }
 }

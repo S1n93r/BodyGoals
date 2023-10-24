@@ -111,7 +111,7 @@ public class Overview extends Fragment {
 
         for (Goal goal : goals) {
 
-            if (calendarWeek.isAfter(goal.getCreationWeek()))
+            if (goal.getCreationWeek() > calendarWeek.getWeek())
                 continue;
 
             OverviewEntryComponent overviewEntryComponent = new OverviewEntryComponent(getContext());

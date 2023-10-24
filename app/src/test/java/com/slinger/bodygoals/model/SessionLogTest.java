@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 public class SessionLogTest {
@@ -17,12 +18,14 @@ public class SessionLogTest {
 
         Calendar calendar = Calendar.getInstance();
 
-        CalendarWeek calendarWeek = CalendarWeek.from(calendar.getTime());
+        Date date = calendar.getTime();
+
+        CalendarWeek calendarWeek = CalendarWeek.from(date);
 
         /* When */
-        sessionLog.logSession(new Session(Goal.of("Push", 2, calendarWeek), calendar.getTime()));
-        sessionLog.logSession(new Session(Goal.of("Pull", 2, calendarWeek), calendar.getTime()));
-        sessionLog.logSession(new Session(Goal.of("Legs", 2, calendarWeek), calendar.getTime()));
+        sessionLog.logSession(new Session(Goal.of("Push", 2, date), calendar.getTime()));
+        sessionLog.logSession(new Session(Goal.of("Pull", 2, date), calendar.getTime()));
+        sessionLog.logSession(new Session(Goal.of("Legs", 2, date), calendar.getTime()));
 
         /* Then */
         assertEquals(1, sessionLog.getLoggedWeeks().size());
@@ -37,11 +40,13 @@ public class SessionLogTest {
 
         Calendar calendar = Calendar.getInstance();
 
-        CalendarWeek calendarWeek = CalendarWeek.from(calendar.getTime());
+        Date date = calendar.getTime();
 
-        Goal push = Goal.of("Push", 2, calendarWeek);
-        Goal pull = Goal.of("Pull", 2, calendarWeek);
-        Goal legs = Goal.of("Legs", 2, calendarWeek);
+        CalendarWeek calendarWeek = CalendarWeek.from(date);
+
+        Goal push = Goal.of("Push", 2, date);
+        Goal pull = Goal.of("Pull", 2, date);
+        Goal legs = Goal.of("Legs", 2, date);
 
         /* When */
         sessionLog.logSession(new Session(push, calendar.getTime()));
@@ -64,18 +69,20 @@ public class SessionLogTest {
 
         Calendar calendar = Calendar.getInstance();
 
-        CalendarWeek calendarWeek = CalendarWeek.from(calendar.getTime());
+        Date date = calendar.getTime();
 
-        Goal push = Goal.of("Push", 3, calendarWeek);
-        Goal pull = Goal.of("Pull", 2, calendarWeek);
-        Goal legs = Goal.of("Legs", 2, calendarWeek);
+        CalendarWeek calendarWeek = CalendarWeek.from(date);
+
+        Goal push = Goal.of("Push", 3, date);
+        Goal pull = Goal.of("Pull", 2, date);
+        Goal legs = Goal.of("Legs", 2, date);
 
         /* When */
-        sessionLog.logSession(new Session(push, calendar.getTime()));
-        sessionLog.logSession(new Session(pull, calendar.getTime()));
-        sessionLog.logSession(new Session(legs, calendar.getTime()));
-        sessionLog.logSession(new Session(push, calendar.getTime()));
-        sessionLog.logSession(new Session(pull, calendar.getTime()));
+        sessionLog.logSession(new Session(push, date));
+        sessionLog.logSession(new Session(pull, date));
+        sessionLog.logSession(new Session(legs, date));
+        sessionLog.logSession(new Session(push, date));
+        sessionLog.logSession(new Session(pull, date));
 
         /* Then */
         assertEquals(67, sessionLog.getGoalProgress(calendarWeek, push));
@@ -91,27 +98,29 @@ public class SessionLogTest {
 
         Calendar calendar = Calendar.getInstance();
 
-        CalendarWeek calendarWeek = CalendarWeek.from(calendar.getTime());
+        Date date = calendar.getTime();
 
-        Goal push = Goal.of("Push", 3, calendarWeek);
+        CalendarWeek calendarWeek = CalendarWeek.from(date);
+
+        Goal push = Goal.of("Push", 3, date);
         push.addMuscleGroup(MuscleGroup.CHEST);
         push.addMuscleGroup(MuscleGroup.TRICEPS);
 
-        Goal pull = Goal.of("Pull", 2, calendarWeek);
+        Goal pull = Goal.of("Pull", 2, date);
         pull.addMuscleGroup(MuscleGroup.LATS);
         pull.addMuscleGroup(MuscleGroup.BICEPS);
 
-        Goal legs = Goal.of("Legs", 2, calendarWeek);
+        Goal legs = Goal.of("Legs", 2, date);
         legs.addMuscleGroup(MuscleGroup.QUADS);
         legs.addMuscleGroup(MuscleGroup.HARM_STRINGS);
         legs.addMuscleGroup(MuscleGroup.CALVES);
 
-        sut.logSession(new Session(pull, calendar.getTime()));
-        sut.logSession(new Session(push, calendar.getTime()));
-        sut.logSession(new Session(pull, calendar.getTime()));
-        sut.logSession(new Session(legs, calendar.getTime()));
-        sut.logSession(new Session(push, calendar.getTime()));
-        sut.logSession(new Session(pull, calendar.getTime()));
+        sut.logSession(new Session(pull, date));
+        sut.logSession(new Session(push, date));
+        sut.logSession(new Session(pull, date));
+        sut.logSession(new Session(legs, date));
+        sut.logSession(new Session(push, date));
+        sut.logSession(new Session(pull, date));
 
         /* When */
         Map<MuscleGroup, Progress> progressPerMuscleGroup = sut.progressPerMuscleGroup(calendarWeek);

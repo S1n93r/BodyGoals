@@ -14,7 +14,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentAddGoalBinding;
-import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.MuscleGroup;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
@@ -26,6 +25,7 @@ import com.slinger.bodygoals.ui.exceptions.NoMuscleGroupException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AddGoal extends Fragment {
@@ -125,9 +125,9 @@ public class AddGoal extends Fragment {
         boolean shouldersChecked = binding.cbShoulders.isChecked();
         boolean tricepsChecked = binding.cbTriceps.isChecked();
 
-        CalendarWeek calendarWeek = CalendarWeek.from(datePickerFragment.getSelectedDateLiveData().getValue());
+        Date creationDate = datePickerFragment.getSelectedDateLiveData().getValue();
 
-        Goal goal = Goal.of(goalName, frequency, calendarWeek);
+        Goal goal = Goal.of(goalName, frequency, creationDate);
 
         List<MuscleGroup> selectedMuscleGroups = new ArrayList<>();
 

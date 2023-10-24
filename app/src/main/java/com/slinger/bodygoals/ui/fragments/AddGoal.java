@@ -58,14 +58,14 @@ public class AddGoal extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonToOverview.setOnClickListener(addGoalView -> navigateToOverview());
+        binding.buttonCancel.setOnClickListener(addGoalView -> navigateToGoalsList());
 
         binding.buttonSave.setOnClickListener(addGoalView -> {
 
             try {
 
                 viewModel.addGoal(collectGoalFromUI());
-                navigateToOverview();
+                navigateToGoalsList();
 
             } catch (IllegalStateException e) {
 
@@ -87,8 +87,9 @@ public class AddGoal extends Fragment {
         );
     }
 
-    private void navigateToOverview() {
-        NavHostFragment.findNavController(AddGoal.this).navigate(R.id.action_AddGoalFragment_to_goals_list_fragment);
+    private void navigateToGoalsList() {
+        NavHostFragment.findNavController(AddGoal.this)
+                .navigate(R.id.action_AddGoalFragment_to_goals_list_fragment);
     }
 
     @Override

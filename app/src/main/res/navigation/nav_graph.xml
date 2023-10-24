@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_AddGoalFragment_to_goals_list_fragment"
             app:destination="@id/goals_list_fragment" />
+        <action
+            android:id="@+id/action_AddGoalFragment_to_OverviewFragment"
+            app:destination="@id/OverviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/AddSessionFragment"
@@ -82,7 +85,7 @@
             app:destination="@id/AddGoalFragment" />
         <action
             android:id="@+id/action_goals_list_fragment_to_OverviewFragment"
-            app:destination="@id/goals_list_fragment" />
+            app:destination="@id/OverviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/run_session_fragment"

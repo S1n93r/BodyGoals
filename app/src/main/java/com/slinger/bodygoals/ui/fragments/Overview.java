@@ -61,8 +61,8 @@ public class Overview extends Fragment {
         binding.buttonToCoverage.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)
                 .navigate(R.id.action_OverviewFragment_to_CoverageFragment));
 
-        binding.buttonToYearlySummary.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)
-                .navigate(R.id.action_OverviewFragment_to_yearly_summary_fragment));
+//        binding.buttonToYearlySummary.setOnClickListener(overviewView -> NavHostFragment.findNavController(Overview.this)
+//                .navigate(R.id.action_OverviewFragment_to_yearly_summary_fragment));
 
         /* Switch calendar week component */
         binding.switchCalendarWeekComponent.setLifecycleOwner(this);

@@ -36,11 +36,7 @@ public class ViewModel extends AndroidViewModel {
     private final MutableLiveData<User> currentUser =
             new MutableLiveData<>(new User());
 
-    private final MutableLiveData<Integer> selectedCalendarWeek =
-            new MutableLiveData<>(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
-
-    private final MutableLiveData<Integer> selectedYear =
-            new MutableLiveData<>(Calendar.getInstance().get(Calendar.YEAR));
+    private final MutableLiveData<Date> selectedDate = new MutableLiveData<>(Calendar.getInstance().getTime());
 
     private final MutableLiveData<List<Goal>> userGoals = new MutableLiveData<>(new ArrayList<>());
 
@@ -79,8 +75,8 @@ public class ViewModel extends AndroidViewModel {
         return userGoals;
     }
 
-    public LiveData<Integer> getSelectedCalendarWeek() {
-        return selectedCalendarWeek;
+    public LiveData<Date> getSelectedDate() {
+        return selectedDate;
     }
 
     public LiveData<Date> getSessionDate() {
@@ -89,28 +85,6 @@ public class ViewModel extends AndroidViewModel {
 
     public void setSessionDate(Date date) {
         sessionDate.setValue(date);
-    }
-
-    public void selectPreviousWeek() {
-
-        Integer weekOfYear = selectedCalendarWeek.getValue();
-
-        /* TODO: Handle logic in DTO. */
-        if (weekOfYear == null || weekOfYear == 1)
-            return;
-
-        selectedCalendarWeek.setValue(weekOfYear - 1);
-    }
-
-    public void selectNextWeek() {
-
-        Integer weekOfYear = selectedCalendarWeek.getValue();
-
-        /* TODO: Handle logic in DTO. */
-        if (weekOfYear == null || weekOfYear == 52)
-            return;
-
-        selectedCalendarWeek.setValue(weekOfYear + 1);
     }
 
     public void addGoal(@NonNull Goal goal) throws GoalAlreadyExistsException {
@@ -134,24 +108,24 @@ public class ViewModel extends AndroidViewModel {
         updateUser();
     }
 
-    public List<Session> getSessions(int weekOfYear) {
+    public List<Session> getSessions(Date date) {
 
         User user = currentUser.getValue();
 
         if (user == null)
             return Lists.of();
 
-        return user.getSessionLog().getSessionsCopy(weekOfYear);
+        return user.getSessionLog().getSessionsWeekOfYear(date);
     }
 
-    public Set<Goal> getSessionGoals(int weekOfYear) {
+    public Set<Goal> getSessionGoals(Date date) {
 
         User user = currentUser.getValue();
 
         if (user == null)
             return Sets.of();
 
-        return user.getSessionLog().getSessionGoals(weekOfYear);
+        return user.getSessionLog().getSessionGoalsWeekOfYear(date);
     }
 
     public int getGoalProgress(int weekOfYear, Goal goal) {
@@ -230,33 +204,29 @@ public class ViewModel extends AndroidViewModel {
         this.preSavedSessions = preSavedSessions;
     }
 
-    public MutableLiveData<Integer> getSelectedYear() {
-        return selectedYear;
+    public void selectPreviousDate(int field) {
+
+        Date currentSelection = selectedDate.getValue();
+
+        if (currentSelection == null)
+            throw new IllegalStateException("Selected Date should never be null.");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentSelection);
+
+        calendar.add(field, -1);
     }
 
-    public void selectedPreviousYear() {
+    public void selectNextDate(int field) {
 
-        if (selectedYear.getValue() == null)
-            return;
+        Date currentSelection = selectedDate.getValue();
 
-        int selectedYearInt = selectedYear.getValue();
+        if (currentSelection == null)
+            throw new IllegalStateException("Selected Date should never be null.");
 
-        if (selectedYearInt - 1 > 1990)
-            selectedYearInt--;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentSelection);
 
-        selectedYear.setValue(selectedYearInt);
-    }
-
-    public void selectedNextYear() {
-
-        if (selectedYear.getValue() == null)
-            return;
-
-        int selectedYearInt = selectedYear.getValue();
-
-        if (selectedYearInt + 1 < 9999)
-            selectedYearInt++;
-
-        selectedYear.setValue(selectedYearInt);
+        calendar.add(field, 1);
     }
 }

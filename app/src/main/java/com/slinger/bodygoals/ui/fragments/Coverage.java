@@ -21,6 +21,8 @@ import com.slinger.bodygoals.model.ProgressStatus;
 import com.slinger.bodygoals.model.User;
 import com.slinger.bodygoals.ui.ViewModel;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 public class Coverage extends Fragment {
@@ -57,10 +59,10 @@ public class Coverage extends Fragment {
         /* Switch calendar week component */
         binding.switchCalendarWeekComponent.setLifecycleOwner(this);
 
-        binding.switchCalendarWeekComponent.setCalendarWeekLiveData(viewModel.getSelectedCalendarWeek());
+        binding.switchCalendarWeekComponent.setCalendarWeekLiveData(viewModel.getSelectedDate());
 
-        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousWeek());
-        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextWeek());
+        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousDate(Calendar.WEEK_OF_YEAR));
+        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextDate(Calendar.WEEK_OF_YEAR));
     }
 
     @Override
@@ -72,9 +74,9 @@ public class Coverage extends Fragment {
     private void registerLiveDataObserver() {
 
         viewModel.getCurrentUser().observe(this,
-                user -> updateCoverage(user, viewModel.getSelectedCalendarWeek().getValue()));
+                user -> updateCoverage(user, viewModel.getSelectedDate().getValue()));
 
-        viewModel.getSelectedCalendarWeek().observe(this, calendarWeek -> {
+        viewModel.getSelectedDate().observe(this, selectedDate -> {
 
             User user = viewModel.getCurrentUser().getValue();
 
@@ -82,13 +84,13 @@ public class Coverage extends Fragment {
             if (user == null)
                 return;
 
-            updateCoverage(user, calendarWeek);
+            updateCoverage(user, selectedDate);
         });
     }
 
-    private void updateCoverage(User user, int weekOfYear) {
+    private void updateCoverage(User user, Date date) {
 
-        Map<MuscleGroup, Progress> progressPerMuscleGroup = user.getSessionLog().progressPerMuscleGroup(weekOfYear);
+        Map<MuscleGroup, Progress> progressPerMuscleGroup = user.getSessionLog().progressPerMuscleGroup(date);
 
         progressPerMuscleGroup.forEach((key, value) -> {
 

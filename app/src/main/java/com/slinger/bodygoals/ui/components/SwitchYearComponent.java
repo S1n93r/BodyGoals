@@ -12,6 +12,10 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 
 import com.slinger.bodygoals.R;
+import com.slinger.bodygoals.model.DateUtil;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class SwitchYearComponent extends ConstraintLayout {
 
@@ -66,11 +70,14 @@ public class SwitchYearComponent extends ConstraintLayout {
         this.lifecycleOwner = lifecycleOwner;
     }
 
-    private void updateTexts(int year) {
+    private void updateTexts(Date date) {
+
+        int year = DateUtil.getFromDate(date, Calendar.YEAR);
+
         yearText.setText(String.valueOf(year));
     }
 
-    public void setCalendarWeekLiveData(LiveData<Integer> selectedYearLiveData) {
+    public void setCalendarWeekLiveData(LiveData<Date> selectedYearLiveData) {
 
         if (lifecycleOwner == null)
             throw new IllegalStateException("Set LifeCycleOwner first!");

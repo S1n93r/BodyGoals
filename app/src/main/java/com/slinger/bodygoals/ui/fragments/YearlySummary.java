@@ -16,6 +16,8 @@ import com.slinger.bodygoals.databinding.FragmentYearlySummaryBinding;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.SwitchYearComponent;
 
+import java.util.Calendar;
+
 public class YearlySummary extends Fragment {
 
     private ViewModel viewModel;
@@ -50,10 +52,10 @@ public class YearlySummary extends Fragment {
         SwitchYearComponent switchYearComponent = binding.switchYearComponent;
 
         switchYearComponent.setLifecycleOwner(this);
-        switchYearComponent.setCalendarWeekLiveData(viewModel.getSelectedYear());
-        
-        switchYearComponent.registerPreviousWeekButtonAction(() -> viewModel.selectedPreviousYear());
-        switchYearComponent.registerNextWeekButtonAction(() -> viewModel.selectedNextYear());
+        switchYearComponent.setCalendarWeekLiveData(viewModel.getSelectedDate());
+
+        switchYearComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousDate(Calendar.YEAR));
+        switchYearComponent.registerNextWeekButtonAction(() -> viewModel.selectNextDate(Calendar.YEAR));
     }
 
     @Override

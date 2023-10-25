@@ -13,11 +13,13 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentOverviewBinding;
+import com.slinger.bodygoals.model.DateUtil;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.OverviewEntryComponent;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,10 +67,10 @@ public class Overview extends Fragment {
         /* Switch calendar week component */
         binding.switchCalendarWeekComponent.setLifecycleOwner(this);
 
-        binding.switchCalendarWeekComponent.setCalendarWeekLiveData(viewModel.getSelectedCalendarWeek());
+        binding.switchCalendarWeekComponent.setCalendarWeekLiveData(viewModel.getSelectedDate());
 
-        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousWeek());
-        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextWeek());
+        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousDate(Calendar.WEEK_OF_YEAR));
+        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextDate(Calendar.WEEK_OF_YEAR));
     }
 
     @Override
@@ -79,20 +81,14 @@ public class Overview extends Fragment {
 
     private void registerLiveDataObserver() {
 
-        viewModel.getUserGoals().observe(this, goals -> {
+        viewModel.getUserGoals().observe(this, goals ->
+                updateGoalProgressBars(viewModel.getSelectedDate().getValue()));
 
-            Integer weekOfYearWrapped = viewModel.getSelectedCalendarWeek().getValue();
-
-            int weekOfYear = weekOfYearWrapped == null
-                    ? Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) : weekOfYearWrapped;
-
-            updateGoalProgressBars(weekOfYear);
-        });
-
-        viewModel.getSelectedCalendarWeek().observe(this, this::updateGoalProgressBars);
+        viewModel.getSelectedDate().observe(this, weekOfYear ->
+                updateGoalProgressBars(viewModel.getSelectedDate().getValue()));
     }
 
-    private void updateGoalProgressBars(int weekOfYear) {
+    private void updateGoalProgressBars(Date date) {
 
         List<Goal> goalsCopy = viewModel.getUserGoals().getValue();
 
@@ -101,7 +97,7 @@ public class Overview extends Fragment {
 
         Set<Goal> goals = new HashSet<>(goalsCopy);
 
-        goals.addAll(viewModel.getSessionGoals(weekOfYear));
+        goals.addAll(viewModel.getSessionGoals(date));
 
         binding.goalProgressBarsList.removeAllViews();
 
@@ -109,6 +105,8 @@ public class Overview extends Fragment {
         int currentOverallProgress = 0;
 
         for (Goal goal : goals) {
+
+            int weekOfYear = DateUtil.getFromDate(date, Calendar.WEEK_OF_YEAR);
 
             if (goal.getCreationWeek() > weekOfYear)
                 continue;

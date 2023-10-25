@@ -17,7 +17,9 @@ import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.LogEntry;
 
+import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class WeeklyLog extends Fragment {
@@ -56,10 +58,10 @@ public class WeeklyLog extends Fragment {
         /* Switch calendar week component */
         binding.switchCalendarWeekComponent.setLifecycleOwner(this);
 
-        binding.switchCalendarWeekComponent.setCalendarWeekLiveData(viewModel.getSelectedCalendarWeek());
+        binding.switchCalendarWeekComponent.setCalendarWeekLiveData(viewModel.getSelectedDate());
 
-        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousWeek());
-        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextWeek());
+        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousDate(Calendar.WEEK_OF_YEAR));
+        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextDate(Calendar.WEEK_OF_YEAR));
     }
 
     @Override
@@ -69,12 +71,12 @@ public class WeeklyLog extends Fragment {
     }
 
     private void registerLiveDataObserver() {
-        viewModel.getSelectedCalendarWeek().observe(this, this::updateWeeklyLogList);
+        viewModel.getSelectedDate().observe(this, this::updateWeeklyLogList);
     }
 
-    private void updateWeeklyLogList(int weekOfYear) {
+    private void updateWeeklyLogList(Date date) {
 
-        List<Session> sessions = viewModel.getSessions(weekOfYear);
+        List<Session> sessions = viewModel.getSessions(date);
         sessions.sort(Comparator.comparing(Session::getDate));
 
         binding.weeklySessionsList.removeAllViews();
@@ -86,7 +88,7 @@ public class WeeklyLog extends Fragment {
             logEntry.setSession(session);
             logEntry.registerDisableGoalRunner(() -> {
                 viewModel.removeLogEntry(session);
-                updateWeeklyLogList(weekOfYear);
+                updateWeeklyLogList(date);
             });
 
             binding.weeklySessionsList.addView(logEntry);

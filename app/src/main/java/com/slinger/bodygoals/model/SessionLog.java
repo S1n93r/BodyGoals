@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.TypeConverters;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import java8.util.stream.StreamSupport;
 
 public class SessionLog {
 
+    /* TODO: To get data I constantly iterate over logs instead of saving progresses etc. in a DTO. */
     @ColumnInfo(name = "logged_sessions")
     @TypeConverters({SessionListConverter.class})
     private List<Session> loggedSessions = new ArrayList<>();
@@ -29,18 +32,21 @@ public class SessionLog {
                 .collect(Collectors.toSet());
     }
 
-    public List<Session> getSessionsCopy(int weekOfYear) {
+    public List<Session> getSessionsWeekOfYear(Date date) {
 
         return StreamSupport.stream(loggedSessions)
-                .filter(session -> session.getGoal().getCreationWeek() == weekOfYear)
+                .filter(session -> DateUtil.compareDate(session.getGoal().getCreationDate(), date, Calendar.YEAR))
+                .filter(session -> DateUtil.compareDate(session.getGoal().getCreationDate(), date, Calendar.WEEK_OF_YEAR))
                 .collect(Collectors.toList());
     }
 
-    public Set<Goal> getSessionGoals(int weekOfYear) {
+    public Set<Goal> getSessionGoalsWeekOfYear(Date date) {
 
         /* FIXME: Sorting is not working. */
-        return StreamSupport.stream(getSessionsCopy(weekOfYear))
-                .map(session -> session.getGoal())
+        return StreamSupport.stream(loggedSessions)
+                .filter(session -> DateUtil.compareDate(session.getGoal().getCreationDate(), date, Calendar.YEAR))
+                .filter(session -> DateUtil.compareDate(session.getGoal().getCreationDate(), date, Calendar.WEEK_OF_YEAR))
+                .map(Session::getGoal)
                 .sorted()
                 .collect(Collectors.toSet());
     }
@@ -58,10 +64,24 @@ public class SessionLog {
         return sessionsMatching.size();
     }
 
-    public int getOverallMonthlyProgress(int month) {
+    public Map<Integer, Integer> getOverallMonthlyProgresses(int year) {
 
-        /* TODO: Implement*/
-        return 0;
+        Map<Integer, Integer> overallMonthlyProgressesMap = new HashMap<>();
+
+        for (int iMonth = Calendar.JANUARY; iMonth <= Calendar.DECEMBER; iMonth++)
+            overallMonthlyProgressesMap.put(iMonth, 0);
+
+        StreamSupport.stream(loggedSessions)
+                .filter(session -> DateUtil.getFromDate(session.getDate(), Calendar.MONTH) == year)
+                .forEach(session -> overallMonthlyProgressesMap.put(
+                        DateUtil.getFromDate(session.getDate(), Calendar.MONTH),
+                        getMonthProgress(year, DateUtil.getFromDate(session.getDate(), Calendar.MONTH))));
+
+        return overallMonthlyProgressesMap;
+    }
+
+    private int getMonthProgress(int year, int month) {
+        throw new UnsupportedOperationException("TODO: Implement!");
     }
 
     public int getGoalProgress(int weekOfYear, Goal goal) {
@@ -85,9 +105,9 @@ public class SessionLog {
 
     /* TODO: Dedicated class instead of map, otherwise every place has to null-check. */
     /* FIXME: Muscle group progress is applied to wrong groups. Check here and in goals. */
-    public Map<MuscleGroup, Progress> progressPerMuscleGroup(int weekOfYear) {
+    public Map<MuscleGroup, Progress> progressPerMuscleGroup(Date date) {
 
-        List<Session> sessions = getSessionsCopy(weekOfYear);
+        List<Session> sessions = getSessionsWeekOfYear(date);
 
         Map<MuscleGroup, Progress> progressPerMuscleGroup = new HashMap<>();
 

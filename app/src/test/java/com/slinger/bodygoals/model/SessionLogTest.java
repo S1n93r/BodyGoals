@@ -20,8 +20,6 @@ public class SessionLogTest {
 
         Date date = calendar.getTime();
 
-        int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
-
         /* When */
         sessionLog.logSession(new Session(Goal.of("Push", 2, date), calendar.getTime()));
         sessionLog.logSession(new Session(Goal.of("Pull", 2, date), calendar.getTime()));
@@ -29,7 +27,7 @@ public class SessionLogTest {
 
         /* Then */
         assertEquals(1, sessionLog.getLoggedWeeks().size());
-        assertEquals(3, sessionLog.getSessionsCopy(weekOfYear).size());
+        assertEquals(3, sessionLog.getSessionsWeekOfYear(date).size());
     }
 
     @Test
@@ -41,6 +39,8 @@ public class SessionLogTest {
         Calendar calendar = Calendar.getInstance();
 
         Date date = calendar.getTime();
+
+        int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
 
         Goal push = Goal.of("Push", 2, date);
         Goal pull = Goal.of("Pull", 2, date);
@@ -54,9 +54,9 @@ public class SessionLogTest {
         sessionLog.logSession(new Session(pull, calendar.getTime()));
 
         /* Then */
-        assertEquals(2, sessionLog.getSessionsLogged(date, push));
-        assertEquals(2, sessionLog.getSessionsLogged(date, pull));
-        assertEquals(1, sessionLog.getSessionsLogged(date, legs));
+        assertEquals(2, sessionLog.getSessionsLogged(weekOfYear, push));
+        assertEquals(2, sessionLog.getSessionsLogged(weekOfYear, pull));
+        assertEquals(1, sessionLog.getSessionsLogged(weekOfYear, legs));
     }
 
     @Test
@@ -68,6 +68,8 @@ public class SessionLogTest {
         Calendar calendar = Calendar.getInstance();
 
         Date date = calendar.getTime();
+
+        int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
 
         Goal push = Goal.of("Push", 3, date);
         Goal pull = Goal.of("Pull", 2, date);
@@ -81,9 +83,9 @@ public class SessionLogTest {
         sessionLog.logSession(new Session(pull, date));
 
         /* Then */
-        assertEquals(67, sessionLog.getGoalProgress(date, push));
-        assertEquals(100, sessionLog.getGoalProgress(date, pull));
-        assertEquals(50, sessionLog.getGoalProgress(date, legs));
+        assertEquals(67, sessionLog.getGoalProgress(weekOfYear, push));
+        assertEquals(100, sessionLog.getGoalProgress(weekOfYear, pull));
+        assertEquals(50, sessionLog.getGoalProgress(weekOfYear, legs));
     }
 
     @Test
@@ -95,8 +97,6 @@ public class SessionLogTest {
         Calendar calendar = Calendar.getInstance();
 
         Date date = calendar.getTime();
-
-        int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
 
         Goal push = Goal.of("Push", 3, date);
         push.addMuscleGroup(MuscleGroup.CHEST);
@@ -119,7 +119,7 @@ public class SessionLogTest {
         sut.logSession(new Session(pull, date));
 
         /* When */
-        Map<MuscleGroup, Progress> progressPerMuscleGroup = sut.progressPerMuscleGroup(weekOfYear);
+        Map<MuscleGroup, Progress> progressPerMuscleGroup = sut.progressPerMuscleGroup(date);
 
         /* Then */
         assertEquals(3, progressPerMuscleGroup.get(MuscleGroup.CHEST).getMax());

@@ -2,6 +2,7 @@ package com.slinger.bodygoals.ui.dtos;
 
 import com.slinger.bodygoals.model.SessionLog;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,9 +13,9 @@ public class YearlySummaryDto {
 
     private final int year;
 
-    private final Map<Month, MonthlySummaryDto> monthlySummaryMap;
+    private final Map<Integer, MonthlySummaryDto> monthlySummaryMap;
 
-    public YearlySummaryDto(int year, Map<Month, MonthlySummaryDto> monthlySummaryMap) {
+    public YearlySummaryDto(int year, Map<Integer, MonthlySummaryDto> monthlySummaryMap) {
         this.year = year;
         this.monthlySummaryMap = monthlySummaryMap;
     }
@@ -22,20 +23,20 @@ public class YearlySummaryDto {
     public static YearlySummaryDto of(int year, int jan, int feb, int mar, int apr, int may, int jun,
                                       int jul, int aug, int sep, int oct, int nov, int dec) {
 
-        Map<Month, MonthlySummaryDto> monthlySummaryMap = new HashMap<>();
+        Map<Integer, MonthlySummaryDto> monthlySummaryMap = new HashMap<>();
 
-        monthlySummaryMap.put(Month.JANUARY, MonthlySummaryDto.of(year, Month.JANUARY, jan));
-        monthlySummaryMap.put(Month.FEBRUARY, MonthlySummaryDto.of(year, Month.FEBRUARY, feb));
-        monthlySummaryMap.put(Month.MARCH, MonthlySummaryDto.of(year, Month.MARCH, mar));
-        monthlySummaryMap.put(Month.APRIL, MonthlySummaryDto.of(year, Month.APRIL, apr));
-        monthlySummaryMap.put(Month.MAY, MonthlySummaryDto.of(year, Month.MAY, may));
-        monthlySummaryMap.put(Month.JUNE, MonthlySummaryDto.of(year, Month.JUNE, jun));
-        monthlySummaryMap.put(Month.JULY, MonthlySummaryDto.of(year, Month.JULY, jul));
-        monthlySummaryMap.put(Month.AUGUST, MonthlySummaryDto.of(year, Month.AUGUST, aug));
-        monthlySummaryMap.put(Month.SEPTEMBER, MonthlySummaryDto.of(year, Month.SEPTEMBER, sep));
-        monthlySummaryMap.put(Month.OCTOBER, MonthlySummaryDto.of(year, Month.OCTOBER, oct));
-        monthlySummaryMap.put(Month.NOVEMBER, MonthlySummaryDto.of(year, Month.NOVEMBER, nov));
-        monthlySummaryMap.put(Month.DECEMBER, MonthlySummaryDto.of(year, Month.DECEMBER, dec));
+        monthlySummaryMap.put(Calendar.JANUARY, MonthlySummaryDto.of(year, Calendar.JANUARY, jan));
+        monthlySummaryMap.put(Calendar.FEBRUARY, MonthlySummaryDto.of(year, Calendar.FEBRUARY, feb));
+        monthlySummaryMap.put(Calendar.MARCH, MonthlySummaryDto.of(year, Calendar.MARCH, mar));
+        monthlySummaryMap.put(Calendar.APRIL, MonthlySummaryDto.of(year, Calendar.APRIL, apr));
+        monthlySummaryMap.put(Calendar.MAY, MonthlySummaryDto.of(year, Calendar.MAY, may));
+        monthlySummaryMap.put(Calendar.JUNE, MonthlySummaryDto.of(year, Calendar.JUNE, jun));
+        monthlySummaryMap.put(Calendar.JULY, MonthlySummaryDto.of(year, Calendar.JULY, jul));
+        monthlySummaryMap.put(Calendar.AUGUST, MonthlySummaryDto.of(year, Calendar.AUGUST, aug));
+        monthlySummaryMap.put(Calendar.SEPTEMBER, MonthlySummaryDto.of(year, Calendar.SEPTEMBER, sep));
+        monthlySummaryMap.put(Calendar.OCTOBER, MonthlySummaryDto.of(year, Calendar.OCTOBER, oct));
+        monthlySummaryMap.put(Calendar.NOVEMBER, MonthlySummaryDto.of(year, Calendar.NOVEMBER, nov));
+        monthlySummaryMap.put(Calendar.DECEMBER, MonthlySummaryDto.of(year, Calendar.DECEMBER, dec));
 
         return new YearlySummaryDto(year, monthlySummaryMap);
     }
@@ -43,11 +44,13 @@ public class YearlySummaryDto {
     /* TODO: Should later be "from sessionLogDto" */
     public static YearlySummaryDto fromSessionLog(int year, SessionLog sessionLog) {
 
+
+
         /* TODO: We need more support classes to implement this. */
         return null;
     }
 
-    public MonthlySummaryDto getMonthlyProgress(Month month) {
+    public MonthlySummaryDto getMonthlyProgress(int month) {
         return monthlySummaryMap.get(month);
     }
 }

@@ -58,6 +58,12 @@ public class SessionLog {
         return sessionsMatching.size();
     }
 
+    public int getOverallMonthlyProgress(int month) {
+
+        /* TODO: Implement*/
+        return 0;
+    }
+
     public int getGoalProgress(int weekOfYear, Goal goal) {
 
         int sessionsLogged = getSessionsLogged(weekOfYear, goal);

@@ -11,7 +11,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.room.Room;
 
 import com.slinger.bodygoals.model.BodyGoalDatabase;
-import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.model.User;
@@ -37,8 +36,8 @@ public class ViewModel extends AndroidViewModel {
     private final MutableLiveData<User> currentUser =
             new MutableLiveData<>(new User());
 
-    private final MutableLiveData<CalendarWeek> selectedCalendarWeek =
-            new MutableLiveData<>(CalendarWeek.from(Calendar.getInstance().getTime()));
+    private final MutableLiveData<Integer> selectedCalendarWeek =
+            new MutableLiveData<>(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
 
     private final MutableLiveData<Integer> selectedYear =
             new MutableLiveData<>(Calendar.getInstance().get(Calendar.YEAR));
@@ -80,7 +79,7 @@ public class ViewModel extends AndroidViewModel {
         return userGoals;
     }
 
-    public LiveData<CalendarWeek> getSelectedCalendarWeek() {
+    public LiveData<Integer> getSelectedCalendarWeek() {
         return selectedCalendarWeek;
     }
 
@@ -94,18 +93,24 @@ public class ViewModel extends AndroidViewModel {
 
     public void selectPreviousWeek() {
 
-        CalendarWeek calendarWeek = selectedCalendarWeek.getValue();
+        Integer weekOfYear = selectedCalendarWeek.getValue();
 
-        if (calendarWeek != null)
-            selectedCalendarWeek.setValue(CalendarWeek.previousWeek(calendarWeek));
+        /* TODO: Handle logic in DTO. */
+        if (weekOfYear == null || weekOfYear == 1)
+            return;
+
+        selectedCalendarWeek.setValue(weekOfYear - 1);
     }
 
     public void selectNextWeek() {
 
-        CalendarWeek calendarWeek = selectedCalendarWeek.getValue();
+        Integer weekOfYear = selectedCalendarWeek.getValue();
 
-        if (calendarWeek != null)
-            selectedCalendarWeek.setValue(CalendarWeek.nextWeek(calendarWeek));
+        /* TODO: Handle logic in DTO. */
+        if (weekOfYear == null || weekOfYear == 52)
+            return;
+
+        selectedCalendarWeek.setValue(weekOfYear + 1);
     }
 
     public void addGoal(@NonNull Goal goal) throws GoalAlreadyExistsException {
@@ -129,37 +134,37 @@ public class ViewModel extends AndroidViewModel {
         updateUser();
     }
 
-    public List<Session> getSessions(CalendarWeek calendarWeek) {
+    public List<Session> getSessions(int weekOfYear) {
 
         User user = currentUser.getValue();
 
         if (user == null)
             return Lists.of();
 
-        return user.getSessionLog().getSessionsCopy(calendarWeek);
+        return user.getSessionLog().getSessionsCopy(weekOfYear);
     }
 
-    public Set<Goal> getSessionGoals(CalendarWeek calendarWeek) {
+    public Set<Goal> getSessionGoals(int weekOfYear) {
 
         User user = currentUser.getValue();
 
         if (user == null)
             return Sets.of();
 
-        return user.getSessionLog().getSessionGoals(calendarWeek);
+        return user.getSessionLog().getSessionGoals(weekOfYear);
     }
 
-    public int getGoalProgress(CalendarWeek calendarWeek, Goal goal) {
+    public int getGoalProgress(int yearOfWeek, Goal goal) {
 
         User user = currentUser.getValue();
 
         if (user == null)
             return 0;
 
-        return user.getSessionLog().getGoalProgress(calendarWeek, goal);
+        return user.getSessionLog().getGoalProgress(yearOfWeek, goal);
     }
 
-    public int getSessionsLogged(CalendarWeek calendarWeek, Goal goal) {
+    public int getSessionsLogged(int weekOfYear, Goal goal) {
 
         User user = currentUser.getValue();
 
@@ -169,7 +174,7 @@ public class ViewModel extends AndroidViewModel {
         if (user.getSessionLog() == null)
             return 0;
 
-        return user.getSessionLog().getSessionsLogged(calendarWeek, goal);
+        return user.getSessionLog().getSessionsLogged(weekOfYear, goal);
     }
 
     private void updateUser() {

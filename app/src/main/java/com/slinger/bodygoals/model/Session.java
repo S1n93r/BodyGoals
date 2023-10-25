@@ -1,5 +1,6 @@
 package com.slinger.bodygoals.model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Session {
@@ -18,5 +19,13 @@ public class Session {
 
     public Date getDate() {
         return date;
+    }
+
+    public int getWeekOfYear() {
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        return calendar.get(Calendar.WEEK_OF_YEAR);
     }
 }

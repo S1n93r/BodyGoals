@@ -13,7 +13,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentWeeklyLogBinding;
-import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.LogEntry;
@@ -73,9 +72,9 @@ public class WeeklyLog extends Fragment {
         viewModel.getSelectedCalendarWeek().observe(this, this::updateWeeklyLogList);
     }
 
-    private void updateWeeklyLogList(CalendarWeek calendarWeek) {
+    private void updateWeeklyLogList(int weekOfYear) {
 
-        List<Session> sessions = viewModel.getSessions(calendarWeek);
+        List<Session> sessions = viewModel.getSessions(weekOfYear);
         sessions.sort(Comparator.comparing(Session::getDate));
 
         binding.weeklySessionsList.removeAllViews();
@@ -87,7 +86,7 @@ public class WeeklyLog extends Fragment {
             logEntry.setSession(session);
             logEntry.registerDisableGoalRunner(() -> {
                 viewModel.removeLogEntry(session);
-                updateWeeklyLogList(calendarWeek);
+                updateWeeklyLogList(weekOfYear);
             });
 
             binding.weeklySessionsList.addView(logEntry);

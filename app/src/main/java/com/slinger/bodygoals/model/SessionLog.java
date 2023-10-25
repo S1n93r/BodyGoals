@@ -22,45 +22,45 @@ public class SessionLog {
         loggedSessions.add(session);
     }
 
-    public Set<CalendarWeek> getLoggedWeeks() {
+    public Set<Integer> getLoggedWeeks() {
 
         return StreamSupport.stream(loggedSessions)
-                .map(session -> CalendarWeek.from(session.getDate()))
+                .map(Session::getWeekOfYear)
                 .collect(Collectors.toSet());
     }
 
-    public List<Session> getSessionsCopy(CalendarWeek calendarWeek) {
+    public List<Session> getSessionsCopy(int weekOfYear) {
 
         return StreamSupport.stream(loggedSessions)
-                .filter(session -> CalendarWeek.from(session.getDate()).equals(calendarWeek))
+                .filter(session -> session.getGoal().getCreationWeek() == weekOfYear)
                 .collect(Collectors.toList());
     }
 
-    public Set<Goal> getSessionGoals(CalendarWeek calendarWeek) {
+    public Set<Goal> getSessionGoals(int weekOfYear) {
 
         /* FIXME: Sorting is not working. */
-        return StreamSupport.stream(getSessionsCopy(calendarWeek))
+        return StreamSupport.stream(getSessionsCopy(weekOfYear))
                 .map(session -> session.getGoal())
                 .sorted()
                 .collect(Collectors.toSet());
     }
 
-    public int getSessionsLogged(CalendarWeek calendarWeek, Goal goal) {
+    public int getSessionsLogged(int yearOfWeek, Goal goal) {
 
         if (loggedSessions.isEmpty())
             return 0;
 
         List<Session> sessionsMatching = StreamSupport.stream(loggedSessions)
                 .filter(session -> session.getGoal().equals(goal))
-                .filter(session -> CalendarWeek.from(session.getDate()).equals(calendarWeek))
+                .filter(session -> session.getGoal().getCreationWeek() == yearOfWeek)
                 .collect(Collectors.toList());
 
         return sessionsMatching.size();
     }
 
-    public int getGoalProgress(CalendarWeek calendarWeek, Goal goal) {
+    public int getGoalProgress(int weekOfYear, Goal goal) {
 
-        int sessionsLogged = getSessionsLogged(calendarWeek, goal);
+        int sessionsLogged = getSessionsLogged(weekOfYear, goal);
 
         return (int) Math.round((double) sessionsLogged / (double) goal.getFrequency() * 100);
     }
@@ -79,9 +79,9 @@ public class SessionLog {
 
     /* TODO: Dedicated class instead of map, otherwise every place has to null-check. */
     /* FIXME: Muscle group progress is applied to wrong groups. Check here and in goals. */
-    public Map<MuscleGroup, Progress> progressPerMuscleGroup(CalendarWeek calendarWeek) {
+    public Map<MuscleGroup, Progress> progressPerMuscleGroup(int weekOfYear) {
 
-        List<Session> sessions = getSessionsCopy(calendarWeek);
+        List<Session> sessions = getSessionsCopy(weekOfYear);
 
         Map<MuscleGroup, Progress> progressPerMuscleGroup = new HashMap<>();
 

@@ -13,7 +13,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentOverviewBinding;
-import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.OverviewEntryComponent;
@@ -82,18 +81,18 @@ public class Overview extends Fragment {
 
         viewModel.getUserGoals().observe(this, goals -> {
 
-            CalendarWeek selectedCalendarWeek = viewModel.getSelectedCalendarWeek().getValue();
-            CalendarWeek calendarWeek = selectedCalendarWeek == null
-                    ? CalendarWeek.from(Calendar.getInstance().getTime())
-                    : selectedCalendarWeek;
+            Integer yearOfWeekWrapped = viewModel.getSelectedCalendarWeek().getValue();
 
-            updateGoalProgressBars(calendarWeek);
+            int yearOfWeek = yearOfWeekWrapped == null
+                    ? Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) : yearOfWeekWrapped;
+
+            updateGoalProgressBars(yearOfWeek);
         });
 
         viewModel.getSelectedCalendarWeek().observe(this, this::updateGoalProgressBars);
     }
 
-    private void updateGoalProgressBars(CalendarWeek calendarWeek) {
+    private void updateGoalProgressBars(int weekOfYear) {
 
         List<Goal> goalsCopy = viewModel.getUserGoals().getValue();
 
@@ -102,7 +101,7 @@ public class Overview extends Fragment {
 
         Set<Goal> goals = new HashSet<>(goalsCopy);
 
-        goals.addAll(viewModel.getSessionGoals(calendarWeek));
+        goals.addAll(viewModel.getSessionGoals(weekOfYear));
 
         binding.goalProgressBarsList.removeAllViews();
 
@@ -111,18 +110,18 @@ public class Overview extends Fragment {
 
         for (Goal goal : goals) {
 
-            if (goal.getCreationWeek() > calendarWeek.getWeek())
+            if (goal.getCreationWeek() > weekOfYear)
                 continue;
 
             OverviewEntryComponent overviewEntryComponent = new OverviewEntryComponent(getContext());
 
-            int progress = viewModel.getGoalProgress(calendarWeek, goal);
+            int progress = viewModel.getGoalProgress(weekOfYear, goal);
 
             overviewEntryComponent.setProgress(progress);
             overviewEntryComponent.setText(goal.getName());
 
             maxOverallProgress += goal.getFrequency();
-            currentOverallProgress += Math.min(goal.getFrequency(), viewModel.getSessionsLogged(calendarWeek, goal));
+            currentOverallProgress += Math.min(goal.getFrequency(), viewModel.getSessionsLogged(weekOfYear, goal));
 
             binding.goalProgressBarsList.addView(overviewEntryComponent);
         }

@@ -15,7 +15,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentCoverageBinding;
-import com.slinger.bodygoals.model.CalendarWeek;
 import com.slinger.bodygoals.model.MuscleGroup;
 import com.slinger.bodygoals.model.Progress;
 import com.slinger.bodygoals.model.ProgressStatus;
@@ -87,9 +86,9 @@ public class Coverage extends Fragment {
         });
     }
 
-    private void updateCoverage(User user, CalendarWeek calendarWeek) {
+    private void updateCoverage(User user, int weekOfYear) {
 
-        Map<MuscleGroup, Progress> progressPerMuscleGroup = user.getSessionLog().progressPerMuscleGroup(calendarWeek);
+        Map<MuscleGroup, Progress> progressPerMuscleGroup = user.getSessionLog().progressPerMuscleGroup(weekOfYear);
 
         progressPerMuscleGroup.forEach((key, value) -> {
 

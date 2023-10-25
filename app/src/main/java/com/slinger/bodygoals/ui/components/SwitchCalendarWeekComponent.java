@@ -12,7 +12,6 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 
 import com.slinger.bodygoals.R;
-import com.slinger.bodygoals.model.CalendarWeek;
 
 public class SwitchCalendarWeekComponent extends ConstraintLayout {
 
@@ -69,20 +68,20 @@ public class SwitchCalendarWeekComponent extends ConstraintLayout {
         this.lifecycleOwner = lifecycleOwner;
     }
 
-    private void updateTexts(CalendarWeek calendarWeek) {
+    private void updateTexts(int weekOfYear) {
 
         String calendarWeekString = String.format(getResources().getString(R.string.calendar_week_place_holder),
-                calendarWeek.getWeek());
+                weekOfYear);
 
         weekText.setText(calendarWeekString);
 
         String calendarWeekYearString = String.format(getResources().getString(R.string.calendar_week_year_place_holder),
-                calendarWeek.getYear());
+                weekOfYear);
 
         yearText.setText(calendarWeekYearString);
     }
 
-    public void setCalendarWeekLiveData(LiveData<CalendarWeek> calendarWeekLiveData) {
+    public void setCalendarWeekLiveData(LiveData<Integer> calendarWeekLiveData) {
 
         if (lifecycleOwner == null)
             throw new IllegalStateException("Set LifeCycleOwner first!");

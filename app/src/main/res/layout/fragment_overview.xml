@@ -107,12 +107,12 @@
             android:text="@string/button_to_coverage"
             android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/button_to_yearly_summary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_to_yearly_summary"
-            android:textSize="16sp" />
+<!--        <Button-->
+<!--            android:id="@+id/button_to_yearly_summary"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/button_to_yearly_summary"-->
+<!--            android:textSize="16sp" />-->
 
     </LinearLayout>
 

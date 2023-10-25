@@ -52,7 +52,7 @@ public class YearlySummaryDto {
 
         Map<Integer, Integer> overallMonthlyProgresses = sessionLog.getOverallMonthlyProgresses(year);
 
-        /* TODO: Feeds redundant with loop above. Check for improvement. */
+        /* TODO: Feels redundant with loop above. Check for improvement. */
         overallMonthlyProgresses.forEach((month, progress) ->
                 monthlySummaryMap.put(month, MonthlySummaryDto.of(year, month, progress)));
 

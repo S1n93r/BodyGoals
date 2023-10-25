@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,10 +51,17 @@ public class SessionLog {
 
     public Set<Goal> getSessionGoalsWeekOfYear(Date date) {
 
+        return getSessionGoalsWeekOfYear(
+                DateUtil.getFromDate(date, Calendar.YEAR),
+                DateUtil.getFromDate(date, Calendar.WEEK_OF_YEAR));
+    }
+
+    private Set<Goal> getSessionGoalsWeekOfYear(int year, int weekOfYear) {
+
         /* FIXME: Sorting is not working. */
         return StreamSupport.stream(loggedSessions)
-                .filter(session -> DateUtil.compareDate(session.getGoal().getCreationDate(), date, Calendar.YEAR))
-                .filter(session -> DateUtil.compareDate(session.getGoal().getCreationDate(), date, Calendar.WEEK_OF_YEAR))
+                .filter(session -> DateUtil.getFromDate(session.getDate(), Calendar.YEAR) == year)
+                .filter(session -> DateUtil.getFromDate(session.getDate(), Calendar.WEEK_OF_YEAR) == weekOfYear)
                 .map(Session::getGoal)
                 .sorted()
                 .collect(Collectors.toSet());
@@ -90,18 +98,25 @@ public class SessionLog {
 
     private int getMonthProgress(Date date) {
 
-        List<Session> sessionsInMonth = getSessionsMonth(date);
-
         int maxProgress = 0;
-        int progress = sessionsInMonth.size();
 
-        Set<Goal> goals = StreamSupport.stream(sessionsInMonth)
-                .map(Session::getGoal)
-                .collect(Collectors.toSet());
+        FirstWeekLastWeek firstWeekLastWeek = DateUtil.getFirstWeekAndLastWeekOfMonth(date);
 
-        /* FIXME: This is per week, not per month. */
-        for (Goal goal : goals)
-            maxProgress += goal.getFrequency();
+        Set<Session> relevantSessions = new HashSet<>();
+
+        for (int iWeek = firstWeekLastWeek.getFirst(); iWeek <= firstWeekLastWeek.getLast(); iWeek++) {
+
+            for (Session loggedSession : loggedSessions) {
+                if (DateUtil.getFromDate(loggedSession.getDate(), Calendar.WEEK_OF_YEAR) == iWeek)
+                    relevantSessions.addAll(loggedSessions);
+            }
+
+            for (Goal goal : getSessionGoalsWeekOfYear(DateUtil.getFromDate(date, Calendar.YEAR), iWeek)) {
+                maxProgress += goal.getFrequency();
+            }
+        }
+
+        int progress = relevantSessions.size();
 
         return (int) Math.round((double) progress / (double) maxProgress * 100);
     }

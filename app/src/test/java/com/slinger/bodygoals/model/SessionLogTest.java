@@ -1,6 +1,7 @@
 package com.slinger.bodygoals.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
@@ -83,9 +84,9 @@ public class SessionLogTest {
         sessionLog.logSession(new Session(pull, date));
 
         /* Then */
-        assertEquals(67, sessionLog.getGoalProgress(weekOfYear, push));
-        assertEquals(100, sessionLog.getGoalProgress(weekOfYear, pull));
-        assertEquals(50, sessionLog.getGoalProgress(weekOfYear, legs));
+        assertEquals(67, sessionLog.getGoalWeeklyProgress(weekOfYear, push));
+        assertEquals(100, sessionLog.getGoalWeeklyProgress(weekOfYear, pull));
+        assertEquals(50, sessionLog.getGoalWeeklyProgress(weekOfYear, legs));
     }
 
     @Test
@@ -149,5 +150,45 @@ public class SessionLogTest {
         assertEquals(3, progressPerMuscleGroup.get(MuscleGroup.CALVES).getMax());
         assertEquals(1, progressPerMuscleGroup.get(MuscleGroup.CALVES).getCurrent());
         assertEquals(33, progressPerMuscleGroup.get(MuscleGroup.CALVES).getCurrentPercent());
+    }
+
+    @Test
+    public void overallMonthlyProgressContainsCorrectValues() {
+
+        /* Given */
+        SessionLog sut = new SessionLog();
+
+        Calendar calendar = Calendar.getInstance();
+
+        Date date = calendar.getTime();
+
+        Goal push = Goal.of("Push", 3, date);
+        push.addMuscleGroup(MuscleGroup.CHEST);
+        push.addMuscleGroup(MuscleGroup.TRICEPS);
+
+        Goal pull = Goal.of("Pull", 2, date);
+        pull.addMuscleGroup(MuscleGroup.LATS);
+        pull.addMuscleGroup(MuscleGroup.BICEPS);
+
+        Goal legs = Goal.of("Legs", 2, date);
+        legs.addMuscleGroup(MuscleGroup.QUADS);
+        legs.addMuscleGroup(MuscleGroup.HARM_STRINGS);
+        legs.addMuscleGroup(MuscleGroup.CALVES);
+
+        sut.logSession(new Session(pull, date));
+        sut.logSession(new Session(push, date));
+        sut.logSession(new Session(pull, date));
+        sut.logSession(new Session(legs, date));
+        sut.logSession(new Session(push, date));
+        sut.logSession(new Session(pull, date));
+
+        /* When */
+        Map<Integer, Integer> overallMonthlyProgresses = sut.getOverallMonthlyProgresses(DateUtil.getFromDate(date, Calendar.YEAR));
+
+        Integer actualProgress = overallMonthlyProgresses.get(DateUtil.getFromDate(date, Calendar.MONTH));
+
+        /* Then */
+        assertNotNull(actualProgress);
+        assertEquals(86, actualProgress.intValue());
     }
 }

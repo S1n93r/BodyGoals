@@ -16,7 +16,7 @@ public class YearlySummaryDtoTest {
     private final Calendar calendar = Calendar.getInstance();
 
     @Test
-    public void test() {
+    public void yearlySummaryDtoIsCorrectlyCreatedFromSessionLog() {
 
         Date today = Calendar.getInstance().getTime();
 
@@ -36,6 +36,6 @@ public class YearlySummaryDtoTest {
         calendar.setTime(today);
 
 //        assertEquals(50, sut.getMonthlyProgress(calendar.get(Calendar.MONTH)).getMonth());
-        assertEquals(50, sut.getMonthlyProgress(calendar.get(Calendar.MONTH)).getProgress());
+        assertEquals(44, sut.getMonthlyProgress(calendar.get(Calendar.MONTH)).getProgress());
     }
 }

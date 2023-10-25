@@ -40,6 +40,14 @@ public class SessionLog {
                 .collect(Collectors.toList());
     }
 
+    public List<Session> getSessionsMonth(Date date) {
+
+        return StreamSupport.stream(loggedSessions)
+                .filter(session -> DateUtil.compareDate(session.getGoal().getCreationDate(), date, Calendar.YEAR))
+                .filter(session -> DateUtil.compareDate(session.getGoal().getCreationDate(), date, Calendar.MONTH))
+                .collect(Collectors.toList());
+    }
+
     public Set<Goal> getSessionGoalsWeekOfYear(Date date) {
 
         /* FIXME: Sorting is not working. */
@@ -72,19 +80,33 @@ public class SessionLog {
             overallMonthlyProgressesMap.put(iMonth, 0);
 
         StreamSupport.stream(loggedSessions)
-                .filter(session -> DateUtil.getFromDate(session.getDate(), Calendar.MONTH) == year)
+                .filter(session -> DateUtil.getFromDate(session.getDate(), Calendar.YEAR) == year)
                 .forEach(session -> overallMonthlyProgressesMap.put(
                         DateUtil.getFromDate(session.getDate(), Calendar.MONTH),
-                        getMonthProgress(year, DateUtil.getFromDate(session.getDate(), Calendar.MONTH))));
+                        getMonthProgress(session.getDate())));
 
         return overallMonthlyProgressesMap;
     }
 
-    private int getMonthProgress(int year, int month) {
-        throw new UnsupportedOperationException("TODO: Implement!");
+    private int getMonthProgress(Date date) {
+
+        List<Session> sessionsInMonth = getSessionsMonth(date);
+
+        int maxProgress = 0;
+        int progress = sessionsInMonth.size();
+
+        Set<Goal> goals = StreamSupport.stream(sessionsInMonth)
+                .map(Session::getGoal)
+                .collect(Collectors.toSet());
+
+        /* FIXME: This is per week, not per month. */
+        for (Goal goal : goals)
+            maxProgress += goal.getFrequency();
+
+        return (int) Math.round((double) progress / (double) maxProgress * 100);
     }
 
-    public int getGoalProgress(int weekOfYear, Goal goal) {
+    public int getGoalWeeklyProgress(int weekOfYear, Goal goal) {
 
         int sessionsLogged = getSessionsLogged(weekOfYear, goal);
 

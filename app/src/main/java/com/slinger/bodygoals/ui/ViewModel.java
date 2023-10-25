@@ -142,7 +142,7 @@ public class ViewModel extends AndroidViewModel {
         if (user == null)
             return 0;
 
-        return user.getSessionLog().getGoalProgress(weekOfYear, goal);
+        return user.getSessionLog().getGoalWeeklyProgress(weekOfYear, goal);
     }
 
     public int getSessionsLogged(int weekOfYear, Goal goal) {

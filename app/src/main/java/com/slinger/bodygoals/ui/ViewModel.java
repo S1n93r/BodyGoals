@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.room.Room;
 
 import com.slinger.bodygoals.model.BodyGoalDatabase;
+import com.slinger.bodygoals.model.DateUtil;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.model.User;
@@ -61,9 +62,15 @@ public class ViewModel extends AndroidViewModel {
     private void registerLiveDataObserver() {
 
         currentUser.observeForever(user -> {
-            /* TODO: Null-semantic is not nice */
-            if (user != null)
-                userGoals.setValue(user.getGoalsCopy());
+
+            if (user == null)
+                return;
+
+            userGoals.setValue(user.getGoalsCopy());
+
+            int year = DateUtil.getFromDate(selectedDate.getValue(), Calendar.YEAR);
+
+            yearlySummaryDtoMutableLiveData.setValue(YearlySummaryDto.fromSessionLog(year, user.getSessionLog()));
         });
     }
 
@@ -206,15 +213,17 @@ public class ViewModel extends AndroidViewModel {
 
     public void selectPreviousDate(int field) {
 
-        Date currentSelection = selectedDate.getValue();
+        Date selectedDate = this.selectedDate.getValue();
 
-        if (currentSelection == null)
+        if (selectedDate == null)
             throw new IllegalStateException("Selected Date should never be null.");
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentSelection);
+        calendar.setTime(selectedDate);
 
         calendar.add(field, -1);
+
+        this.selectedDate.setValue(calendar.getTime());
     }
 
     public void selectNextDate(int field) {
@@ -228,5 +237,7 @@ public class ViewModel extends AndroidViewModel {
         calendar.setTime(currentSelection);
 
         calendar.add(field, 1);
+
+        this.selectedDate.setValue(calendar.getTime());
     }
 }

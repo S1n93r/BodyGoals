@@ -75,6 +75,7 @@ public class SwitchCalendarWeekComponent extends ConstraintLayout {
     private void updateTexts(Date date) {
 
         int weekOfYear = DateUtil.getFromDate(date, Calendar.WEEK_OF_YEAR);
+        int year = DateUtil.getFromDate(date, Calendar.YEAR);
 
         String calendarWeekString = String.format(getResources().getString(R.string.calendar_week_place_holder),
                 weekOfYear);
@@ -82,7 +83,7 @@ public class SwitchCalendarWeekComponent extends ConstraintLayout {
         weekText.setText(calendarWeekString);
 
         String calendarWeekYearString = String.format(getResources().getString(R.string.calendar_week_year_place_holder),
-                weekOfYear);
+                year);
 
         yearText.setText(calendarWeekYearString);
     }

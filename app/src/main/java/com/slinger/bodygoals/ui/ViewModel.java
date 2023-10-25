@@ -240,4 +240,8 @@ public class ViewModel extends AndroidViewModel {
 
         this.selectedDate.setValue(calendar.getTime());
     }
+
+    public LiveData<YearlySummaryDto> getYearlySummaryDtoMutableLiveData() {
+        return yearlySummaryDtoMutableLiveData;
+    }
 }

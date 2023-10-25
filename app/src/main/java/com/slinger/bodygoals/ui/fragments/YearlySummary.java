@@ -15,6 +15,7 @@ import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentYearlySummaryBinding;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.SwitchYearComponent;
+import com.slinger.bodygoals.ui.dtos.YearlySummaryDto;
 
 import java.util.Calendar;
 
@@ -65,6 +66,25 @@ public class YearlySummary extends Fragment {
     }
 
     private void registerLiveDataObserver() {
+        viewModel.getYearlySummaryDtoMutableLiveData().observe(this, this::update);
+    }
 
+    private void update(YearlySummaryDto yearlySummaryDto) {
+
+        binding.progressJan.setText(String.valueOf(yearlySummaryDto.getMonthlyProgress(Calendar.JANUARY).getProgress()));
+        binding.progressFeb.setText(String.valueOf(yearlySummaryDto.getMonthlyProgress(Calendar.FEBRUARY).getProgress()));
+        binding.progressMar.setText(String.valueOf(yearlySummaryDto.getMonthlyProgress(Calendar.MARCH).getProgress()));
+
+        binding.progressApr.setText(String.valueOf(yearlySummaryDto.getMonthlyProgress(Calendar.APRIL).getProgress()));
+        binding.progressMay.setText(String.valueOf(yearlySummaryDto.getMonthlyProgress(Calendar.MAY).getProgress()));
+        binding.progressJun.setText(String.valueOf(yearlySummaryDto.getMonthlyProgress(Calendar.JUNE).getProgress()));
+
+        binding.progressJul.setText(String.valueOf(yearlySummaryDto.getMonthlyProgress(Calendar.JULY).getProgress()));
+        binding.progressAug.setText(String.valueOf(yearlySummaryDto.getMonthlyProgress(Calendar.AUGUST).getProgress()));
+        binding.progressSep.setText(String.valueOf(yearlySummaryDto.getMonthlyProgress(Calendar.SEPTEMBER).getProgress()));
+
+        binding.progressOct.setText(String.valueOf(yearlySummaryDto.getMonthlyProgress(Calendar.OCTOBER).getProgress()));
+        binding.progressNov.setText(String.valueOf(yearlySummaryDto.getMonthlyProgress(Calendar.NOVEMBER).getProgress()));
+        binding.progressDec.setText(String.valueOf(yearlySummaryDto.getMonthlyProgress(Calendar.DECEMBER).getProgress()));
     }
 }

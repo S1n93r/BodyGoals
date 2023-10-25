@@ -81,12 +81,12 @@ public class Overview extends Fragment {
 
         viewModel.getUserGoals().observe(this, goals -> {
 
-            Integer yearOfWeekWrapped = viewModel.getSelectedCalendarWeek().getValue();
+            Integer weekOfYearWrapped = viewModel.getSelectedCalendarWeek().getValue();
 
-            int yearOfWeek = yearOfWeekWrapped == null
-                    ? Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) : yearOfWeekWrapped;
+            int weekOfYear = weekOfYearWrapped == null
+                    ? Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) : weekOfYearWrapped;
 
-            updateGoalProgressBars(yearOfWeek);
+            updateGoalProgressBars(weekOfYear);
         });
 
         viewModel.getSelectedCalendarWeek().observe(this, this::updateGoalProgressBars);

@@ -45,14 +45,14 @@ public class SessionLog {
                 .collect(Collectors.toSet());
     }
 
-    public int getSessionsLogged(int yearOfWeek, Goal goal) {
+    public int getSessionsLogged(int weekOfYear, Goal goal) {
 
         if (loggedSessions.isEmpty())
             return 0;
 
         List<Session> sessionsMatching = StreamSupport.stream(loggedSessions)
                 .filter(session -> session.getGoal().equals(goal))
-                .filter(session -> session.getGoal().getCreationWeek() == yearOfWeek)
+                .filter(session -> session.getGoal().getCreationWeek() == weekOfYear)
                 .collect(Collectors.toList());
 
         return sessionsMatching.size();

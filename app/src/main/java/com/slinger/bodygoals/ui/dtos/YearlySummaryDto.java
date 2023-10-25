@@ -41,7 +41,8 @@ public class YearlySummaryDto {
     }
 
     /* TODO: Should later be "from sessionLogDto" */
-    public static YearlySummaryDto fromSessionLog(SessionLog sessionLog) {
+    public static YearlySummaryDto fromSessionLog(int year, SessionLog sessionLog) {
+
         /* TODO: We need more support classes to implement this. */
         return null;
     }

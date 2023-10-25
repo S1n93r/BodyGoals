@@ -154,14 +154,14 @@ public class ViewModel extends AndroidViewModel {
         return user.getSessionLog().getSessionGoals(weekOfYear);
     }
 
-    public int getGoalProgress(int yearOfWeek, Goal goal) {
+    public int getGoalProgress(int weekOfYear, Goal goal) {
 
         User user = currentUser.getValue();
 
         if (user == null)
             return 0;
 
-        return user.getSessionLog().getGoalProgress(yearOfWeek, goal);
+        return user.getSessionLog().getGoalProgress(weekOfYear, goal);
     }
 
     public int getSessionsLogged(int weekOfYear, Goal goal) {

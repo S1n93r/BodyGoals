@@ -59,6 +59,10 @@ public class YearlySummaryDto {
         return new YearlySummaryDto(year, monthlySummaryMap);
     }
 
+    public int getYear() {
+        return year;
+    }
+
     public MonthlySummaryDto getMonthlyProgress(int month) {
         return monthlySummaryMap.get(month);
     }

@@ -16,6 +16,10 @@ public class MonthlySummaryDto {
         return new MonthlySummaryDto(year, month, progress);
     }
 
+    public int getYear() {
+        return year;
+    }
+
     public int getMonth() {
         return month;
     }

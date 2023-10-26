@@ -3,14 +3,14 @@ package com.slinger.bodygoals.ui.components;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.slinger.bodygoals.model.Goal;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.slinger.bodygoals.ui.dtos.GoalDto;
+
 public class GoalCheckBox extends androidx.appcompat.widget.AppCompatCheckBox {
 
-    private Goal goal;
+    private GoalDto goal;
 
     public GoalCheckBox(@NonNull Context context) {
         super(context);
@@ -25,11 +25,11 @@ public class GoalCheckBox extends androidx.appcompat.widget.AppCompatCheckBox {
     }
 
 
-    public Goal getGoal() {
+    public GoalDto getGoal() {
         return goal;
     }
 
-    public void setGoal(Goal goal) {
+    public void setGoal(GoalDto goal) {
 
         setText(goal.getName());
 

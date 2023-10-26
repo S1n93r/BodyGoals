@@ -62,7 +62,6 @@ public class SessionLog {
                 .filter(session -> DateUtil.getFromDate(session.getDate(), Calendar.YEAR) == year)
                 .filter(session -> DateUtil.getFromDate(session.getDate(), Calendar.WEEK_OF_YEAR) == weekOfYear)
                 .map(Session::getGoal)
-                .sorted()
                 .collect(Collectors.toSet());
     }
 

@@ -13,11 +13,11 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentAddSessionBinding;
-import com.slinger.bodygoals.model.Goal;
-import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.DatePickerFragment;
 import com.slinger.bodygoals.ui.components.GoalCheckBox;
+import com.slinger.bodygoals.ui.dtos.GoalDto;
+import com.slinger.bodygoals.ui.dtos.SessionDto;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -85,22 +85,22 @@ public class AddSession extends Fragment {
         binding = null;
     }
 
-    private List<Session> collectSessionsFromUI() {
+    private List<SessionDto> collectSessionsFromUI() {
 
-        List<Goal> goals = new ArrayList<>(binding.goalList.getChildCount());
+        List<GoalDto> goalDtos = new ArrayList<>(binding.goalList.getChildCount());
 
         for (int i = 0; i < binding.goalList.getChildCount(); i++) {
 
             GoalCheckBox goalCheckBox = (GoalCheckBox) binding.goalList.getChildAt(i);
 
             if (goalCheckBox.isChecked())
-                goals.add(goalCheckBox.getGoal());
+                goalDtos.add(goalCheckBox.getGoal());
         }
 
         Date date = datePickerFragment.getSelectedDateLiveData().getValue();
 
-        return StreamSupport.stream(goals)
-                .map(goal -> new Session(goal, date))
+        return StreamSupport.stream(goalDtos)
+                .map(goal -> SessionDto.of(goal, date))
                 .collect(Collectors.toList());
     }
 
@@ -110,7 +110,7 @@ public class AddSession extends Fragment {
 
             binding.goalList.removeAllViews();
 
-            for (Goal goal : goals) {
+            for (GoalDto goal : goals) {
 
                 if (getContext() == null)
                     throw new IllegalStateException("Context is null. Check why.");

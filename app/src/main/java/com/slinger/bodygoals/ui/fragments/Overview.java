@@ -14,9 +14,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentOverviewBinding;
 import com.slinger.bodygoals.model.DateUtil;
-import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.OverviewEntryComponent;
+import com.slinger.bodygoals.ui.dtos.GoalDto;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -90,12 +90,12 @@ public class Overview extends Fragment {
 
     private void updateGoalProgressBars(Date date) {
 
-        List<Goal> goalsCopy = viewModel.getUserGoals().getValue();
+        List<GoalDto> goalsCopy = viewModel.getUserGoals().getValue();
 
         if (goalsCopy == null)
             throw new IllegalStateException("Live data for goals should never be null.");
 
-        Set<Goal> goals = new HashSet<>(goalsCopy);
+        Set<GoalDto> goals = new HashSet<>(goalsCopy);
 
         goals.addAll(viewModel.getSessionGoals(date));
 
@@ -104,22 +104,22 @@ public class Overview extends Fragment {
         int maxOverallProgress = 0;
         int currentOverallProgress = 0;
 
-        for (Goal goal : goals) {
+        for (GoalDto goalDto : goals) {
 
             int weekOfYear = DateUtil.getFromDate(date, Calendar.WEEK_OF_YEAR);
 
-            if (goal.getCreationWeek() > weekOfYear)
+            if (goalDto.getCreationWeek() > weekOfYear)
                 continue;
 
             OverviewEntryComponent overviewEntryComponent = new OverviewEntryComponent(getContext());
 
-            int progress = viewModel.getGoalProgress(weekOfYear, goal);
+            int progress = viewModel.getGoalProgress(weekOfYear, goalDto);
 
             overviewEntryComponent.setProgress(progress);
-            overviewEntryComponent.setText(goal.getName());
+            overviewEntryComponent.setText(goalDto.getName());
 
-            maxOverallProgress += goal.getFrequency();
-            currentOverallProgress += Math.min(goal.getFrequency(), viewModel.getSessionsLogged(weekOfYear, goal));
+            maxOverallProgress += goalDto.getFrequency();
+            currentOverallProgress += Math.min(goalDto.getFrequency(), viewModel.getSessionsLogged(weekOfYear, goalDto));
 
             binding.goalProgressBarsList.addView(overviewEntryComponent);
         }

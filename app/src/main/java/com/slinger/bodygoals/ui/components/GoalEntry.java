@@ -10,11 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.slinger.bodygoals.R;
-import com.slinger.bodygoals.model.Goal;
+import com.slinger.bodygoals.ui.dtos.GoalDto;
 
 public class GoalEntry extends RelativeLayout {
 
-    private Goal goal;
+    private GoalDto goalDto;
 
     private TextView textView;
 
@@ -85,11 +85,11 @@ public class GoalEntry extends RelativeLayout {
         this.addView(innerView);
     }
 
-    public void setGoal(Goal goal) {
+    public void setGoalDto(GoalDto goalDto) {
 
-        this.goal = goal;
+        this.goalDto = goalDto;
 
-        textView.setText(goal.getName());
+        textView.setText(goalDto.getName());
     }
 
     public void registerEditGoalRunner(Runnable runnable) {

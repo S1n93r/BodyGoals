@@ -9,6 +9,7 @@ import androidx.room.TypeConverters;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +29,45 @@ public class User {
     @TypeConverters({GoalListConverter.class})
     private List<Goal> goals = new ArrayList<>();
 
-    public void addGoal(Goal goal) throws GoalAlreadyExistsException {
+    public void addGoal(String goalName, int frequency, Date startingDate) throws GoalAlreadyExistsException {
+
+        int maxId = 0;
+
+        for (int id : StreamSupport.stream(goals).map(goal -> goal.getGoalIdentifier().getId()).collect(Collectors.toSet()))
+            if (id > maxId)
+                maxId = id;
+
+        Goal goal = new Goal(GoalIdentifier.of(maxId + 1), goalName, frequency, startingDate);
+
+        checkGoalNameAlreadyExists(goal);
+
+        goals.add(goal);
+    }
+
+    public void editGoal(Goal goal) throws GoalAlreadyExistsException {
+
+        checkGoalNameAlreadyExists(goal);
+
+        boolean goalNotFound = true;
+
+        for (Goal goalUser : goals) {
+
+            if (goalUser.equals(goal)) {
+
+                int originalIndex = goals.indexOf(goalUser);
+
+                goals.remove(originalIndex);
+                goals.add(originalIndex, goalUser);
+
+                goalNotFound = false;
+            }
+        }
+
+        if (goalNotFound)
+            throw new IllegalStateException(String.format("Goal %s was not found.", goal.getName()));
+    }
+
+    private void checkGoalNameAlreadyExists(Goal goal) throws GoalAlreadyExistsException {
 
         Set<String> goalNames = StreamSupport.stream(goals)
                 .map(Goal::getName)
@@ -36,22 +75,6 @@ public class User {
 
         if (goalNames.contains(goal.getName()))
             throw new GoalAlreadyExistsException();
-
-        goals.add(goal);
-    }
-
-    public void editGoal(Goal goal) throws GoalAlreadyExistsException {
-
-        for (Goal goalUser : goals) {
-
-            if (goalUser == goal) {
-
-                int originalIndex = goals.indexOf(goalUser);
-
-                goals.remove(originalIndex);
-                goals.add(originalIndex, goalUser);
-            }
-        }
     }
 
     public SessionLog getSessionLog() {

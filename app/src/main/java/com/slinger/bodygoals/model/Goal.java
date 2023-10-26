@@ -9,17 +9,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class Goal implements Comparable<Goal> {
+public class Goal {
 
-    public static Goal EMPTY = new Goal("", 0, Calendar.getInstance().getTime());
+    public static Goal EMPTY = new Goal(GoalIdentifier.of(-1), "", 0, Calendar.getInstance().getTime());
 
-    private final String name;
-    private final int frequency;
-    private final List<MuscleGroup> muscleGroups = new ArrayList<>();
+    private final GoalIdentifier goalIdentifier;
+
+    private String name;
+    private int frequency;
+    private List<MuscleGroup> muscleGroups = new ArrayList<>();
 
     private final Date creationDate;
 
-    public Goal(String name, int frequency, Date creationDate) {
+    public Goal(GoalIdentifier goalIdentifier, String name, int frequency, Date creationDate) {
+
+        this.goalIdentifier = goalIdentifier;
+
         this.name = name;
         this.frequency = frequency;
         this.creationDate = creationDate;
@@ -29,8 +34,8 @@ public class Goal implements Comparable<Goal> {
         muscleGroups.add(muscleGroup);
     }
 
-    public static Goal of(String name, int frequency, Date creationDate) {
-        return new Goal(name, frequency, creationDate);
+    public static Goal of(GoalIdentifier goalIdentifier, String name, int frequency, Date creationDate) {
+        return new Goal(goalIdentifier, name, frequency, creationDate);
     }
 
     public String getName() {
@@ -42,25 +47,20 @@ public class Goal implements Comparable<Goal> {
     }
 
     @Override
-    public boolean equals(@Nullable Object obj) {
+    public boolean equals(@Nullable Object o) {
 
-        if (obj == this)
+        if (this == o)
             return true;
 
-        if (!(obj instanceof Goal))
+        if (o == null || getClass() != o.getClass())
             return false;
 
-        return name.equals(((Goal) obj).getName());
+        return goalIdentifier.equals(((Goal) o).getGoalIdentifier());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    @Override
-    public int compareTo(Goal o) {
-        return name.toLowerCase().compareTo(o.name.toLowerCase());
     }
 
     public List<MuscleGroup> getMuscleGroupsCopy() {
@@ -72,10 +72,22 @@ public class Goal implements Comparable<Goal> {
     }
 
     public int getCreationWeek() {
+        return DateUtil.getFromDate(creationDate, Calendar.WEEK_OF_YEAR);
+    }
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(creationDate);
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        return calendar.get(Calendar.WEEK_OF_YEAR);
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
+    }
+
+    public void setMuscleGroups(List<MuscleGroup> muscleGroups) {
+        this.muscleGroups = muscleGroups;
+    }
+
+    public GoalIdentifier getGoalIdentifier() {
+        return goalIdentifier;
     }
 }

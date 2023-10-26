@@ -16,6 +16,8 @@ import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.model.User;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
+import com.slinger.bodygoals.ui.dtos.GoalDto;
+import com.slinger.bodygoals.ui.dtos.SessionDto;
 import com.slinger.bodygoals.ui.dtos.YearlySummaryDto;
 
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ import java.util.concurrent.Executors;
 
 import java8.util.Lists;
 import java8.util.Sets;
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 
 public class ViewModel extends AndroidViewModel {
 
@@ -40,20 +44,20 @@ public class ViewModel extends AndroidViewModel {
 
     private final MutableLiveData<Date> selectedDate = new MutableLiveData<>(Calendar.getInstance().getTime());
 
-    private final MutableLiveData<List<Goal>> userGoals = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<List<GoalDto>> userGoals = new MutableLiveData<>(new ArrayList<>());
 
     private final MutableLiveData<Date> sessionDate = new MutableLiveData<>(Calendar.getInstance().getTime());
 
     private final MutableLiveData<YearlySummaryDto> yearlySummaryDtoMutableLiveData =
             new MutableLiveData<>(YearlySummaryDto.EMPTY);
 
-    private final MutableLiveData<Goal> selectedGoal = new MutableLiveData<>(Goal.EMPTY);
+    private final MutableLiveData<GoalDto> selectedGoal = new MutableLiveData<>(GoalDto.EMPTY);
 
     private final MutableLiveData<Boolean> goalEditMode = new MutableLiveData<>(false);
 
     private final BodyGoalDatabase database;
 
-    private List<Session> preSavedSessions;
+    private List<SessionDto> preSavedSessions;
 
     public ViewModel(@NonNull Application application) {
 
@@ -71,7 +75,11 @@ public class ViewModel extends AndroidViewModel {
             if (user == null)
                 return;
 
-            userGoals.setValue(user.getGoals());
+            List<GoalDto> goalDtos = StreamSupport.stream(user.getGoals())
+                    .map(GoalDto::from)
+                    .collect(Collectors.toList());
+
+            userGoals.setValue(goalDtos);
 
             int year = DateUtil.getFromDate(selectedDate.getValue(), Calendar.YEAR);
 
@@ -83,7 +91,7 @@ public class ViewModel extends AndroidViewModel {
         return currentUser;
     }
 
-    public LiveData<List<Goal>> getUserGoals() {
+    public LiveData<List<GoalDto>> getUserGoals() {
         return userGoals;
     }
 
@@ -99,31 +107,30 @@ public class ViewModel extends AndroidViewModel {
         sessionDate.setValue(date);
     }
 
-    public void addGoal(@NonNull Goal goal) throws GoalAlreadyExistsException {
+    public void addGoal(@NonNull GoalDto goalDto) throws GoalAlreadyExistsException {
 
         User user = currentUser.getValue();
 
-        Objects.requireNonNull(user).addGoal(goal);
+        Objects.requireNonNull(user).addGoal(goalDto.getName(), goalDto.getFrequency(), goalDto.getCreationDate());
 
         updateUser();
     }
 
-    public void editGoal(@NonNull Goal goal) throws GoalAlreadyExistsException {
+    public void editGoal(@NonNull GoalDto goalDto) throws GoalAlreadyExistsException {
 
         User user = currentUser.getValue();
 
-        Objects.requireNonNull(user).editGoal(goal);
+        Objects.requireNonNull(user).editGoal(goalDto.to());
 
         updateUser();
     }
 
-    public void addSessions(List<Session> sessions) {
+    public void addSessions(List<SessionDto> sessionDtos) {
 
         if (currentUser.getValue() == null)
             return;
 
-        for (Session session : sessions)
-            currentUser.getValue().getSessionLog().logSession(session);
+        StreamSupport.stream(sessionDtos).map(SessionDto::to).forEach(session -> currentUser.getValue().getSessionLog().logSession(session));
 
         updateUser();
     }
@@ -138,27 +145,29 @@ public class ViewModel extends AndroidViewModel {
         return user.getSessionLog().getSessionsWeekOfYear(date);
     }
 
-    public Set<Goal> getSessionGoals(Date date) {
+    public Set<GoalDto> getSessionGoals(Date date) {
 
         User user = currentUser.getValue();
 
         if (user == null)
             return Sets.of();
 
-        return user.getSessionLog().getSessionGoalsWeekOfYear(date);
+        Set<Goal> goalsFromUserYear = user.getSessionLog().getSessionGoalsWeekOfYear(date);
+
+        return StreamSupport.stream(goalsFromUserYear).map(GoalDto::from).collect(Collectors.toSet());
     }
 
-    public int getGoalProgress(int weekOfYear, Goal goal) {
+    public int getGoalProgress(int weekOfYear, GoalDto goalDto) {
 
         User user = currentUser.getValue();
 
         if (user == null)
             return 0;
 
-        return user.getSessionLog().getGoalWeeklyProgress(weekOfYear, goal);
+        return user.getSessionLog().getGoalWeeklyProgress(weekOfYear, goalDto.to());
     }
 
-    public int getSessionsLogged(int weekOfYear, Goal goal) {
+    public int getSessionsLogged(int weekOfYear, GoalDto goalDto) {
 
         User user = currentUser.getValue();
 
@@ -168,7 +177,7 @@ public class ViewModel extends AndroidViewModel {
         if (user.getSessionLog() == null)
             return 0;
 
-        return user.getSessionLog().getSessionsLogged(weekOfYear, goal);
+        return user.getSessionLog().getSessionsLogged(weekOfYear, goalDto.to());
     }
 
     private void updateUser() {
@@ -194,14 +203,14 @@ public class ViewModel extends AndroidViewModel {
         });
     }
 
-    public void deleteGoal(Goal goal) {
+    public void deleteGoal(GoalDto goalDto) {
 
         User user = currentUser.getValue();
 
         if (user == null)
             return;
 
-        user.removeGoal(goal);
+        user.removeGoal(goalDto.to());
 
         updateUser();
     }
@@ -216,11 +225,11 @@ public class ViewModel extends AndroidViewModel {
         updateUser();
     }
 
-    public List<Session> getPreSavedSessions() {
+    public List<SessionDto> getPreSavedSessions() {
         return preSavedSessions;
     }
 
-    public void setPreSavedSessions(List<Session> preSavedSessions) {
+    public void setPreSavedSessions(List<SessionDto> preSavedSessions) {
         this.preSavedSessions = preSavedSessions;
     }
 
@@ -258,16 +267,16 @@ public class ViewModel extends AndroidViewModel {
         return yearlySummaryDtoMutableLiveData;
     }
 
-    public LiveData<Goal> getSelectedGoal() {
+    public LiveData<GoalDto> getSelectedGoal() {
         return selectedGoal;
     }
 
-    public void selectGoal(Goal goal) {
+    public void selectGoal(GoalDto goal) {
         selectedGoal.setValue(goal);
     }
 
     public void clearSelectGoal() {
-        selectedGoal.setValue(Goal.EMPTY);
+        selectedGoal.setValue(GoalDto.EMPTY);
     }
 
     public LiveData<Boolean> getGoalEditMode() {

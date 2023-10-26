@@ -3,6 +3,7 @@ package com.slinger.bodygoals.ui.dtos;
 import static org.junit.Assert.assertEquals;
 
 import com.slinger.bodygoals.model.Goal;
+import com.slinger.bodygoals.model.GoalIdentifier;
 import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.model.SessionLog;
 
@@ -20,9 +21,9 @@ public class YearlySummaryDtoTest {
 
         Date today = Calendar.getInstance().getTime();
 
-        Goal pushPull = new Goal("Push / Pull", 3, today);
-        Goal legs = new Goal("legs", 3, today);
-        Goal shoulders = new Goal("shoulders", 3, today);
+        Goal pushPull = new Goal(GoalIdentifier.DEFAULT, "Push / Pull", 3, today);
+        Goal legs = new Goal(GoalIdentifier.DEFAULT, "legs", 3, today);
+        Goal shoulders = new Goal(GoalIdentifier.DEFAULT, "shoulders", 3, today);
 
         SessionLog sessionLog = new SessionLog();
 

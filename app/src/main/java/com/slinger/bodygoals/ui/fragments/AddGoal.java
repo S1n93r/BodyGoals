@@ -14,11 +14,12 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentAddGoalBinding;
-import com.slinger.bodygoals.model.Goal;
+import com.slinger.bodygoals.model.GoalIdentifier;
 import com.slinger.bodygoals.model.MuscleGroup;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.DatePickerFragment;
+import com.slinger.bodygoals.ui.dtos.GoalDto;
 import com.slinger.bodygoals.ui.exceptions.NoFrequencyException;
 import com.slinger.bodygoals.ui.exceptions.NoGoalNameException;
 import com.slinger.bodygoals.ui.exceptions.NoMuscleGroupException;
@@ -27,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class AddGoal extends Fragment {
 
@@ -105,7 +107,7 @@ public class AddGoal extends Fragment {
         binding = null;
     }
 
-    private Goal collectGoalFromUI() throws NoFrequencyException {
+    private GoalDto collectGoalFromUI() throws NoFrequencyException {
 
         String frequencyString = binding.frequencyTextView.getText().toString();
 
@@ -133,8 +135,6 @@ public class AddGoal extends Fragment {
         boolean tricepsChecked = binding.cbTriceps.isChecked();
 
         Date creationDate = datePickerFragment.getSelectedDateLiveData().getValue();
-
-        Goal goal = Goal.of(goalName, frequency, creationDate);
 
         List<MuscleGroup> selectedMuscleGroups = new ArrayList<>();
 
@@ -177,9 +177,7 @@ public class AddGoal extends Fragment {
         if (selectedMuscleGroups.isEmpty())
             throw new NoMuscleGroupException();
 
-        selectedMuscleGroups.forEach(goal::addMuscleGroup);
-
-        return goal;
+        return GoalDto.of(GoalIdentifier.DEFAULT, goalName, frequency, Objects.requireNonNull(creationDate), selectedMuscleGroups);
     }
 
     private void registerLiveDataObserver() {
@@ -192,14 +190,22 @@ public class AddGoal extends Fragment {
         });
 
         viewModel.getSelectedGoal().observe(this, this::update);
+
+        viewModel.getGoalEditMode().observe(this, editModeEnabled -> {
+
+            if (editModeEnabled)
+                binding.buttonSave.setText(R.string.save);
+            else
+                binding.buttonSave.setText(R.string.add);
+        });
     }
 
-    private void update(Goal goal) {
+    private void update(GoalDto goalDto) {
 
-        binding.goalNameText.setText(goal.getName());
-        binding.frequencyTextView.setText(String.valueOf(goal.getFrequency()));
+        binding.goalNameText.setText(goalDto.getName());
+        binding.frequencyTextView.setText(String.valueOf(goalDto.getFrequency()));
 
-        for (MuscleGroup muscleGroup : goal.getMuscleGroupsCopy()) {
+        for (MuscleGroup muscleGroup : goalDto.getMuscleGroupsCopy()) {
 
             binding.cbAbs.setChecked(muscleGroup == MuscleGroup.ABS);
             binding.cbBiceps.setChecked(muscleGroup == MuscleGroup.BICEPS);

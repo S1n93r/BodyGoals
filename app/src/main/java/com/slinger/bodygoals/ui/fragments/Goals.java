@@ -13,9 +13,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentGoalsBinding;
-import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.GoalEntry;
+import com.slinger.bodygoals.ui.dtos.GoalDto;
 
 import java.util.List;
 
@@ -67,26 +67,26 @@ public class Goals extends Fragment {
         viewModel.getUserGoals().observe(this, this::updateGoalsList);
     }
 
-    private void updateGoalsList(List<Goal> goals) {
+    private void updateGoalsList(List<GoalDto> goalDtos) {
 
         binding.goalsList.removeAllViews();
 
-        for (Goal goal : goals) {
+        for (GoalDto goalDto : goalDtos) {
 
             GoalEntry goalEntry = new GoalEntry(getContext());
 
-            goalEntry.setGoal(goal);
+            goalEntry.setGoalDto(goalDto);
 
             goalEntry.registerEditGoalRunner(() -> {
 
                 /* FIXME: Loading goals values into view does not work. Seem like it is overwritten with an instance of Goal.EMPTY. */
-                viewModel.selectGoal(goal);
+                viewModel.selectGoal(goalDto);
                 viewModel.enableGoalEditMode();
 
                 NavHostFragment.findNavController(Goals.this).navigate(R.id.action_goals_list_fragment_to_AddGoalFragment);
             });
 
-            goalEntry.registerDeleteGoalRunner(() -> viewModel.deleteGoal(goal));
+            goalEntry.registerDeleteGoalRunner(() -> viewModel.deleteGoal(goalDto));
 
             binding.goalsList.addView(goalEntry);
         }

@@ -29,7 +29,7 @@ public class User {
     @TypeConverters({GoalListConverter.class})
     private List<Goal> goals = new ArrayList<>();
 
-    public void addGoal(String goalName, int frequency, Date startingDate) throws GoalAlreadyExistsException {
+    public void addGoal(String goalName, int frequency, Date startingDate, List<MuscleGroup> muscleGroups) throws GoalAlreadyExistsException {
 
         int maxId = 0;
 
@@ -38,6 +38,8 @@ public class User {
                 maxId = id;
 
         Goal goal = new Goal(GoalIdentifier.of(maxId + 1), goalName, frequency, startingDate);
+
+        muscleGroups.forEach(goal::addMuscleGroup);
 
         checkGoalNameAlreadyExists(goal);
 

@@ -116,6 +116,7 @@ public class ViewModel extends AndroidViewModel {
         updateUser();
     }
 
+    /* FIXME: Saving an edited goal does not do anything. */
     public void editGoal(@NonNull GoalDto goalDto) throws GoalAlreadyExistsException {
 
         User user = currentUser.getValue();

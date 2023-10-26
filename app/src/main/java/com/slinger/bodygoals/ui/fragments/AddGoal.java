@@ -207,18 +207,41 @@ public class AddGoal extends Fragment {
 
         for (MuscleGroup muscleGroup : goalDto.getMuscleGroupsCopy()) {
 
-            binding.cbAbs.setChecked(muscleGroup == MuscleGroup.ABS);
-            binding.cbBiceps.setChecked(muscleGroup == MuscleGroup.BICEPS);
-            binding.cbCalves.setChecked(muscleGroup == MuscleGroup.CALVES);
-            binding.cbChest.setChecked(muscleGroup == MuscleGroup.CHEST);
-            binding.cbForearms.setChecked(muscleGroup == MuscleGroup.FOREARMS);
-            binding.cbHarmstring.setChecked(muscleGroup == MuscleGroup.HARM_STRINGS);
-            binding.cbLats.setChecked(muscleGroup == MuscleGroup.LATS);
-            binding.cbLowerBack.setChecked(muscleGroup == MuscleGroup.LOWER_BACK);
-            binding.cbNeck.setChecked(muscleGroup == MuscleGroup.NECK);
-            binding.cbQuads.setChecked(muscleGroup == MuscleGroup.QUADS);
-            binding.cbShoulders.setChecked(muscleGroup == MuscleGroup.SHOULDERS);
-            binding.cbTriceps.setChecked(muscleGroup == MuscleGroup.TRICEPS);
+            if (muscleGroup == MuscleGroup.ABS)
+                binding.cbAbs.setChecked(true);
+
+            if (muscleGroup == MuscleGroup.BICEPS)
+                binding.cbBiceps.setChecked(true);
+
+            if (muscleGroup == MuscleGroup.CALVES)
+                binding.cbCalves.setChecked(true);
+
+            if (muscleGroup == MuscleGroup.CHEST)
+                binding.cbChest.setChecked(true);
+
+            if (muscleGroup == MuscleGroup.FOREARMS)
+                binding.cbForearms.setChecked(true);
+
+            if (muscleGroup == MuscleGroup.HARM_STRINGS)
+                binding.cbHarmstring.setChecked(true);
+
+            if (muscleGroup == MuscleGroup.LATS)
+                binding.cbLats.setChecked(true);
+
+            if (muscleGroup == MuscleGroup.LOWER_BACK)
+                binding.cbLowerBack.setChecked(true);
+
+            if (muscleGroup == MuscleGroup.NECK)
+                binding.cbNeck.setChecked(true);
+
+            if (muscleGroup == MuscleGroup.QUADS)
+                binding.cbQuads.setChecked(true);
+
+            if (muscleGroup == MuscleGroup.SHOULDERS)
+                binding.cbShoulders.setChecked(true);
+
+            if (muscleGroup == MuscleGroup.TRICEPS)
+                binding.cbTriceps.setChecked(true);
         }
     }
 }

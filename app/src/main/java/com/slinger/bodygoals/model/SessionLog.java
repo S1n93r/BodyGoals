@@ -58,7 +58,6 @@ public class SessionLog {
 
     private Set<Goal> getSessionGoalsWeekOfYear(int year, int weekOfYear) {
 
-        /* FIXME: Sorting is not working. */
         return StreamSupport.stream(loggedSessions)
                 .filter(session -> DateUtil.getFromDate(session.getDate(), Calendar.YEAR) == year)
                 .filter(session -> DateUtil.getFromDate(session.getDate(), Calendar.WEEK_OF_YEAR) == weekOfYear)
@@ -141,7 +140,6 @@ public class SessionLog {
     }
 
     /* TODO: Dedicated class instead of map, otherwise every place has to null-check. */
-    /* FIXME: Muscle group progress is applied to wrong groups. Check here and in goals. */
     public Map<MuscleGroup, Progress> progressPerMuscleGroup(Date date) {
 
         List<Session> sessions = getSessionsWeekOfYear(date);

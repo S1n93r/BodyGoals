@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -46,6 +47,10 @@ public class ViewModel extends AndroidViewModel {
     private final MutableLiveData<YearlySummaryDto> yearlySummaryDtoMutableLiveData =
             new MutableLiveData<>(YearlySummaryDto.EMPTY);
 
+    private final MutableLiveData<Goal> selectedGoal = new MutableLiveData<>(Goal.EMPTY);
+
+    private final MutableLiveData<Boolean> goalEditMode = new MutableLiveData<>(false);
+
     private final BodyGoalDatabase database;
 
     private List<Session> preSavedSessions;
@@ -66,7 +71,7 @@ public class ViewModel extends AndroidViewModel {
             if (user == null)
                 return;
 
-            userGoals.setValue(user.getGoalsCopy());
+            userGoals.setValue(user.getGoals());
 
             int year = DateUtil.getFromDate(selectedDate.getValue(), Calendar.YEAR);
 
@@ -96,10 +101,19 @@ public class ViewModel extends AndroidViewModel {
 
     public void addGoal(@NonNull Goal goal) throws GoalAlreadyExistsException {
 
-        if (currentUser.getValue() != null)
-            currentUser.getValue().addGoal(goal);
-        else
-            throw new IllegalStateException("User should not be 'null', as it was initialized with test user.");
+        User user = currentUser.getValue();
+
+        Objects.requireNonNull(user).addGoal(goal);
+
+        updateUser();
+    }
+
+    /* FIXME: Editing is not working. */
+    public void editGoal(@NonNull Goal goal) throws GoalAlreadyExistsException {
+
+        User user = currentUser.getValue();
+
+        Objects.requireNonNull(user).editGoal(goal);
 
         updateUser();
     }
@@ -243,5 +257,29 @@ public class ViewModel extends AndroidViewModel {
 
     public LiveData<YearlySummaryDto> getYearlySummaryDtoMutableLiveData() {
         return yearlySummaryDtoMutableLiveData;
+    }
+
+    public LiveData<Goal> getSelectedGoal() {
+        return selectedGoal;
+    }
+
+    public void selectGoal(Goal goal) {
+        selectedGoal.setValue(goal);
+    }
+
+    public void clearSelectGoal() {
+        selectedGoal.setValue(Goal.EMPTY);
+    }
+
+    public LiveData<Boolean> getGoalEditMode() {
+        return goalEditMode;
+    }
+
+    public void enableGoalEditMode() {
+        goalEditMode.setValue(true);
+    }
+
+    public void disableGoalEditMode() {
+        goalEditMode.setValue(false);
     }
 }

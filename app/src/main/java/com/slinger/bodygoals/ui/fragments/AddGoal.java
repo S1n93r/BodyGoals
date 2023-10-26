@@ -64,8 +64,15 @@ public class AddGoal extends Fragment {
 
             try {
 
-                viewModel.addGoal(collectGoalFromUI());
+                if (Boolean.TRUE.equals(viewModel.getGoalEditMode().getValue()))
+                    viewModel.editGoal(collectGoalFromUI());
+                else
+                    viewModel.addGoal(collectGoalFromUI());
+
                 navigateToGoalsList();
+
+                viewModel.clearSelectGoal();
+                viewModel.disableGoalEditMode();
 
             } catch (IllegalStateException e) {
 
@@ -183,5 +190,29 @@ public class AddGoal extends Fragment {
 
             binding.selectedDateText.setText(weekString);
         });
+
+        viewModel.getSelectedGoal().observe(this, this::update);
+    }
+
+    private void update(Goal goal) {
+
+        binding.goalNameText.setText(goal.getName());
+        binding.frequencyTextView.setText(String.valueOf(goal.getFrequency()));
+
+        for (MuscleGroup muscleGroup : goal.getMuscleGroupsCopy()) {
+
+            binding.cbAbs.setChecked(muscleGroup == MuscleGroup.ABS);
+            binding.cbBiceps.setChecked(muscleGroup == MuscleGroup.BICEPS);
+            binding.cbCalves.setChecked(muscleGroup == MuscleGroup.CALVES);
+            binding.cbChest.setChecked(muscleGroup == MuscleGroup.CHEST);
+            binding.cbForearms.setChecked(muscleGroup == MuscleGroup.FOREARMS);
+            binding.cbHarmstring.setChecked(muscleGroup == MuscleGroup.HARM_STRINGS);
+            binding.cbLats.setChecked(muscleGroup == MuscleGroup.LATS);
+            binding.cbLowerBack.setChecked(muscleGroup == MuscleGroup.LOWER_BACK);
+            binding.cbNeck.setChecked(muscleGroup == MuscleGroup.NECK);
+            binding.cbQuads.setChecked(muscleGroup == MuscleGroup.QUADS);
+            binding.cbShoulders.setChecked(muscleGroup == MuscleGroup.SHOULDERS);
+            binding.cbTriceps.setChecked(muscleGroup == MuscleGroup.TRICEPS);
+        }
     }
 }

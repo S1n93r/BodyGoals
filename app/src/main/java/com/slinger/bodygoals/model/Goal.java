@@ -11,6 +11,8 @@ import java.util.Objects;
 
 public class Goal implements Comparable<Goal> {
 
+    public static Goal EMPTY = new Goal("", 0, Calendar.getInstance().getTime());
+
     private final String name;
     private final int frequency;
     private final List<MuscleGroup> muscleGroups = new ArrayList<>();

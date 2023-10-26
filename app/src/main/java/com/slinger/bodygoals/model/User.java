@@ -9,7 +9,6 @@ import androidx.room.TypeConverters;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -41,6 +40,20 @@ public class User {
         goals.add(goal);
     }
 
+    public void editGoal(Goal goal) throws GoalAlreadyExistsException {
+
+        for (Goal goalUser : goals) {
+
+            if (goalUser == goal) {
+
+                int originalIndex = goals.indexOf(goalUser);
+
+                goals.remove(originalIndex);
+                goals.add(originalIndex, goalUser);
+            }
+        }
+    }
+
     public SessionLog getSessionLog() {
         return sessionLog;
     }
@@ -55,10 +68,6 @@ public class User {
 
     public List<Goal> getGoals() {
         return goals;
-    }
-
-    public List<Goal> getGoalsCopy() {
-        return Collections.unmodifiableList(goals);
     }
 
     public int getUserId() {

@@ -18,6 +18,7 @@ public class GoalEntry extends RelativeLayout {
 
     private TextView textView;
 
+    private ImageView imageViewEdit;
     private ImageView imageViewDelete;
     private ImageView imageViewConfirmDelete;
     private ImageView imageViewCancelDelete;
@@ -61,8 +62,11 @@ public class GoalEntry extends RelativeLayout {
 
         originalTextColor = textView.getCurrentTextColor();
 
+        imageViewEdit = innerView.findViewById(R.id.button_edit);
+
         imageViewDelete = innerView.findViewById(R.id.button_delete);
         imageViewDelete.setOnClickListener(v -> {
+            imageViewEdit.setVisibility(GONE);
             imageViewDelete.setVisibility(GONE);
             imageViewConfirmDelete.setVisibility(VISIBLE);
             imageViewCancelDelete.setVisibility(VISIBLE);
@@ -72,6 +76,7 @@ public class GoalEntry extends RelativeLayout {
 
         imageViewCancelDelete = innerView.findViewById(R.id.button_cancel_delete);
         imageViewCancelDelete.setOnClickListener(v -> {
+            imageViewEdit.setVisibility(VISIBLE);
             imageViewDelete.setVisibility(VISIBLE);
             imageViewConfirmDelete.setVisibility(GONE);
             imageViewCancelDelete.setVisibility(GONE);
@@ -85,6 +90,10 @@ public class GoalEntry extends RelativeLayout {
         this.goal = goal;
 
         textView.setText(goal.getName());
+    }
+
+    public void registerEditGoalRunner(Runnable runnable) {
+        imageViewEdit.setOnClickListener(view -> runnable.run());
     }
 
     public void registerDeleteGoalRunner(Runnable runnable) {

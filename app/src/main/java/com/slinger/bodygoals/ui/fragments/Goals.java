@@ -77,6 +77,14 @@ public class Goals extends Fragment {
 
             goalEntry.setGoal(goal);
 
+            goalEntry.registerEditGoalRunner(() -> {
+
+                viewModel.selectGoal(goal);
+                viewModel.enableGoalEditMode();
+
+                NavHostFragment.findNavController(Goals.this).navigate(R.id.action_goals_list_fragment_to_AddGoalFragment);
+            });
+
             goalEntry.registerDeleteGoalRunner(() -> viewModel.deleteGoal(goal));
 
             binding.goalsList.addView(goalEntry);

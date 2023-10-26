@@ -13,6 +13,13 @@
         android:textSize="22sp"
         android:textAlignment="viewStart" />
 
+    <ImageView
+        android:id="@+id/button_edit"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_weight="1"
+        android:src="@drawable/ic_pencil"
+        android:contentDescription="@string/button_disable_delete_description" />
 
     <ImageView
         android:id="@+id/button_delete"
@@ -20,7 +27,8 @@
         android:layout_height="32dp"
         android:layout_weight="1"
         android:src="@drawable/ic_bin"
-        android:contentDescription="@string/button_disable_delete_description" />
+        android:contentDescription="@string/button_disable_delete_description"
+        android:layout_marginStart="8dp" />
 
     <ImageView
         android:id="@+id/button_confirm_delete"
@@ -38,6 +46,7 @@
         android:layout_weight="1"
         android:src="@drawable/ic_cancel_2"
         android:contentDescription="@string/button_disable_delete_description"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_marginStart="8dp" />
 
 </LinearLayout>

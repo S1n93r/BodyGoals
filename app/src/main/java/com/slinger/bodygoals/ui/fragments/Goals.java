@@ -79,6 +79,7 @@ public class Goals extends Fragment {
 
             goalEntry.registerEditGoalRunner(() -> {
 
+                /* FIXME: Loading goals values into view does not work. Seem like it is overwritten with an instance of Goal.EMPTY. */
                 viewModel.selectGoal(goal);
                 viewModel.enableGoalEditMode();
 

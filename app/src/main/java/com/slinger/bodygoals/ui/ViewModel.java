@@ -108,7 +108,6 @@ public class ViewModel extends AndroidViewModel {
         updateUser();
     }
 
-    /* FIXME: Editing is not working. */
     public void editGoal(@NonNull Goal goal) throws GoalAlreadyExistsException {
 
         User user = currentUser.getValue();

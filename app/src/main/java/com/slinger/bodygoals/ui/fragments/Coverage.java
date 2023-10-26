@@ -24,6 +24,7 @@ import com.slinger.bodygoals.ui.ViewModel;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 public class Coverage extends Fragment {
 
@@ -80,11 +81,7 @@ public class Coverage extends Fragment {
 
             User user = viewModel.getCurrentUser().getValue();
 
-            /* TODO: Meh. */
-            if (user == null)
-                return;
-
-            updateCoverage(user, selectedDate);
+            updateCoverage(Objects.requireNonNull(user), selectedDate);
         });
     }
 

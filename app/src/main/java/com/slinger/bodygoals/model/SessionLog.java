@@ -17,7 +17,6 @@ import java8.util.stream.StreamSupport;
 
 public class SessionLog {
 
-    /* TODO: To get data I constantly iterate over logs instead of saving progresses etc. in a DTO. */
     @ColumnInfo(name = "logged_sessions")
     @TypeConverters({SessionListConverter.class})
     private List<Session> loggedSessions = new ArrayList<>();
@@ -157,7 +156,6 @@ public class SessionLog {
         loggedSessions.remove(session);
     }
 
-    /* TODO: Dedicated class instead of map, otherwise every place has to null-check. */
     public Map<MuscleGroup, Progress> progressPerMuscleGroup(Date date) {
 
         List<Session> sessions = getSessionsWeekOfYear(date);

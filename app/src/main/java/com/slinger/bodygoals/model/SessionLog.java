@@ -21,8 +21,14 @@ public class SessionLog {
     @TypeConverters({SessionListConverter.class})
     private List<Session> loggedSessions = new ArrayList<>();
 
+    /* TODO: Session should be created in the log, not before. */
+    @Deprecated
     public void logSession(Session session) {
         loggedSessions.add(session);
+    }
+
+    public void logSession(Goal sessionGoal, Date sessionDate) {
+        loggedSessions.add(new Session(sessionGoal, sessionDate));
     }
 
     public Set<Integer> getLoggedWeeks() {

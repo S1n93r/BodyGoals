@@ -115,7 +115,7 @@ public class ViewModel extends AndroidViewModel {
 
         updateUser();
     }
-    
+
     public void editGoal(@NonNull GoalDto goalDto) throws GoalAlreadyExistsException {
 
         User user = currentUser.getValue();
@@ -178,7 +178,7 @@ public class ViewModel extends AndroidViewModel {
         if (user.getSessionLog() == null)
             return 0;
 
-        return user.getSessionLog().getSessionsLogged(weekOfYear, goalDto.to());
+        return user.getSessionLog().getSessionsLogged(weekOfYear, goalDto.getGoalIdentifier());
     }
 
     private void updateUser() {

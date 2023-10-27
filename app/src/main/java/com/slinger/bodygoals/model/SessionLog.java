@@ -65,13 +65,13 @@ public class SessionLog {
                 .collect(Collectors.toSet());
     }
 
-    public int getSessionsLogged(int weekOfYear, Goal goal) {
+    public int getSessionsLogged(int weekOfYear, GoalIdentifier goalIdentifier) {
 
         if (loggedSessions.isEmpty())
             return 0;
 
         List<Session> sessionsMatching = StreamSupport.stream(loggedSessions)
-                .filter(session -> session.getGoal().equals(goal))
+                .filter(session -> session.getGoal().getGoalIdentifier().equals(goalIdentifier))
                 .filter(session -> session.getGoal().getCreationWeek() == weekOfYear)
                 .collect(Collectors.toList());
 
@@ -121,7 +121,7 @@ public class SessionLog {
 
     public int getGoalWeeklyProgress(int weekOfYear, Goal goal) {
 
-        int sessionsLogged = getSessionsLogged(weekOfYear, goal);
+        int sessionsLogged = getSessionsLogged(weekOfYear, goal.getGoalIdentifier());
 
         return (int) Math.round((double) sessionsLogged / (double) goal.getFrequency() * 100);
     }

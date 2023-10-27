@@ -22,9 +22,9 @@ public class SessionLogTest {
         Date date = calendar.getTime();
 
         /* When */
-        sessionLog.logSession(new Session(Goal.of("Push", 2, date), calendar.getTime()));
-        sessionLog.logSession(new Session(Goal.of("Pull", 2, date), calendar.getTime()));
-        sessionLog.logSession(new Session(Goal.of("Legs", 2, date), calendar.getTime()));
+        sessionLog.logSession(new Session(Goal.of(GoalIdentifier.of(1), "Push", 2, date), calendar.getTime()));
+        sessionLog.logSession(new Session(Goal.of(GoalIdentifier.of(2), "Pull", 2, date), calendar.getTime()));
+        sessionLog.logSession(new Session(Goal.of(GoalIdentifier.of(3), "Legs", 2, date), calendar.getTime()));
 
         /* Then */
         assertEquals(1, sessionLog.getLoggedWeeks().size());
@@ -43,9 +43,9 @@ public class SessionLogTest {
 
         int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
 
-        Goal push = Goal.of("Push", 2, date);
-        Goal pull = Goal.of("Pull", 2, date);
-        Goal legs = Goal.of("Legs", 2, date);
+        Goal push = Goal.of(GoalIdentifier.of(1), "Push", 2, date);
+        Goal pull = Goal.of(GoalIdentifier.of(2), "Pull", 2, date);
+        Goal legs = Goal.of(GoalIdentifier.of(3), "Legs", 2, date);
 
         /* When */
         sessionLog.logSession(new Session(push, calendar.getTime()));
@@ -55,9 +55,9 @@ public class SessionLogTest {
         sessionLog.logSession(new Session(pull, calendar.getTime()));
 
         /* Then */
-        assertEquals(2, sessionLog.getSessionsLogged(weekOfYear, push));
-        assertEquals(2, sessionLog.getSessionsLogged(weekOfYear, pull));
-        assertEquals(1, sessionLog.getSessionsLogged(weekOfYear, legs));
+        assertEquals(2, sessionLog.getSessionsLogged(weekOfYear, GoalIdentifier.of(1)));
+        assertEquals(2, sessionLog.getSessionsLogged(weekOfYear, GoalIdentifier.of(2)));
+        assertEquals(1, sessionLog.getSessionsLogged(weekOfYear, GoalIdentifier.of(3)));
     }
 
     @Test
@@ -72,9 +72,9 @@ public class SessionLogTest {
 
         int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
 
-        Goal push = Goal.of("Push", 3, date);
-        Goal pull = Goal.of("Pull", 2, date);
-        Goal legs = Goal.of("Legs", 2, date);
+        Goal push = Goal.of(GoalIdentifier.of(1), "Push", 3, date);
+        Goal pull = Goal.of(GoalIdentifier.of(2), "Pull", 2, date);
+        Goal legs = Goal.of(GoalIdentifier.of(3), "Legs", 2, date);
 
         /* When */
         sessionLog.logSession(new Session(push, date));
@@ -99,15 +99,15 @@ public class SessionLogTest {
 
         Date date = calendar.getTime();
 
-        Goal push = Goal.of("Push", 3, date);
+        Goal push = Goal.of(GoalIdentifier.of(1), "Push", 3, date);
         push.addMuscleGroup(MuscleGroup.CHEST);
         push.addMuscleGroup(MuscleGroup.TRICEPS);
 
-        Goal pull = Goal.of("Pull", 2, date);
+        Goal pull = Goal.of(GoalIdentifier.of(2), "Pull", 2, date);
         pull.addMuscleGroup(MuscleGroup.LATS);
         pull.addMuscleGroup(MuscleGroup.BICEPS);
 
-        Goal legs = Goal.of("Legs", 2, date);
+        Goal legs = Goal.of(GoalIdentifier.of(3), "Legs", 2, date);
         legs.addMuscleGroup(MuscleGroup.QUADS);
         legs.addMuscleGroup(MuscleGroup.HARM_STRINGS);
         legs.addMuscleGroup(MuscleGroup.CALVES);
@@ -162,15 +162,15 @@ public class SessionLogTest {
 
         Date date = calendar.getTime();
 
-        Goal push = Goal.of("Push", 3, date);
+        Goal push = Goal.of(GoalIdentifier.of(1), "Push", 3, date);
         push.addMuscleGroup(MuscleGroup.CHEST);
         push.addMuscleGroup(MuscleGroup.TRICEPS);
 
-        Goal pull = Goal.of("Pull", 2, date);
+        Goal pull = Goal.of(GoalIdentifier.of(2), "Pull", 2, date);
         pull.addMuscleGroup(MuscleGroup.LATS);
         pull.addMuscleGroup(MuscleGroup.BICEPS);
 
-        Goal legs = Goal.of("Legs", 2, date);
+        Goal legs = Goal.of(GoalIdentifier.of(3), "Legs", 2, date);
         legs.addMuscleGroup(MuscleGroup.QUADS);
         legs.addMuscleGroup(MuscleGroup.HARM_STRINGS);
         legs.addMuscleGroup(MuscleGroup.CALVES);

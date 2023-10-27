@@ -46,32 +46,32 @@ public class User {
         goals.add(goal);
     }
 
-    public void editGoal(Goal goal) throws GoalAlreadyExistsException {
-
-        checkGoalNameAlreadyExists(goal);
+    public void editGoal(GoalIdentifier goalIdentifier, String name, int frequency, List<MuscleGroup> muscleGroups) throws GoalAlreadyExistsException {
 
         boolean goalNotFound = true;
 
         for (Goal goalUser : goals) {
 
-            if (goalUser.equals(goal)) {
+            if (goalUser.getGoalIdentifier().equals(goalIdentifier)) {
 
-                int originalIndex = goals.indexOf(goalUser);
+                checkGoalNameAlreadyExists(goalUser);
 
-                goals.remove(originalIndex);
-                goals.add(originalIndex, goalUser);
+                goalUser.setName(name);
+                goalUser.setFrequency(frequency);
+                goalUser.setMuscleGroups(muscleGroups);
 
                 goalNotFound = false;
             }
         }
 
         if (goalNotFound)
-            throw new IllegalStateException(String.format("Goal %s was not found.", goal.getName()));
+            throw new IllegalStateException(String.format("Goal %s was not found.", name));
     }
 
     private void checkGoalNameAlreadyExists(Goal goal) throws GoalAlreadyExistsException {
 
         Set<String> goalNames = StreamSupport.stream(goals)
+                .filter(goalFromUser -> !goalFromUser.getGoalIdentifier().equals(goal.getGoalIdentifier()))
                 .map(Goal::getName)
                 .collect(Collectors.toSet());
 

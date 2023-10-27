@@ -121,7 +121,8 @@ public class ViewModel extends AndroidViewModel {
 
         User user = currentUser.getValue();
 
-        Objects.requireNonNull(user).editGoal(goalDto.to());
+        Objects.requireNonNull(user).editGoal(Objects.requireNonNull(selectedGoal.getValue()).getGoalIdentifier(),
+                goalDto.getName(), goalDto.getFrequency(), goalDto.getMuscleGroupsCopy());
 
         updateUser();
     }

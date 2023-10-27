@@ -64,6 +64,9 @@ public class User {
             }
         }
 
+        /* Adjust linked sessions. */
+        sessionLog.adjustGoalInSessions(goalIdentifier, name, frequency, muscleGroups);
+
         if (goalNotFound)
             throw new IllegalStateException(String.format("Goal %s was not found.", name));
     }

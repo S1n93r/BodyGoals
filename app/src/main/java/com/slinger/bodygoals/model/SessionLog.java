@@ -78,6 +78,25 @@ public class SessionLog {
         return sessionsMatching.size();
     }
 
+    public void adjustGoalInSessions(GoalIdentifier goalIdentifier, String goalName, int frequency, List<MuscleGroup> muscleGroups) {
+
+        getSessionsOfGoal(goalIdentifier).forEach(session -> {
+
+            Goal goal = session.getGoal();
+
+            goal.setName(goalName);
+            goal.setFrequency(frequency);
+            goal.setMuscleGroups(muscleGroups);
+        });
+    }
+
+    public List<Session> getSessionsOfGoal(GoalIdentifier goalIdentifier) {
+
+        return StreamSupport.stream(loggedSessions)
+                .filter(session -> session.getGoal().getGoalIdentifier().equals(goalIdentifier))
+                .collect(Collectors.toList());
+    }
+
     public Map<Integer, Integer> getOverallMonthlyProgresses(int year) {
 
         Map<Integer, Integer> overallMonthlyProgressesMap = new HashMap<>();

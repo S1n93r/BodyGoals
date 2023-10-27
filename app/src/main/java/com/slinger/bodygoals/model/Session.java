@@ -22,7 +22,7 @@ public class Session {
     }
 
     public int getWeekOfYear() {
-        
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 

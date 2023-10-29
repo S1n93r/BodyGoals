@@ -53,6 +53,7 @@ public class Goals extends Fragment {
                 NavHostFragment.findNavController(Goals.this).navigate(R.id.action_goals_list_fragment_to_OverviewFragment));
 
         binding.buttonAdd.setOnClickListener(addGoalView -> {
+            viewModel.clearSelectGoal();
             NavHostFragment.findNavController(Goals.this).navigate(R.id.action_goals_list_fragment_to_AddGoalFragment);
         });
     }

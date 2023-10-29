@@ -113,18 +113,4 @@ public class User {
     public void removeGoal(GoalIdentifier goalIdentifier) {
         goals.removeIf(goal -> goal.getGoalIdentifier().equals(goalIdentifier));
     }
-
-    public void addOrReplaceGoal(Goal goal) {
-
-        for (Goal goalInUser : goals) {
-
-            if (goalInUser.getGoalIdentifier().equals(goal.getGoalIdentifier())) {
-
-                removeGoal(goalInUser.getGoalIdentifier());
-                addGoal(goal);
-            } else {
-                addGoalWithNewId(goal.getName(), goal.getFrequency(), goal.getCreationDate(), goal.getMuscleGroupsCopy());
-            }
-        }
-    }
 }

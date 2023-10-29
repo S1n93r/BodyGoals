@@ -49,7 +49,6 @@ public class UserDto {
         return new UserDto(userId, loggedSessions, goals);
     }
 
-    /* TODO: Convert to Util class? */
     public static UserDto from(User user) {
 
         List<GoalDto> goalDtos = StreamSupport.stream(user.getGoals()).map(GoalDto::from).collect(Collectors.toList());
@@ -58,7 +57,6 @@ public class UserDto {
         return UserDto.of(UserIdentifier.of(user.getUserId()), sessionDtos, goalDtos);
     }
 
-    /* TODO: Convert to Util class? */
     public User to() {
 
         User user = new User();

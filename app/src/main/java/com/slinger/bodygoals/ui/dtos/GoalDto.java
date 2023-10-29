@@ -44,12 +44,10 @@ public class GoalDto implements Comparable<GoalDto> {
         return new GoalDto(goalIdentifier, name, frequency, creationDate, muscleGroups);
     }
 
-    /* TODO: Convert to Util class? */
     public static GoalDto from(Goal goal) {
         return GoalDto.of(goal.getGoalIdentifier(), goal.getName(), goal.getFrequency(), goal.getCreationDate(), goal.getMuscleGroupsCopy());
     }
 
-    /* TODO: Convert to Util class? */
     public Goal to() {
 
         Goal goal = new Goal(GoalIdentifier.of(goalIdentifier.getId()), name, frequency, new Date(creationDate.getTime()));

@@ -42,7 +42,6 @@ public class YearlySummaryDto {
         return new YearlySummaryDto(year, monthlySummaryMap);
     }
 
-    /* TODO: Should later be "from sessionLogDto" */
     public static YearlySummaryDto fromSessionLog(int year, SessionLog sessionLog) {
 
         Map<Integer, MonthlySummaryDto> monthlySummaryMap = new HashMap<>();
@@ -52,7 +51,6 @@ public class YearlySummaryDto {
 
         Map<Integer, Integer> overallMonthlyProgresses = sessionLog.getOverallMonthlyProgresses(year);
 
-        /* TODO: Feels redundant with loop above. Check for improvement. */
         overallMonthlyProgresses.forEach((month, progress) ->
                 monthlySummaryMap.put(month, MonthlySummaryDto.of(year, month, progress)));
 

@@ -22,7 +22,6 @@ public class RunSession extends Fragment {
 
     private final MutableLiveData<Integer> currentSets = new MutableLiveData<>(0);
 
-    /* TODO: Make configuration of default max sets possible. */
     private final MutableLiveData<Integer> maxSets = new MutableLiveData<>(0);
 
     private ViewModel viewModel;

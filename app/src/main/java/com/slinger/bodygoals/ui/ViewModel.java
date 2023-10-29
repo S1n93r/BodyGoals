@@ -33,6 +33,8 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import java8.util.Lists;
+import java8.util.Sets;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
@@ -151,7 +153,10 @@ public class ViewModel extends AndroidViewModel {
 
         User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
-        return StreamSupport.stream(Objects.requireNonNull(user).getSessionLog().getSessionsWeekOfYear(date))
+        if (user == null)
+            return Lists.of();
+
+        return StreamSupport.stream(user.getSessionLog().getSessionsWeekOfYear(date))
                 .map(SessionDto::from)
                 .collect(Collectors.toList());
     }
@@ -162,7 +167,10 @@ public class ViewModel extends AndroidViewModel {
 
         User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
-        Set<Goal> goalsFromUserYear = Objects.requireNonNull(user).getSessionLog().getSessionGoalsWeekOfYear(date);
+        if (user == null)
+            return Sets.of();
+
+        Set<Goal> goalsFromUserYear = user.getSessionLog().getSessionGoalsWeekOfYear(date);
 
         return StreamSupport.stream(goalsFromUserYear).map(GoalDto::from).collect(Collectors.toSet());
     }

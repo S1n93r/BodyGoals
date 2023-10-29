@@ -118,7 +118,6 @@ public class RunSession extends Fragment {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            /* TODO: Implement number guards. */
             if (count > 0)
                 maxSets.setValue(Integer.parseInt(s.toString()));
         }

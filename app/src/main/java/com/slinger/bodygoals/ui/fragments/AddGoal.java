@@ -109,16 +109,15 @@ public class AddGoal extends Fragment {
     private GoalDto collectGoalFromUI() throws NoFrequencyException {
 
         String frequencyString = binding.frequencyTextView.getText().toString();
-
         String goalName = binding.goalNameText.getText().toString();
 
         if (goalName.isEmpty())
             throw new NoGoalNameException();
 
-        if (frequencyString.isEmpty())
-            throw new NoFrequencyException();
-
         int frequency = Integer.parseInt(frequencyString);
+
+        if (frequencyString.isEmpty() || frequency == 0)
+            throw new NoFrequencyException();
 
         boolean absChecked = binding.cbAbs.isChecked();
         boolean bicepsChecked = binding.cbBiceps.isChecked();

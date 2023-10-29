@@ -2,6 +2,8 @@ package com.slinger.bodygoals.model;
 
 import androidx.annotation.Nullable;
 
+import com.slinger.bodygoals.ui.dtos.Identifieable;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -9,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class Goal {
+public class Goal implements Identifieable {
 
     public static Goal EMPTY = new Goal(GoalIdentifier.of(-1), "", 0, Calendar.getInstance().getTime());
 
@@ -88,6 +90,11 @@ public class Goal {
     }
 
     public GoalIdentifier getGoalIdentifier() {
+        return goalIdentifier;
+    }
+
+    @Override
+    public Identifier getIdentifier() {
         return goalIdentifier;
     }
 }

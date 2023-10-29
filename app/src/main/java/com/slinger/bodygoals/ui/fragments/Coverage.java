@@ -18,13 +18,11 @@ import com.slinger.bodygoals.databinding.FragmentCoverageBinding;
 import com.slinger.bodygoals.model.MuscleGroup;
 import com.slinger.bodygoals.model.Progress;
 import com.slinger.bodygoals.model.ProgressStatus;
-import com.slinger.bodygoals.model.User;
 import com.slinger.bodygoals.ui.ViewModel;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-import java.util.Objects;
 
 public class Coverage extends Fragment {
 
@@ -75,19 +73,14 @@ public class Coverage extends Fragment {
     private void registerLiveDataObserver() {
 
         viewModel.getCurrentUser().observe(this,
-                user -> updateCoverage(user, viewModel.getSelectedDate().getValue()));
+                userDto -> updateCoverage(viewModel.getSelectedDate().getValue()));
 
-        viewModel.getSelectedDate().observe(this, selectedDate -> {
-
-            User user = viewModel.getCurrentUser().getValue();
-
-            updateCoverage(Objects.requireNonNull(user), selectedDate);
-        });
+        viewModel.getSelectedDate().observe(this, this::updateCoverage);
     }
 
-    private void updateCoverage(User user, Date date) {
+    private void updateCoverage(Date date) {
 
-        Map<MuscleGroup, Progress> progressPerMuscleGroup = user.getSessionLog().progressPerMuscleGroup(date);
+        Map<MuscleGroup, Progress> progressPerMuscleGroup = viewModel.getProgressPerMuscleGroup(date);
 
         progressPerMuscleGroup.forEach((key, value) -> {
 

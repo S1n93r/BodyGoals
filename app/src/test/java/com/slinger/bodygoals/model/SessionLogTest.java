@@ -22,9 +22,9 @@ public class SessionLogTest {
         Date date = calendar.getTime();
 
         /* When */
-        sessionLog.logSession(new Session(Goal.of(GoalIdentifier.of(1), "Push", 2, date), calendar.getTime()));
-        sessionLog.logSession(new Session(Goal.of(GoalIdentifier.of(2), "Pull", 2, date), calendar.getTime()));
-        sessionLog.logSession(new Session(Goal.of(GoalIdentifier.of(3), "Legs", 2, date), calendar.getTime()));
+        sessionLog.logSession(Goal.of(GoalIdentifier.of(1), "Push", 2, date), calendar.getTime());
+        sessionLog.logSession(Goal.of(GoalIdentifier.of(2), "Pull", 2, date), calendar.getTime());
+        sessionLog.logSession(Goal.of(GoalIdentifier.of(3), "Legs", 2, date), calendar.getTime());
 
         /* Then */
         assertEquals(1, sessionLog.getLoggedWeeks().size());
@@ -48,11 +48,11 @@ public class SessionLogTest {
         Goal legs = Goal.of(GoalIdentifier.of(3), "Legs", 2, date);
 
         /* When */
-        sessionLog.logSession(new Session(push, calendar.getTime()));
-        sessionLog.logSession(new Session(pull, calendar.getTime()));
-        sessionLog.logSession(new Session(legs, calendar.getTime()));
-        sessionLog.logSession(new Session(push, calendar.getTime()));
-        sessionLog.logSession(new Session(pull, calendar.getTime()));
+        sessionLog.logSession(push, calendar.getTime());
+        sessionLog.logSession(pull, calendar.getTime());
+        sessionLog.logSession(legs, calendar.getTime());
+        sessionLog.logSession(push, calendar.getTime());
+        sessionLog.logSession(pull, calendar.getTime());
 
         /* Then */
         assertEquals(2, sessionLog.getSessionsLogged(weekOfYear, GoalIdentifier.of(1)));
@@ -77,11 +77,11 @@ public class SessionLogTest {
         Goal legs = Goal.of(GoalIdentifier.of(3), "Legs", 2, date);
 
         /* When */
-        sessionLog.logSession(new Session(push, date));
-        sessionLog.logSession(new Session(pull, date));
-        sessionLog.logSession(new Session(legs, date));
-        sessionLog.logSession(new Session(push, date));
-        sessionLog.logSession(new Session(pull, date));
+        sessionLog.logSession(push, date);
+        sessionLog.logSession(pull, date);
+        sessionLog.logSession(legs, date);
+        sessionLog.logSession(push, date);
+        sessionLog.logSession(pull, date);
 
         /* Then */
         assertEquals(67, sessionLog.getGoalWeeklyProgress(weekOfYear, push));
@@ -112,12 +112,12 @@ public class SessionLogTest {
         legs.addMuscleGroup(MuscleGroup.HARM_STRINGS);
         legs.addMuscleGroup(MuscleGroup.CALVES);
 
-        sut.logSession(new Session(pull, date));
-        sut.logSession(new Session(push, date));
-        sut.logSession(new Session(pull, date));
-        sut.logSession(new Session(legs, date));
-        sut.logSession(new Session(push, date));
-        sut.logSession(new Session(pull, date));
+        sut.logSession(pull, date);
+        sut.logSession(push, date);
+        sut.logSession(pull, date);
+        sut.logSession(legs, date);
+        sut.logSession(push, date);
+        sut.logSession(pull, date);
 
         /* When */
         Map<MuscleGroup, Progress> progressPerMuscleGroup = sut.progressPerMuscleGroup(date);
@@ -175,12 +175,12 @@ public class SessionLogTest {
         legs.addMuscleGroup(MuscleGroup.HARM_STRINGS);
         legs.addMuscleGroup(MuscleGroup.CALVES);
 
-        sut.logSession(new Session(pull, date));
-        sut.logSession(new Session(push, date));
-        sut.logSession(new Session(pull, date));
-        sut.logSession(new Session(legs, date));
-        sut.logSession(new Session(push, date));
-        sut.logSession(new Session(pull, date));
+        sut.logSession(pull, date);
+        sut.logSession(push, date);
+        sut.logSession(pull, date);
+        sut.logSession(legs, date);
+        sut.logSession(push, date);
+        sut.logSession(pull, date);
 
         /* When */
         Map<Integer, Integer> overallMonthlyProgresses = sut.getOverallMonthlyProgresses(DateUtil.getFromDate(date, Calendar.YEAR));

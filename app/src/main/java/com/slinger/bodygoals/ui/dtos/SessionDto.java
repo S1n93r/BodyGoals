@@ -1,22 +1,24 @@
 package com.slinger.bodygoals.ui.dtos;
 
 import com.slinger.bodygoals.model.Session;
+import com.slinger.bodygoals.model.SessionIdentifier;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class SessionDto {
 
+    private final SessionIdentifier sessionIdentifier;
     private final GoalDto goalDto;
     private final Date date;
 
-    private SessionDto(GoalDto goalDto, Date date) {
+    public SessionDto(SessionIdentifier sessionIdentifier, GoalDto goalDto, Date date) {
+        this.sessionIdentifier = sessionIdentifier;
         this.goalDto = goalDto;
         this.date = date;
     }
 
-    public static SessionDto of(GoalDto goalDto, Date date) {
-        return new SessionDto(goalDto, date);
+    public static SessionDto of(SessionIdentifier sessionIdentifier, GoalDto goalDto, Date date) {
+        return new SessionDto(sessionIdentifier, goalDto, date);
     }
 
     public GoalDto getGoal() {
@@ -27,15 +29,15 @@ public class SessionDto {
         return date;
     }
 
-    public int getWeekOfYear() {
+    public SessionIdentifier getSessionIdentifier() {
+        return sessionIdentifier;
+    }
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-
-        return calendar.get(Calendar.WEEK_OF_YEAR);
+    public static SessionDto from(Session session) {
+        return SessionDto.of(session.getSessionIdentifier(), GoalDto.from(session.getGoal()), session.getDate());
     }
 
     public Session to() {
-        return new Session(goalDto.to(), new Date(date.getTime()));
+        return new Session(sessionIdentifier, goalDto.to(), new Date(date.getTime()));
     }
 }

@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
+import com.slinger.bodygoals.model.util.IdentifierUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,17 +30,20 @@ public class User {
     @TypeConverters({GoalListConverter.class})
     private List<Goal> goals = new ArrayList<>();
 
-    public void addGoal(String goalName, int frequency, Date startingDate, List<MuscleGroup> muscleGroups) throws GoalAlreadyExistsException {
+    public void addGoalWithNewId(String goalName, int frequency, Date startingDate, List<MuscleGroup> muscleGroups) throws GoalAlreadyExistsException {
 
-        int maxId = 0;
+        int id = IdentifierUtil.getNextId(goals);
 
-        for (int id : StreamSupport.stream(goals).map(goal -> goal.getGoalIdentifier().getId()).collect(Collectors.toSet()))
-            if (id > maxId)
-                maxId = id;
-
-        Goal goal = new Goal(GoalIdentifier.of(maxId + 1), goalName, frequency, startingDate);
+        Goal goal = new Goal(GoalIdentifier.of(id), goalName, frequency, startingDate);
 
         muscleGroups.forEach(goal::addMuscleGroup);
+
+        checkGoalNameAlreadyExists(goal);
+
+        goals.add(goal);
+    }
+
+    public void addGoal(Goal goal) throws GoalAlreadyExistsException {
 
         checkGoalNameAlreadyExists(goal);
 
@@ -106,7 +110,21 @@ public class User {
         this.userId = userId;
     }
 
-    public void removeGoal(Goal goal) {
-        goals.remove(goal);
+    public void removeGoal(GoalIdentifier goalIdentifier) {
+        goals.removeIf(goal -> goal.getGoalIdentifier().equals(goalIdentifier));
+    }
+
+    public void addOrReplaceGoal(Goal goal) {
+
+        for (Goal goalInUser : goals) {
+
+            if (goalInUser.getGoalIdentifier().equals(goal.getGoalIdentifier())) {
+
+                removeGoal(goalInUser.getGoalIdentifier());
+                addGoal(goal);
+            } else {
+                addGoalWithNewId(goal.getName(), goal.getFrequency(), goal.getCreationDate(), goal.getMuscleGroupsCopy());
+            }
+        }
     }
 }

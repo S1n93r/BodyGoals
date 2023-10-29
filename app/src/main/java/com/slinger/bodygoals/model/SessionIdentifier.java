@@ -2,18 +2,18 @@ package com.slinger.bodygoals.model;
 
 import java.util.Objects;
 
-public class UserIdentifier implements Identifier {
+public class SessionIdentifier implements Identifier {
 
-    public static UserIdentifier DEFAULT = UserIdentifier.of(-1);
+    public static SessionIdentifier DEFAULT = SessionIdentifier.of(-1);
 
     private final int id;
 
-    private UserIdentifier(int id) {
+    private SessionIdentifier(int id) {
         this.id = id;
     }
 
-    public static UserIdentifier of(int id) {
-        return new UserIdentifier(id);
+    public static SessionIdentifier of(int id) {
+        return new SessionIdentifier(id);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class UserIdentifier implements Identifier {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        UserIdentifier that = (UserIdentifier) o;
+        SessionIdentifier that = (SessionIdentifier) o;
 
         return id == that.id;
     }

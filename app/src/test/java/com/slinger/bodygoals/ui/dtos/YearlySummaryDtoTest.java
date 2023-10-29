@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.GoalIdentifier;
-import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.model.SessionLog;
 
 import org.junit.Test;
@@ -27,10 +26,10 @@ public class YearlySummaryDtoTest {
 
         SessionLog sessionLog = new SessionLog();
 
-        sessionLog.logSession(new Session(pushPull, today));
-        sessionLog.logSession(new Session(legs, today));
-        sessionLog.logSession(new Session(shoulders, today));
-        sessionLog.logSession(new Session(pushPull, today));
+        sessionLog.logSession(pushPull, today);
+        sessionLog.logSession(legs, today);
+        sessionLog.logSession(shoulders, today);
+        sessionLog.logSession(pushPull, today);
 
         YearlySummaryDto sut = YearlySummaryDto.fromSessionLog(2023, sessionLog);
 

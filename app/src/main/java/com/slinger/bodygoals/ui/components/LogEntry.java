@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.slinger.bodygoals.R;
-import com.slinger.bodygoals.model.Session;
+import com.slinger.bodygoals.ui.dtos.SessionDto;
 
 import java.text.DateFormat;
 
@@ -59,13 +59,13 @@ public class LogEntry extends RelativeLayout {
         this.addView(innerView);
     }
 
-    public void setSession(Session session) {
+    public void setSession(SessionDto sessionDto) {
 
         DateFormat dateFormat = DateFormat.getInstance();
-        String dateString = dateFormat.format(session.getDate());
+        String dateString = dateFormat.format(sessionDto.getDate());
 
         String weeklyLogEntry = String.format(getResources().getString(R.string.weekly_log_entry),
-                dateString, session.getGoal().getName());
+                dateString, sessionDto.getGoal().getName());
 
         textView.setText(weeklyLogEntry);
     }

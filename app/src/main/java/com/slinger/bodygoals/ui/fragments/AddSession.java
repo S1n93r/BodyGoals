@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentAddSessionBinding;
+import com.slinger.bodygoals.model.SessionIdentifier;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.DatePickerFragment;
 import com.slinger.bodygoals.ui.components.GoalCheckBox;
@@ -100,7 +101,7 @@ public class AddSession extends Fragment {
         Date date = datePickerFragment.getSelectedDateLiveData().getValue();
 
         return StreamSupport.stream(goalDtos)
-                .map(goal -> SessionDto.of(goal, date))
+                .map(goal -> SessionDto.of(SessionIdentifier.DEFAULT, goal, date))
                 .collect(Collectors.toList());
     }
 

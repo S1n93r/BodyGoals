@@ -2,7 +2,7 @@ package com.slinger.bodygoals.model;
 
 import java.util.Objects;
 
-public class GoalIdentifier {
+public class GoalIdentifier implements Identifier {
 
     public static GoalIdentifier DEFAULT = GoalIdentifier.of(-1);
 
@@ -16,6 +16,7 @@ public class GoalIdentifier {
         return new GoalIdentifier(id);
     }
 
+    @Override
     public int getId() {
         return id;
     }

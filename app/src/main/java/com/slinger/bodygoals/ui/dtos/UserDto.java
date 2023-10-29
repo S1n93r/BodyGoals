@@ -2,27 +2,31 @@ package com.slinger.bodygoals.ui.dtos;
 
 import androidx.annotation.NonNull;
 
-import com.slinger.bodygoals.model.Goal;
-import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.model.User;
 import com.slinger.bodygoals.model.UserIdentifier;
 
 import java.util.List;
 import java.util.Objects;
 
+import java8.util.Lists;
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
+
 public class UserDto {
+
+    public static UserDto EMPTY = UserDto.of(UserIdentifier.of(123), Lists.of(), Lists.of());
 
     private final UserIdentifier userIdentifier;
 
-    private final List<Session> loggedSessions;
+    private final List<SessionDto> loggedSessions;
 
-    private final List<Goal> goals;
+    private final List<GoalDto> goalDtos;
 
-    private UserDto(@NonNull UserIdentifier userIdentifier, @NonNull List<Session> loggedSessions, @NonNull List<Goal> goals) {
+    private UserDto(@NonNull UserIdentifier userIdentifier, @NonNull List<SessionDto> loggedSessions, @NonNull List<GoalDto> goalDtos) {
 
         this.userIdentifier = userIdentifier;
         this.loggedSessions = loggedSessions;
-        this.goals = goals;
+        this.goalDtos = goalDtos;
     }
 
     @Override
@@ -41,13 +45,17 @@ public class UserDto {
         return Objects.hash(userIdentifier);
     }
 
-    public static UserDto of(@NonNull UserIdentifier userId, @NonNull List<Session> loggedSessions, @NonNull List<Goal> goals) {
+    public static UserDto of(@NonNull UserIdentifier userId, @NonNull List<SessionDto> loggedSessions, @NonNull List<GoalDto> goals) {
         return new UserDto(userId, loggedSessions, goals);
     }
 
     /* TODO: Convert to Util class? */
     public static UserDto from(User user) {
-        return UserDto.of(UserIdentifier.of(user.getUserId()), user.getSessionLog().getLoggedSessions(), user.getGoals());
+
+        List<GoalDto> goalDtos = StreamSupport.stream(user.getGoals()).map(GoalDto::from).collect(Collectors.toList());
+        List<SessionDto> sessionDtos = StreamSupport.stream(user.getSessionLog().getLoggedSessions()).map(SessionDto::from).collect(Collectors.toList());
+
+        return UserDto.of(UserIdentifier.of(user.getUserId()), sessionDtos, goalDtos);
     }
 
     /* TODO: Convert to Util class? */
@@ -55,8 +63,8 @@ public class UserDto {
 
         User user = new User();
 
-        goals.forEach(goal -> user.addGoal(goal.getName(), goal.getFrequency(), goal.getCreationDate(), goal.getMuscleGroupsCopy()));
-        loggedSessions.forEach(session -> user.getSessionLog().logSession(session.getGoal(), session.getDate()));
+        goalDtos.forEach(goal -> user.addGoalWithNewId(goal.getName(), goal.getFrequency(), goal.getCreationDate(), goal.getMuscleGroupsCopy()));
+        loggedSessions.forEach(session -> user.getSessionLog().logSession(session.getGoal().to(), session.getDate()));
 
         return user;
     }
@@ -66,11 +74,11 @@ public class UserDto {
         return userIdentifier;
     }
 
-    public List<Session> getLoggedSessions() {
+    public List<SessionDto> getLoggedSessions() {
         return loggedSessions;
     }
 
-    public List<Goal> getGoals() {
-        return goals;
+    public List<GoalDto> getGoalDtos() {
+        return goalDtos;
     }
 }

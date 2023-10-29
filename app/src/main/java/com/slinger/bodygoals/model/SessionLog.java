@@ -3,6 +3,8 @@ package com.slinger.bodygoals.model;
 import androidx.room.ColumnInfo;
 import androidx.room.TypeConverters;
 
+import com.slinger.bodygoals.model.util.IdentifierUtil;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,7 +30,10 @@ public class SessionLog {
     }
 
     public void logSession(Goal sessionGoal, Date sessionDate) {
-        loggedSessions.add(new Session(sessionGoal, sessionDate));
+
+        int id = IdentifierUtil.getNextId(loggedSessions);
+
+        loggedSessions.add(new Session(SessionIdentifier.of(id), sessionGoal, sessionDate));
     }
 
     public Set<Integer> getLoggedWeeks() {
@@ -158,8 +163,8 @@ public class SessionLog {
         this.loggedSessions = loggedSessions;
     }
 
-    public void removeLogSession(Session session) {
-        loggedSessions.remove(session);
+    public void removeLogSession(SessionIdentifier sessionIdentifier) {
+        loggedSessions.removeIf(session -> session.getSessionIdentifier().equals(sessionIdentifier));
     }
 
     public Map<MuscleGroup, Progress> progressPerMuscleGroup(Date date) {

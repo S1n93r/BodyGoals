@@ -11,36 +11,39 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.room.Room;
 
 import com.slinger.bodygoals.model.BodyGoalDatabase;
-import com.slinger.bodygoals.model.DateUtil;
 import com.slinger.bodygoals.model.Goal;
-import com.slinger.bodygoals.model.Session;
+import com.slinger.bodygoals.model.MuscleGroup;
+import com.slinger.bodygoals.model.Progress;
 import com.slinger.bodygoals.model.User;
+import com.slinger.bodygoals.model.UserIdentifier;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
 import com.slinger.bodygoals.ui.dtos.GoalDto;
 import com.slinger.bodygoals.ui.dtos.SessionDto;
+import com.slinger.bodygoals.ui.dtos.UserDto;
 import com.slinger.bodygoals.ui.dtos.YearlySummaryDto;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import java8.util.Lists;
-import java8.util.Sets;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
 public class ViewModel extends AndroidViewModel {
 
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
-    private final MutableLiveData<User> currentUser =
-            new MutableLiveData<>(new User());
+    private final Map<UserIdentifier, User> userMap = new HashMap<>();
+
+    private final MutableLiveData<UserDto> currentUser = new MutableLiveData<>(UserDto.EMPTY);
 
     private final MutableLiveData<Date> selectedDate = new MutableLiveData<>(Calendar.getInstance().getTime());
 
@@ -70,24 +73,18 @@ public class ViewModel extends AndroidViewModel {
 
     private void registerLiveDataObserver() {
 
-        currentUser.observeForever(user -> {
+        currentUser.observeForever(userDto -> {
 
-            if (user == null)
-                return;
+            userGoals.setValue(userDto.getGoalDtos());
 
-            List<GoalDto> goalDtos = StreamSupport.stream(user.getGoals())
-                    .map(GoalDto::from)
-                    .collect(Collectors.toList());
-
-            userGoals.setValue(goalDtos);
-
-            int year = DateUtil.getFromDate(selectedDate.getValue(), Calendar.YEAR);
-
-            yearlySummaryDtoMutableLiveData.setValue(YearlySummaryDto.fromSessionLog(year, user.getSessionLog()));
+            /* TODO: Turn on again if yearl summary is re-implemented. */
+//            int year = DateUtil.getFromDate(selectedDate.getValue(), Calendar.YEAR);
+//
+//            yearlySummaryDtoMutableLiveData.setValue(YearlySummaryDto.fromSessionLog(year, user.getSessionLog()));
         });
     }
 
-    public LiveData<User> getCurrentUser() {
+    public LiveData<UserDto> getCurrentUser() {
         return currentUser;
     }
 
@@ -109,88 +106,89 @@ public class ViewModel extends AndroidViewModel {
 
     public void addGoal(@NonNull GoalDto goalDto) throws GoalAlreadyExistsException {
 
-        User user = currentUser.getValue();
+        UserDto userDto = currentUser.getValue();
 
-        Objects.requireNonNull(user).addGoal(goalDto.getName(), goalDto.getFrequency(), goalDto.getCreationDate(), goalDto.getMuscleGroupsCopy());
+        User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
-        updateUser();
+        Objects.requireNonNull(user).addGoal(goalDto.to());
+
+        currentUser.setValue(UserDto.from(user));
+
+        /* TODO: Do on app closed. */
+        saveUserToDatabase(user);
     }
 
     public void editGoal(@NonNull GoalDto goalDto) throws GoalAlreadyExistsException {
 
-        User user = currentUser.getValue();
+        UserDto userDto = currentUser.getValue();
+
+        User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
         Objects.requireNonNull(user).editGoal(Objects.requireNonNull(selectedGoal.getValue()).getGoalIdentifier(),
                 goalDto.getName(), goalDto.getFrequency(), goalDto.getMuscleGroupsCopy());
 
-        updateUser();
+        currentUser.setValue(UserDto.from(user));
+
+        /* TODO: Do on app closed. */
+        saveUserToDatabase(user);
     }
 
     public void addSessions(List<SessionDto> sessionDtos) {
 
-        if (currentUser.getValue() == null)
-            return;
+        UserDto userDto = currentUser.getValue();
 
-        StreamSupport.stream(sessionDtos).map(SessionDto::to).forEach(session -> currentUser.getValue().getSessionLog().logSession(session));
+        User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
-        updateUser();
+        StreamSupport.stream(sessionDtos).map(SessionDto::to).forEach(session -> user.getSessionLog().logSession(session.getGoal(), session.getDate()));
+
+        /* TODO: Do on app closed. */
+        saveUserToDatabase(user);
     }
 
-    public List<Session> getSessions(Date date) {
+    public List<SessionDto> getSessionsWeekOfYear(Date date) {
 
-        User user = currentUser.getValue();
+        UserDto userDto = currentUser.getValue();
 
-        if (user == null)
-            return Lists.of();
+        User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
-        return user.getSessionLog().getSessionsWeekOfYear(date);
+        return StreamSupport.stream(Objects.requireNonNull(user).getSessionLog().getSessionsWeekOfYear(date))
+                .map(SessionDto::from)
+                .collect(Collectors.toList());
     }
 
     public Set<GoalDto> getSessionGoals(Date date) {
 
-        User user = currentUser.getValue();
+        UserDto userDto = currentUser.getValue();
 
-        if (user == null)
-            return Sets.of();
+        User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
-        Set<Goal> goalsFromUserYear = user.getSessionLog().getSessionGoalsWeekOfYear(date);
+        Set<Goal> goalsFromUserYear = Objects.requireNonNull(user).getSessionLog().getSessionGoalsWeekOfYear(date);
 
         return StreamSupport.stream(goalsFromUserYear).map(GoalDto::from).collect(Collectors.toSet());
     }
 
     public int getGoalProgress(int weekOfYear, GoalDto goalDto) {
 
-        User user = currentUser.getValue();
+        UserDto userDto = currentUser.getValue();
 
-        if (user == null)
-            return 0;
+        User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
-        return user.getSessionLog().getGoalWeeklyProgress(weekOfYear, goalDto.to());
+        return Objects.requireNonNull(user).getSessionLog().getGoalWeeklyProgress(weekOfYear, goalDto.to());
     }
 
     public int getSessionsLogged(int weekOfYear, GoalDto goalDto) {
 
-        User user = currentUser.getValue();
+        UserDto userDto = currentUser.getValue();
 
-        if (user == null)
-            return 0;
+        User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
-        if (user.getSessionLog() == null)
-            return 0;
-
-        return user.getSessionLog().getSessionsLogged(weekOfYear, goalDto.getGoalIdentifier());
+        return Objects.requireNonNull(user).getSessionLog().getSessionsLogged(weekOfYear, goalDto.getGoalIdentifier());
     }
 
-    private void updateUser() {
-
-        User user = currentUser.getValue();
-
-        /* TODO: There should be a immutable UserDto for ViewClasses to use. */
-        currentUser.setValue(null);
-        currentUser.setValue(user);
+    private void saveUserToDatabase(User user) {
 
         if (database != null)
-            executor.execute(() -> database.userDao().insertAll(currentUser.getValue()));
+            executor.execute(() -> database.userDao().insertAll(user));
     }
 
     public void loadUser() {
@@ -199,31 +197,32 @@ public class ViewModel extends AndroidViewModel {
 
             User user = database.userDao().findByName(123);
 
-            if (user != null)
-                handler.post(() -> currentUser.setValue(user));
+            userMap.put(UserIdentifier.of(user.getUserId()), user);
+
+            handler.post(() -> currentUser.setValue(UserDto.from(user)));
         });
     }
 
     public void deleteGoal(GoalDto goalDto) {
 
-        User user = currentUser.getValue();
+        UserDto userDto = currentUser.getValue();
 
-        if (user == null)
-            return;
+        User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
-        user.removeGoal(goalDto.to());
+        Objects.requireNonNull(user).removeGoal(goalDto.getGoalIdentifier());
 
-        updateUser();
+        saveUserToDatabase(user);
     }
 
-    public void removeLogEntry(Session session) {
+    public void removeLogEntry(SessionDto sessionDto) {
 
-        if (currentUser.getValue() == null)
-            return;
+        UserDto userDto = currentUser.getValue();
 
-        currentUser.getValue().getSessionLog().removeLogSession(session);
+        User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
-        updateUser();
+        Objects.requireNonNull(user).getSessionLog().removeLogSession(sessionDto.getSessionIdentifier());
+
+        saveUserToDatabase(user);
     }
 
     public List<SessionDto> getPreSavedSessions() {
@@ -262,6 +261,15 @@ public class ViewModel extends AndroidViewModel {
         calendar.add(field, 1);
 
         this.selectedDate.setValue(calendar.getTime());
+    }
+
+    public Map<MuscleGroup, Progress> getProgressPerMuscleGroup(Date date) {
+
+        UserDto userDto = currentUser.getValue();
+
+        User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
+
+        return Objects.requireNonNull(user).getSessionLog().progressPerMuscleGroup(date);
     }
 
     public LiveData<YearlySummaryDto> getYearlySummaryDtoMutableLiveData() {

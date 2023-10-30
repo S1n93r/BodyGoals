@@ -141,7 +141,10 @@ public class ViewModel extends AndroidViewModel {
 
         User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
-        StreamSupport.stream(sessionDtos).map(SessionDto::to).forEach(session -> user.getSessionLog().logSession(session.getGoal(), session.getDate()));
+        StreamSupport.stream(sessionDtos).map(SessionDto::to)
+                .forEach(session -> Objects.requireNonNull(user).getSessionLog().logSession(session.getGoal(), session.getDate()));
+
+        currentUser.setValue(UserDto.from(Objects.requireNonNull(user)));
 
         /* TODO: Do on app closed. */
         saveUserToDatabase(user);
@@ -224,6 +227,8 @@ public class ViewModel extends AndroidViewModel {
 
         Objects.requireNonNull(user).removeGoal(goalDto.getGoalIdentifier());
 
+        currentUser.setValue(UserDto.from(user));
+
         saveUserToDatabase(user);
     }
 
@@ -234,6 +239,8 @@ public class ViewModel extends AndroidViewModel {
         User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
         Objects.requireNonNull(user).getSessionLog().removeLogSession(sessionDto.getSessionIdentifier());
+
+        currentUser.setValue(UserDto.from(user));
 
         saveUserToDatabase(user);
     }

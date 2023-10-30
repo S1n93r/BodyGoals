@@ -25,7 +25,6 @@
             android:id="@+id/calendar_week_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="@string/calendar_week_place_holder" />
 
         <TextView

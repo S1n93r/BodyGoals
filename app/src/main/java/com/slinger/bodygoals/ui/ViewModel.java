@@ -205,9 +205,14 @@ public class ViewModel extends AndroidViewModel {
 
             User user = database.userDao().findByName(123);
 
+            if (user == null)
+                user = new User();
+
             userMap.put(UserIdentifier.of(user.getUserId()), user);
 
-            handler.post(() -> currentUser.setValue(UserDto.from(user)));
+            UserDto userDto = UserDto.from(user);
+
+            handler.post(() -> currentUser.setValue(userDto));
         });
     }
 

@@ -69,14 +69,16 @@ public class SessionLog {
                 .collect(Collectors.toSet());
     }
 
-    public int getSessionsLogged(int weekOfYear, GoalIdentifier goalIdentifier) {
+    public int getNumberOfSessionsLoggedWeekOfYear(Date date, GoalIdentifier goalIdentifier) {
 
         if (loggedSessions.isEmpty())
             return 0;
 
+
         List<Session> sessionsMatching = StreamSupport.stream(loggedSessions)
                 .filter(session -> session.getGoal().getGoalIdentifier().equals(goalIdentifier))
-                .filter(session -> session.getGoal().getCreationWeek() == weekOfYear)
+                .filter(session -> DateUtil.compareDate(session.getDate(), date, Calendar.YEAR))
+                .filter(session -> DateUtil.compareDate(session.getDate(), date, Calendar.WEEK_OF_YEAR))
                 .collect(Collectors.toList());
 
         return sessionsMatching.size();
@@ -142,9 +144,9 @@ public class SessionLog {
         return (int) Math.round((double) progress / (double) maxProgress * 100);
     }
 
-    public int getGoalWeeklyProgress(int weekOfYear, Goal goal) {
+    public int getGoalWeeklyProgress(Date date, Goal goal) {
 
-        int sessionsLogged = getSessionsLogged(weekOfYear, goal.getGoalIdentifier());
+        int sessionsLogged = getNumberOfSessionsLoggedWeekOfYear(date, goal.getGoalIdentifier());
 
         return (int) Math.round((double) sessionsLogged / (double) goal.getFrequency() * 100);
     }

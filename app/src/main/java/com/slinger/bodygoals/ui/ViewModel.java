@@ -169,22 +169,22 @@ public class ViewModel extends AndroidViewModel {
         return StreamSupport.stream(goalsFromUserYear).map(GoalDto::from).collect(Collectors.toSet());
     }
 
-    public int getGoalProgress(int weekOfYear, GoalDto goalDto) {
+    public int getGoalProgress(Date date, GoalDto goalDto) {
 
         UserDto userDto = currentUser.getValue();
 
         User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
-        return Objects.requireNonNull(user).getSessionLog().getGoalWeeklyProgress(weekOfYear, goalDto.to());
+        return Objects.requireNonNull(user).getSessionLog().getGoalWeeklyProgress(date, goalDto.to());
     }
 
-    public int getSessionsLogged(int weekOfYear, GoalDto goalDto) {
+    public int getSessionsLogged(Date date, GoalDto goalDto) {
 
         UserDto userDto = currentUser.getValue();
 
         User user = userMap.get(Objects.requireNonNull(userDto).getUserIdentifier());
 
-        return Objects.requireNonNull(user).getSessionLog().getSessionsLogged(weekOfYear, goalDto.getGoalIdentifier());
+        return Objects.requireNonNull(user).getSessionLog().getNumberOfSessionsLoggedWeekOfYear(date, goalDto.getGoalIdentifier());
     }
 
     private void saveUserToDatabase(User user) {

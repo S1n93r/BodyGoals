@@ -114,13 +114,13 @@ public class Overview extends Fragment {
 
             OverviewEntryComponent overviewEntryComponent = new OverviewEntryComponent(getContext());
 
-            int progress = viewModel.getGoalProgress(weekOfYear, goalDto);
+            int progress = viewModel.getGoalProgress(date, goalDto);
 
             overviewEntryComponent.setProgress(progress);
             overviewEntryComponent.setText(goalDto.getName());
 
             maxOverallProgress += goalDto.getFrequency();
-            currentOverallProgress += Math.min(goalDto.getFrequency(), viewModel.getSessionsLogged(weekOfYear, goalDto));
+            currentOverallProgress += Math.min(goalDto.getFrequency(), viewModel.getSessionsLogged(date, goalDto));
 
             binding.goalProgressBarsList.addView(overviewEntryComponent);
         }

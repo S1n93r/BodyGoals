@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class Overview extends Fragment {
@@ -81,7 +82,7 @@ public class Overview extends Fragment {
 
     private void registerLiveDataObserver() {
 
-        viewModel.getUserGoals().observe(this, goals ->
+        viewModel.getCurrentUser().observe(this, userDto ->
                 updateGoalProgressBars(viewModel.getSelectedDate().getValue()));
 
         viewModel.getSelectedDate().observe(this, weekOfYear ->
@@ -90,7 +91,7 @@ public class Overview extends Fragment {
 
     private void updateGoalProgressBars(Date date) {
 
-        List<GoalDto> goalsCopy = viewModel.getUserGoals().getValue();
+        List<GoalDto> goalsCopy = Objects.requireNonNull(viewModel.getCurrentUser().getValue()).getGoalDtos();
 
         if (goalsCopy == null)
             throw new IllegalStateException("Live data for goals should never be null.");

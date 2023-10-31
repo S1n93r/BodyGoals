@@ -22,7 +22,6 @@ import com.slinger.bodygoals.ui.dtos.SessionDto;
 import com.slinger.bodygoals.ui.dtos.UserDto;
 import com.slinger.bodygoals.ui.dtos.YearlySummaryDto;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -48,8 +47,6 @@ public class ViewModel extends AndroidViewModel {
     private final MutableLiveData<UserDto> currentUser = new MutableLiveData<>(UserDto.EMPTY);
 
     private final MutableLiveData<Date> selectedDate = new MutableLiveData<>(Calendar.getInstance().getTime());
-
-    private final MutableLiveData<List<GoalDto>> userGoals = new MutableLiveData<>(new ArrayList<>());
 
     private final MutableLiveData<Date> sessionDate = new MutableLiveData<>(Calendar.getInstance().getTime());
 
@@ -77,8 +74,6 @@ public class ViewModel extends AndroidViewModel {
 
         currentUser.observeForever(userDto -> {
 
-            userGoals.setValue(userDto.getGoalDtos());
-
             /* TODO: Turn on again if yearl summary is re-implemented. */
 //            int year = DateUtil.getFromDate(selectedDate.getValue(), Calendar.YEAR);
 //
@@ -88,10 +83,6 @@ public class ViewModel extends AndroidViewModel {
 
     public LiveData<UserDto> getCurrentUser() {
         return currentUser;
-    }
-
-    public LiveData<List<GoalDto>> getUserGoals() {
-        return userGoals;
     }
 
     public LiveData<Date> getSelectedDate() {

@@ -65,7 +65,7 @@ public class Goals extends Fragment {
     }
 
     private void registerLiveDataObserver() {
-        viewModel.getUserGoals().observe(this, this::updateGoalsList);
+        viewModel.getCurrentUser().observe(this, userDto -> updateGoalsList(userDto.getGoalDtos()));
     }
 
     private void updateGoalsList(List<GoalDto> goalDtos) {

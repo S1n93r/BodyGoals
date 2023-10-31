@@ -107,11 +107,11 @@ public class AddSession extends Fragment {
 
     private void registerLiveDataObserver() {
 
-        viewModel.getUserGoals().observe(this, goals -> {
+        viewModel.getCurrentUser().observe(this, userDto -> {
 
             binding.goalList.removeAllViews();
 
-            for (GoalDto goal : goals) {
+            for (GoalDto goal : userDto.getGoalDtos()) {
 
                 if (getContext() == null)
                     throw new IllegalStateException("Context is null. Check why.");

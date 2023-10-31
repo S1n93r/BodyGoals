@@ -45,7 +45,7 @@ public class GoalDto implements Comparable<GoalDto> {
     }
 
     public static GoalDto from(Goal goal) {
-        return GoalDto.of(goal.getGoalIdentifier(), goal.getName(), goal.getFrequency(), goal.getCreationDate(), goal.getMuscleGroupsCopy());
+        return GoalDto.of(goal.getGoalIdentifier(), goal.getName(), goal.getFrequency(), goal.getStartingDate(), goal.getMuscleGroupsCopy());
     }
 
     public Goal to() {

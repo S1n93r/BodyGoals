@@ -43,7 +43,7 @@ public class User {
         goals.add(goal);
     }
 
-    public void editGoal(GoalIdentifier goalIdentifier, String name, int frequency, List<MuscleGroup> muscleGroups) throws GoalAlreadyExistsException {
+    public void editGoal(GoalIdentifier goalIdentifier, String name, int frequency, Date startingDate, List<MuscleGroup> muscleGroups) throws GoalAlreadyExistsException {
 
         List<Goal> matchingGoals = StreamSupport.stream(goals)
                 .filter(goalUser -> goalUser.getGoalIdentifier().equals(goalIdentifier))
@@ -61,6 +61,7 @@ public class User {
 
         goalEdit.setName(name);
         goalEdit.setFrequency(frequency);
+        goalEdit.setStartingDate(startingDate);
         goalEdit.setMuscleGroups(muscleGroups);
 
         /* Adjust linked sessions. */

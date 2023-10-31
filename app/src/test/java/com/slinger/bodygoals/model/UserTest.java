@@ -29,7 +29,7 @@ public class UserTest {
 
         assertEquals("Push / Pull", sut.getGoals().get(0).getName());
         assertEquals(2, sut.getGoals().get(1).getFrequency());
-        assertEquals(today, sut.getGoals().get(2).getCreationDate());
+        assertEquals(today, sut.getGoals().get(2).getStartingDate());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class UserTest {
         sut.addGoalWithNewId("Shoulders / Abs", 2, today,
                 Lists.of(MuscleGroup.SHOULDERS, MuscleGroup.ABS));
 
-        sut.editGoal(GoalIdentifier.of(1), "Push / Pull", 3,
+        sut.editGoal(GoalIdentifier.of(1), "Push / Pull", 3, today,
                 Lists.of(MuscleGroup.BICEPS, MuscleGroup.LATS, MuscleGroup.TRICEPS, MuscleGroup.CHEST, MuscleGroup.FOREARMS));
 
         /* Then */

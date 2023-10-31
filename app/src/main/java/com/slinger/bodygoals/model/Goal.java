@@ -21,15 +21,15 @@ public class Goal implements Identifieable {
     private int frequency;
     private List<MuscleGroup> muscleGroups = new ArrayList<>();
 
-    private final Date creationDate;
+    private Date startingDate;
 
-    public Goal(GoalIdentifier goalIdentifier, String name, int frequency, Date creationDate) {
+    public Goal(GoalIdentifier goalIdentifier, String name, int frequency, Date startingDate) {
 
         this.goalIdentifier = goalIdentifier;
 
         this.name = name;
         this.frequency = frequency;
-        this.creationDate = creationDate;
+        this.startingDate = startingDate;
     }
 
     public void addMuscleGroup(MuscleGroup muscleGroup) {
@@ -69,12 +69,12 @@ public class Goal implements Identifieable {
         return Collections.unmodifiableList(muscleGroups);
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public Date getStartingDate() {
+        return startingDate;
     }
 
     public int getCreationWeek() {
-        return DateUtil.getFromDate(creationDate, Calendar.WEEK_OF_YEAR);
+        return DateUtil.getFromDate(startingDate, Calendar.WEEK_OF_YEAR);
     }
 
     public void setName(String name) {
@@ -91,6 +91,10 @@ public class Goal implements Identifieable {
 
     public GoalIdentifier getGoalIdentifier() {
         return goalIdentifier;
+    }
+
+    public void setStartingDate(Date startingDate) {
+        this.startingDate = startingDate;
     }
 
     @Override

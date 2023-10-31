@@ -40,16 +40,16 @@ public class SessionLog {
     public List<Session> getSessionsWeekOfYear(Date date) {
 
         return StreamSupport.stream(loggedSessions)
-                .filter(session -> DateUtil.compareDate(session.getGoal().getCreationDate(), date, Calendar.YEAR))
-                .filter(session -> DateUtil.compareDate(session.getGoal().getCreationDate(), date, Calendar.WEEK_OF_YEAR))
+                .filter(session -> DateUtil.compareDate(session.getGoal().getStartingDate(), date, Calendar.YEAR))
+                .filter(session -> DateUtil.compareDate(session.getGoal().getStartingDate(), date, Calendar.WEEK_OF_YEAR))
                 .collect(Collectors.toList());
     }
 
     public List<Session> getSessionsMonth(Date date) {
 
         return StreamSupport.stream(loggedSessions)
-                .filter(session -> DateUtil.compareDate(session.getGoal().getCreationDate(), date, Calendar.YEAR))
-                .filter(session -> DateUtil.compareDate(session.getGoal().getCreationDate(), date, Calendar.MONTH))
+                .filter(session -> DateUtil.compareDate(session.getGoal().getStartingDate(), date, Calendar.YEAR))
+                .filter(session -> DateUtil.compareDate(session.getGoal().getStartingDate(), date, Calendar.MONTH))
                 .collect(Collectors.toList());
     }
 

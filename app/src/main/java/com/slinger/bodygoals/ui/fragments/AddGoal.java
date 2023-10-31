@@ -202,6 +202,7 @@ public class AddGoal extends Fragment {
 
         binding.goalNameText.setText(goalDto.getName());
         binding.frequencyTextView.setText(String.valueOf(goalDto.getFrequency()));
+        binding.selectedDateText.setText(String.valueOf(goalDto.getCreationWeek()));
 
         for (MuscleGroup muscleGroup : goalDto.getMuscleGroupsCopy()) {
 

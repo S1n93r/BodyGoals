@@ -67,16 +67,32 @@ public class UserTest {
         /* When */
         sut.addGoalWithNewId("push pull", 2, today,
                 Lists.of(MuscleGroup.BICEPS, MuscleGroup.LATS, MuscleGroup.TRICEPS, MuscleGroup.CHEST));
+        sut.addGoalWithNewId("Legs", 2, today,
+                Lists.of(MuscleGroup.QUADS, MuscleGroup.CALVES, MuscleGroup.HARM_STRINGS, MuscleGroup.LOWER_BACK));
+        sut.addGoalWithNewId("Shoulders / Abs", 2, today,
+                Lists.of(MuscleGroup.SHOULDERS, MuscleGroup.ABS));
 
         sut.editGoal(GoalIdentifier.of(1), "Push / Pull", 3,
                 Lists.of(MuscleGroup.BICEPS, MuscleGroup.LATS, MuscleGroup.TRICEPS, MuscleGroup.CHEST, MuscleGroup.FOREARMS));
 
         /* Then */
-        Goal actualGoal = sut.getGoals().get(0);
+        Goal actualGoalPushPull = sut.getGoals().get(0);
+        Goal actualGoalLegs = sut.getGoals().get(1);
+        Goal actualGoalShoulderAbs = sut.getGoals().get(2);
 
-        assertEquals("Push / Pull", actualGoal.getName());
-        assertEquals(3, actualGoal.getFrequency());
+        assertEquals("Push / Pull", actualGoalPushPull.getName());
+        assertEquals(3, actualGoalPushPull.getFrequency());
         assertEquals(Lists.of(MuscleGroup.BICEPS, MuscleGroup.LATS, MuscleGroup.TRICEPS, MuscleGroup.CHEST, MuscleGroup.FOREARMS),
-                actualGoal.getMuscleGroupsCopy());
+                actualGoalPushPull.getMuscleGroupsCopy());
+
+        assertEquals("Legs", actualGoalLegs.getName());
+        assertEquals(2, actualGoalLegs.getFrequency());
+        assertEquals(Lists.of(MuscleGroup.QUADS, MuscleGroup.CALVES, MuscleGroup.HARM_STRINGS, MuscleGroup.LOWER_BACK),
+                actualGoalLegs.getMuscleGroupsCopy());
+
+        assertEquals("Shoulders / Abs", actualGoalShoulderAbs.getName());
+        assertEquals(2, actualGoalShoulderAbs.getFrequency());
+        assertEquals(Lists.of(MuscleGroup.SHOULDERS, MuscleGroup.ABS),
+                actualGoalShoulderAbs.getMuscleGroupsCopy());
     }
 }

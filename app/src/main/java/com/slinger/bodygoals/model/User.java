@@ -43,13 +43,6 @@ public class User {
         goals.add(goal);
     }
 
-    public void addGoal(Goal goal) throws GoalAlreadyExistsException {
-
-        checkGoalNameAlreadyExists(goal);
-
-        goals.add(goal);
-    }
-
     public void editGoal(GoalIdentifier goalIdentifier, String name, int frequency, List<MuscleGroup> muscleGroups) throws GoalAlreadyExistsException {
 
         List<Goal> matchingGoals = StreamSupport.stream(goals)

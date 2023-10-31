@@ -20,9 +20,9 @@ public class UserTest {
         Date today = Calendar.getInstance().getTime();
 
         /* When */
-        sut.addGoal(new Goal(GoalIdentifier.of(1), "Push / Pull", 2, today));
-        sut.addGoal(new Goal(GoalIdentifier.of(2), "Shoulders / Abs", 2, today));
-        sut.addGoal(new Goal(GoalIdentifier.of(3), "Legs", 2, today));
+        sut.addGoalWithNewId("Push / Pull", 2, today, Lists.of());
+        sut.addGoalWithNewId("Shoulders / Abs", 2, today, Lists.of());
+        sut.addGoalWithNewId("Legs", 2, today, Lists.of());
 
         /* Then */
         assertEquals(3, sut.getGoals().size());

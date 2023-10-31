@@ -39,12 +39,10 @@ public class SessionLog {
 
     public List<Session> getSessionsWeekOfYear(Date date) {
 
-        List<Session> sessions = StreamSupport.stream(loggedSessions)
+        return StreamSupport.stream(loggedSessions)
                 .filter(session -> DateUtil.compareDate(session.getDate(), date, Calendar.YEAR))
                 .filter(session -> DateUtil.compareDate(session.getDate(), date, Calendar.WEEK_OF_YEAR))
                 .collect(Collectors.toList());
-
-        return sessions;
     }
 
     public List<Session> getSessionsMonth(Date date) {

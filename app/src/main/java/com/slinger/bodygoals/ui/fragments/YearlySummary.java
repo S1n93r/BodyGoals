@@ -55,8 +55,8 @@ public class YearlySummary extends Fragment {
         switchYearComponent.setLifecycleOwner(this);
         switchYearComponent.setCalendarWeekLiveData(viewModel.getSelectedDate());
 
-        switchYearComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousDate(Calendar.YEAR));
-        switchYearComponent.registerNextWeekButtonAction(() -> viewModel.selectNextDate(Calendar.YEAR));
+        switchYearComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousYear());
+        switchYearComponent.registerNextWeekButtonAction(() -> viewModel.selectNextYear());
     }
 
     @Override

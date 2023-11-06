@@ -4,16 +4,15 @@ import androidx.annotation.Nullable;
 
 import com.slinger.bodygoals.ui.dtos.Identifieable;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 public class Goal implements Identifieable {
 
-    public static Goal EMPTY = new Goal(GoalIdentifier.of(-1), "", 0, Calendar.getInstance().getTime());
+    public static Goal EMPTY = new Goal(GoalIdentifier.of(-1), "", 0, LocalDate.now());
 
     private final GoalIdentifier goalIdentifier;
 
@@ -21,9 +20,9 @@ public class Goal implements Identifieable {
     private int frequency;
     private List<MuscleGroup> muscleGroups = new ArrayList<>();
 
-    private Date startingDate;
+    private LocalDate startingDate;
 
-    public Goal(GoalIdentifier goalIdentifier, String name, int frequency, Date startingDate) {
+    public Goal(GoalIdentifier goalIdentifier, String name, int frequency, LocalDate startingDate) {
 
         this.goalIdentifier = goalIdentifier;
 
@@ -32,20 +31,28 @@ public class Goal implements Identifieable {
         this.startingDate = startingDate;
     }
 
-    public void addMuscleGroup(MuscleGroup muscleGroup) {
-        muscleGroups.add(muscleGroup);
+    public static Goal of(GoalIdentifier goalIdentifier, String name, int frequency, LocalDate creationDate) {
+        return new Goal(goalIdentifier, name, frequency, creationDate);
     }
 
-    public static Goal of(GoalIdentifier goalIdentifier, String name, int frequency, Date creationDate) {
-        return new Goal(goalIdentifier, name, frequency, creationDate);
+    public void addMuscleGroup(MuscleGroup muscleGroup) {
+        muscleGroups.add(muscleGroup);
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getFrequency() {
         return frequency;
+    }
+
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
     }
 
     @Override
@@ -69,20 +76,17 @@ public class Goal implements Identifieable {
         return Collections.unmodifiableList(muscleGroups);
     }
 
-    public Date getStartingDate() {
+    public LocalDate getStartingDate() {
         return startingDate;
     }
 
+    public void setStartingDate(LocalDate startingDate) {
+        this.startingDate = startingDate;
+    }
+
+    /* TODO: Unused. */
     public int getCreationWeek() {
-        return DateUtil.getFromDate(startingDate, Calendar.WEEK_OF_YEAR);
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
+        return DateUtil.getWeekOfYear(startingDate);
     }
 
     public void setMuscleGroups(List<MuscleGroup> muscleGroups) {
@@ -91,10 +95,6 @@ public class Goal implements Identifieable {
 
     public GoalIdentifier getGoalIdentifier() {
         return goalIdentifier;
-    }
-
-    public void setStartingDate(Date startingDate) {
-        this.startingDate = startingDate;
     }
 
     @Override

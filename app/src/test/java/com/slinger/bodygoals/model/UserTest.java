@@ -4,8 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 
 import java8.util.Lists;
 
@@ -17,7 +16,7 @@ public class UserTest {
         /* Given */
         User sut = new User();
 
-        Date today = Calendar.getInstance().getTime();
+        LocalDate today = LocalDate.now();
 
         /* When */
         sut.addGoalWithNewId("Push / Pull", 2, today, Lists.of());
@@ -38,7 +37,7 @@ public class UserTest {
         /* Given */
         User sut = new User();
 
-        Date today = Calendar.getInstance().getTime();
+        LocalDate today = LocalDate.now();
 
         /* When */
         sut.addGoalWithNewId("Push / Pull", 2, today,
@@ -62,7 +61,7 @@ public class UserTest {
         /* Given */
         User sut = new User();
 
-        Date today = Calendar.getInstance().getTime();
+        LocalDate today = LocalDate.now();
 
         /* When */
         sut.addGoalWithNewId("push pull", 2, today,

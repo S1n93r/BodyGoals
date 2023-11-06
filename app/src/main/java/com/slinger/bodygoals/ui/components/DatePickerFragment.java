@@ -10,12 +10,12 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Date;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
-    MutableLiveData<Date> selectedDateLiveData = new MutableLiveData<>(Calendar.getInstance().getTime());
+    MutableLiveData<LocalDate> selectedDateLiveData = new MutableLiveData<>(LocalDate.now());
 
     @NonNull
     @Override
@@ -37,14 +37,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         if (getActivity() == null)
             throw new IllegalStateException("Activity should not be 'null'.");
 
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.set(year, month, dayOfMonth);
-
-        selectedDateLiveData.setValue(calendar.getTime());
+        selectedDateLiveData.setValue(LocalDate.of(year, month, dayOfMonth));
     }
 
-    public LiveData<Date> getSelectedDateLiveData() {
+    public LiveData<LocalDate> getSelectedDateLiveData() {
         return selectedDateLiveData;
     }
 }

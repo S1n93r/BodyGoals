@@ -1,12 +1,19 @@
 package com.slinger.bodygoals.model;
 
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public final class DateUtil {
 
     private DateUtil() {
         /* Util */
+    }
+
+    public static int getWeekOfYear(LocalDate date) {
+        return date.get(WeekFields.of(Locale.getDefault()).weekOfYear());
     }
 
     public static int getFromDate(Date date, int field) {
@@ -17,22 +24,9 @@ public final class DateUtil {
         return calendar.get(field);
     }
 
-    public static boolean compareDate(Date date, Date other, int field) {
+    public static FirstWeekLastWeek getFirstWeekAndLastWeekOfMonth(LocalDate date) {
 
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.setTime(date);
-        int fieldValue = calendar.get(field);
-
-        calendar.setTime(other);
-        int fieldValueOther = calendar.get(field);
-
-        return fieldValue == fieldValueOther;
-    }
-
-    public static FirstWeekLastWeek getFirstWeekAndLastWeekOfMonth(Date date) {
-
-        int month = DateUtil.getFromDate(date, Calendar.MONTH);
+        int month = date.getMonthValue();
 
         switch (month) {
 

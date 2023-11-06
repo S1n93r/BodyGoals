@@ -20,8 +20,7 @@ import com.slinger.bodygoals.model.Progress;
 import com.slinger.bodygoals.model.ProgressStatus;
 import com.slinger.bodygoals.ui.ViewModel;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class Coverage extends Fragment {
@@ -60,8 +59,8 @@ public class Coverage extends Fragment {
 
         binding.switchCalendarWeekComponent.setCalendarWeekLiveData(viewModel.getSelectedDate());
 
-        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousDate(Calendar.WEEK_OF_YEAR));
-        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextDate(Calendar.WEEK_OF_YEAR));
+        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousWeekOfYear());
+        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextWeekOfYear());
     }
 
     @Override
@@ -78,7 +77,7 @@ public class Coverage extends Fragment {
         viewModel.getSelectedDate().observe(this, this::updateCoverage);
     }
 
-    private void updateCoverage(Date date) {
+    private void updateCoverage(LocalDate date) {
 
         Map<MuscleGroup, Progress> progressPerMuscleGroup = viewModel.getProgressPerMuscleGroup(date);
 

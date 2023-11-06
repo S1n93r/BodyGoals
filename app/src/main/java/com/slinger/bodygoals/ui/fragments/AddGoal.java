@@ -25,8 +25,8 @@ import com.slinger.bodygoals.ui.exceptions.NoGoalNameException;
 import com.slinger.bodygoals.ui.exceptions.NoMuscleGroupException;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -132,7 +132,7 @@ public class AddGoal extends Fragment {
         boolean shouldersChecked = binding.cbShoulders.isChecked();
         boolean tricepsChecked = binding.cbTriceps.isChecked();
 
-        Date creationDate = datePickerFragment.getSelectedDateLiveData().getValue();
+        LocalDate creationDate = datePickerFragment.getSelectedDateLiveData().getValue();
 
         List<MuscleGroup> selectedMuscleGroups = new ArrayList<>();
 

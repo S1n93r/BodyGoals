@@ -18,8 +18,7 @@ import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.OverviewEntryComponent;
 import com.slinger.bodygoals.ui.dtos.GoalDto;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -70,8 +69,8 @@ public class Overview extends Fragment {
 
         binding.switchCalendarWeekComponent.setCalendarWeekLiveData(viewModel.getSelectedDate());
 
-        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousDate(Calendar.WEEK_OF_YEAR));
-        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextDate(Calendar.WEEK_OF_YEAR));
+        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousWeekOfYear());
+        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextWeekOfYear());
     }
 
     @Override
@@ -89,7 +88,7 @@ public class Overview extends Fragment {
                 updateGoalProgressBars(viewModel.getSelectedDate().getValue()));
     }
 
-    private void updateGoalProgressBars(Date date) {
+    private void updateGoalProgressBars(LocalDate date) {
 
         List<GoalDto> goalsCopy = Objects.requireNonNull(viewModel.getCurrentUser().getValue()).getGoalDtos();
 
@@ -107,9 +106,7 @@ public class Overview extends Fragment {
 
         for (GoalDto goalDto : goals) {
 
-            int weekOfYear = DateUtil.getFromDate(date, Calendar.WEEK_OF_YEAR);
-
-            if (goalDto.getCreationWeek() > weekOfYear)
+            if (goalDto.getCreationWeek() > DateUtil.getWeekOfYear(date))
                 continue;
 
             OverviewEntryComponent overviewEntryComponent = new OverviewEntryComponent(getContext());

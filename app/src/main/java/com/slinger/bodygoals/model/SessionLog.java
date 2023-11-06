@@ -5,9 +5,9 @@ import androidx.room.TypeConverters;
 
 import com.slinger.bodygoals.model.util.IdentifierUtil;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +23,7 @@ public class SessionLog {
     @TypeConverters({SessionListConverter.class})
     private List<Session> loggedSessions = new ArrayList<>();
 
-    public void logSession(Goal sessionGoal, Date sessionDate) {
+    public void logSession(Goal sessionGoal, LocalDate sessionDate) {
 
         int id = IdentifierUtil.getNextId(loggedSessions);
 
@@ -37,39 +37,39 @@ public class SessionLog {
                 .collect(Collectors.toSet());
     }
 
-    public List<Session> getSessionsWeekOfYear(Date date) {
+    public List<Session> getSessionsWeekOfYear(LocalDate date) {
 
         return StreamSupport.stream(loggedSessions)
-                .filter(session -> DateUtil.compareDate(session.getDate(), date, Calendar.YEAR))
-                .filter(session -> DateUtil.compareDate(session.getDate(), date, Calendar.WEEK_OF_YEAR))
+                .filter(session -> session.getDate().getYear() == date.getYear())
+                .filter(session -> DateUtil.getWeekOfYear(session.getDate()) == DateUtil.getWeekOfYear(date))
                 .collect(Collectors.toList());
     }
 
-    public List<Session> getSessionsMonth(Date date) {
+    public List<Session> getSessionsMonth(LocalDate date) {
 
         return StreamSupport.stream(loggedSessions)
-                .filter(session -> DateUtil.compareDate(session.getDate(), date, Calendar.YEAR))
-                .filter(session -> DateUtil.compareDate(session.getDate(), date, Calendar.MONTH))
+                .filter(session -> session.getDate().getYear() == date.getYear())
+                .filter(session -> session.getDate().getMonthValue() == date.getMonthValue())
                 .collect(Collectors.toList());
     }
 
-    public Set<Goal> getSessionGoalsWeekOfYear(Date date) {
+    public Set<Goal> getSessionGoalsWeekOfYear(LocalDate date) {
 
         return getSessionGoalsWeekOfYear(
-                DateUtil.getFromDate(date, Calendar.YEAR),
-                DateUtil.getFromDate(date, Calendar.WEEK_OF_YEAR));
+                date.getYear(),
+                DateUtil.getWeekOfYear(date));
     }
 
     private Set<Goal> getSessionGoalsWeekOfYear(int year, int weekOfYear) {
 
         return StreamSupport.stream(loggedSessions)
-                .filter(session -> DateUtil.getFromDate(session.getDate(), Calendar.YEAR) == year)
-                .filter(session -> DateUtil.getFromDate(session.getDate(), Calendar.WEEK_OF_YEAR) == weekOfYear)
+                .filter(session -> session.getDate().getYear() == year)
+                .filter(session -> DateUtil.getWeekOfYear(session.getDate()) == weekOfYear)
                 .map(Session::getGoal)
                 .collect(Collectors.toSet());
     }
 
-    public int getNumberOfSessionsLoggedWeekOfYear(Date date, GoalIdentifier goalIdentifier) {
+    public int getNumberOfSessionsLoggedWeekOfYear(LocalDate date, GoalIdentifier goalIdentifier) {
 
         if (loggedSessions.isEmpty())
             return 0;
@@ -77,8 +77,8 @@ public class SessionLog {
 
         List<Session> sessionsMatching = StreamSupport.stream(loggedSessions)
                 .filter(session -> session.getGoal().getGoalIdentifier().equals(goalIdentifier))
-                .filter(session -> DateUtil.compareDate(session.getDate(), date, Calendar.YEAR))
-                .filter(session -> DateUtil.compareDate(session.getDate(), date, Calendar.WEEK_OF_YEAR))
+                .filter(session -> session.getDate().getYear() == date.getYear())
+                .filter(session -> DateUtil.getWeekOfYear(session.getDate()) == DateUtil.getWeekOfYear(date))
                 .collect(Collectors.toList());
 
         return sessionsMatching.size();
@@ -111,15 +111,15 @@ public class SessionLog {
             overallMonthlyProgressesMap.put(iMonth, 0);
 
         StreamSupport.stream(loggedSessions)
-                .filter(session -> DateUtil.getFromDate(session.getDate(), Calendar.YEAR) == year)
+                .filter(session -> session.getDate().getYear() == year)
                 .forEach(session -> overallMonthlyProgressesMap.put(
-                        DateUtil.getFromDate(session.getDate(), Calendar.MONTH),
+                        session.getDate().getMonthValue(),
                         getMonthProgress(session.getDate())));
 
         return overallMonthlyProgressesMap;
     }
 
-    private int getMonthProgress(Date date) {
+    private int getMonthProgress(LocalDate date) {
 
         int maxProgress = 0;
 
@@ -130,11 +130,11 @@ public class SessionLog {
         for (int iWeek = firstWeekLastWeek.getFirst(); iWeek <= firstWeekLastWeek.getLast(); iWeek++) {
 
             for (Session loggedSession : loggedSessions) {
-                if (DateUtil.getFromDate(loggedSession.getDate(), Calendar.WEEK_OF_YEAR) == iWeek)
+                if (DateUtil.getWeekOfYear(loggedSession.getDate()) == iWeek)
                     relevantSessions.addAll(loggedSessions);
             }
 
-            for (Goal goal : getSessionGoalsWeekOfYear(DateUtil.getFromDate(date, Calendar.YEAR), iWeek)) {
+            for (Goal goal : getSessionGoalsWeekOfYear(date.getYear(), iWeek)) {
                 maxProgress += goal.getFrequency();
             }
         }
@@ -144,7 +144,7 @@ public class SessionLog {
         return (int) Math.round((double) progress / (double) maxProgress * 100);
     }
 
-    public int getGoalWeeklyProgress(Date date, Goal goal) {
+    public int getGoalWeeklyProgress(LocalDate date, Goal goal) {
 
         int sessionsLogged = getNumberOfSessionsLoggedWeekOfYear(date, goal.getGoalIdentifier());
 
@@ -163,7 +163,7 @@ public class SessionLog {
         loggedSessions.removeIf(session -> session.getSessionIdentifier().equals(sessionIdentifier));
     }
 
-    public Map<MuscleGroup, Progress> progressPerMuscleGroup(Date date) {
+    public Map<MuscleGroup, Progress> progressPerMuscleGroup(LocalDate date) {
 
         List<Session> sessions = getSessionsWeekOfYear(date);
 

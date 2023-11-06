@@ -9,8 +9,8 @@ import androidx.room.TypeConverters;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
 import com.slinger.bodygoals.model.util.IdentifierUtil;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -30,7 +30,7 @@ public class User {
     @TypeConverters({GoalListConverter.class})
     private List<Goal> goals = new ArrayList<>();
 
-    public void addGoalWithNewId(String goalName, int frequency, Date startingDate, List<MuscleGroup> muscleGroups) throws GoalAlreadyExistsException {
+    public void addGoalWithNewId(String goalName, int frequency, LocalDate startingDate, List<MuscleGroup> muscleGroups) throws GoalAlreadyExistsException {
 
         int id = IdentifierUtil.getNextId(goals);
 
@@ -43,7 +43,7 @@ public class User {
         goals.add(goal);
     }
 
-    public void editGoal(GoalIdentifier goalIdentifier, String name, int frequency, Date startingDate, List<MuscleGroup> muscleGroups) throws GoalAlreadyExistsException {
+    public void editGoal(GoalIdentifier goalIdentifier, String name, int frequency, LocalDate startingDate, List<MuscleGroup> muscleGroups) throws GoalAlreadyExistsException {
 
         List<Goal> matchingGoals = StreamSupport.stream(goals)
                 .filter(goalUser -> goalUser.getGoalIdentifier().equals(goalIdentifier))
@@ -87,12 +87,12 @@ public class User {
         this.sessionLog = sessionLog;
     }
 
-    public void setGoals(List<Goal> goals) {
-        this.goals = goals;
-    }
-
     public List<Goal> getGoals() {
         return goals;
+    }
+
+    public void setGoals(List<Goal> goals) {
+        this.goals = goals;
     }
 
     public int getUserId() {

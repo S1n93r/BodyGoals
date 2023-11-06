@@ -3,29 +3,33 @@ package com.slinger.bodygoals.ui.dtos;
 import com.slinger.bodygoals.model.Session;
 import com.slinger.bodygoals.model.SessionIdentifier;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class SessionDto {
 
     private final SessionIdentifier sessionIdentifier;
     private final GoalDto goalDto;
-    private final Date date;
+    private final LocalDate date;
 
-    public SessionDto(SessionIdentifier sessionIdentifier, GoalDto goalDto, Date date) {
+    public SessionDto(SessionIdentifier sessionIdentifier, GoalDto goalDto, LocalDate date) {
         this.sessionIdentifier = sessionIdentifier;
         this.goalDto = goalDto;
         this.date = date;
     }
 
-    public static SessionDto of(SessionIdentifier sessionIdentifier, GoalDto goalDto, Date date) {
+    public static SessionDto of(SessionIdentifier sessionIdentifier, GoalDto goalDto, LocalDate date) {
         return new SessionDto(sessionIdentifier, goalDto, date);
+    }
+
+    public static SessionDto from(Session session) {
+        return SessionDto.of(session.getSessionIdentifier(), GoalDto.from(session.getGoal()), session.getDate());
     }
 
     public GoalDto getGoal() {
         return goalDto;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -33,11 +37,7 @@ public class SessionDto {
         return sessionIdentifier;
     }
 
-    public static SessionDto from(Session session) {
-        return SessionDto.of(session.getSessionIdentifier(), GoalDto.from(session.getGoal()), session.getDate());
-    }
-
     public Session to() {
-        return new Session(sessionIdentifier, goalDto.to(), new Date(date.getTime()));
+        return new Session(sessionIdentifier, goalDto.to(), date);
     }
 }

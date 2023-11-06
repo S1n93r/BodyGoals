@@ -22,8 +22,7 @@ import com.slinger.bodygoals.ui.dtos.SessionDto;
 import com.slinger.bodygoals.ui.dtos.UserDto;
 import com.slinger.bodygoals.ui.dtos.YearlySummaryDto;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,9 +45,9 @@ public class ViewModel extends AndroidViewModel {
 
     private final MutableLiveData<UserDto> currentUser = new MutableLiveData<>(UserDto.EMPTY);
 
-    private final MutableLiveData<Date> selectedDate = new MutableLiveData<>(Calendar.getInstance().getTime());
+    private final MutableLiveData<LocalDate> selectedDate = new MutableLiveData<>(LocalDate.now());
 
-    private final MutableLiveData<Date> sessionDate = new MutableLiveData<>(Calendar.getInstance().getTime());
+    private final MutableLiveData<LocalDate> sessionDate = new MutableLiveData<>(LocalDate.now());
 
     private final MutableLiveData<YearlySummaryDto> yearlySummaryDtoMutableLiveData =
             new MutableLiveData<>(YearlySummaryDto.EMPTY);
@@ -85,15 +84,15 @@ public class ViewModel extends AndroidViewModel {
         return currentUser;
     }
 
-    public LiveData<Date> getSelectedDate() {
+    public LiveData<LocalDate> getSelectedDate() {
         return selectedDate;
     }
 
-    public LiveData<Date> getSessionDate() {
+    public LiveData<LocalDate> getSessionDate() {
         return sessionDate;
     }
 
-    public void setSessionDate(Date date) {
+    public void setSessionDate(LocalDate date) {
         sessionDate.setValue(date);
     }
 
@@ -141,7 +140,7 @@ public class ViewModel extends AndroidViewModel {
         saveUserToDatabase(user);
     }
 
-    public List<SessionDto> getSessionsWeekOfYear(Date date) {
+    public List<SessionDto> getSessionsWeekOfYear(LocalDate date) {
 
         UserDto userDto = currentUser.getValue();
 
@@ -155,7 +154,7 @@ public class ViewModel extends AndroidViewModel {
                 .collect(Collectors.toList());
     }
 
-    public Set<GoalDto> getSessionGoals(Date date) {
+    public Set<GoalDto> getSessionGoals(LocalDate date) {
 
         UserDto userDto = currentUser.getValue();
 
@@ -169,7 +168,7 @@ public class ViewModel extends AndroidViewModel {
         return StreamSupport.stream(goalsFromUserYear).map(GoalDto::from).collect(Collectors.toSet());
     }
 
-    public int getGoalProgress(Date date, GoalDto goalDto) {
+    public int getGoalProgress(LocalDate date, GoalDto goalDto) {
 
         UserDto userDto = currentUser.getValue();
 
@@ -178,7 +177,7 @@ public class ViewModel extends AndroidViewModel {
         return Objects.requireNonNull(user).getSessionLog().getGoalWeeklyProgress(date, goalDto.to());
     }
 
-    public int getSessionsLogged(Date date, GoalDto goalDto) {
+    public int getSessionsLogged(LocalDate date, GoalDto goalDto) {
 
         UserDto userDto = currentUser.getValue();
 
@@ -244,37 +243,67 @@ public class ViewModel extends AndroidViewModel {
         this.preSavedSessions = preSavedSessions;
     }
 
-    public void selectPreviousDate(int field) {
+    public void selectPreviousWeekOfYear() {
 
-        Date selectedDate = this.selectedDate.getValue();
+        LocalDate selectedDate = this.selectedDate.getValue();
 
         if (selectedDate == null)
             throw new IllegalStateException("Selected Date should never be null.");
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
+        selectedDate.minusWeeks(1);
 
-        calendar.add(field, -1);
-
-        this.selectedDate.setValue(calendar.getTime());
+        this.selectedDate.setValue(LocalDate.of(
+                selectedDate.getYear(),
+                selectedDate.getMonthValue(),
+                selectedDate.getDayOfMonth()));
     }
 
-    public void selectNextDate(int field) {
+    public void selectNextWeekOfYear() {
 
-        Date currentSelection = selectedDate.getValue();
+        LocalDate selectedDate = this.selectedDate.getValue();
 
-        if (currentSelection == null)
+        if (selectedDate == null)
             throw new IllegalStateException("Selected Date should never be null.");
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentSelection);
+        selectedDate.plusWeeks(1);
 
-        calendar.add(field, 1);
-
-        this.selectedDate.setValue(calendar.getTime());
+        this.selectedDate.setValue(LocalDate.of(
+                selectedDate.getYear(),
+                selectedDate.getMonthValue(),
+                selectedDate.getDayOfMonth()));
     }
 
-    public Map<MuscleGroup, Progress> getProgressPerMuscleGroup(Date date) {
+    public void selectPreviousYear() {
+
+        LocalDate selectedDate = this.selectedDate.getValue();
+
+        if (selectedDate == null)
+            throw new IllegalStateException("Selected Date should never be null.");
+
+        selectedDate.minusYears(1);
+
+        this.selectedDate.setValue(LocalDate.of(
+                selectedDate.getYear(),
+                selectedDate.getMonthValue(),
+                selectedDate.getDayOfMonth()));
+    }
+
+    public void selectNextYear() {
+
+        LocalDate selectedDate = this.selectedDate.getValue();
+
+        if (selectedDate == null)
+            throw new IllegalStateException("Selected Date should never be null.");
+
+        selectedDate.plusYears(1);
+
+        this.selectedDate.setValue(LocalDate.of(
+                selectedDate.getYear(),
+                selectedDate.getMonthValue(),
+                selectedDate.getDayOfMonth()));
+    }
+
+    public Map<MuscleGroup, Progress> getProgressPerMuscleGroup(LocalDate date) {
 
         UserDto userDto = currentUser.getValue();
 

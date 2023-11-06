@@ -21,8 +21,8 @@ import com.slinger.bodygoals.ui.dtos.GoalDto;
 import com.slinger.bodygoals.ui.dtos.SessionDto;
 
 import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import java8.util.stream.Collectors;
@@ -98,7 +98,7 @@ public class AddSession extends Fragment {
                 goalDtos.add(goalCheckBox.getGoal());
         }
 
-        Date date = datePickerFragment.getSelectedDateLiveData().getValue();
+        LocalDate date = datePickerFragment.getSelectedDateLiveData().getValue();
 
         return StreamSupport.stream(goalDtos)
                 .map(goal -> SessionDto.of(SessionIdentifier.DEFAULT, goal, date))

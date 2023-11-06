@@ -2,16 +2,17 @@ package com.slinger.bodygoals.model;
 
 import com.slinger.bodygoals.ui.dtos.Identifieable;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 
 public class Session implements Identifieable {
 
     private final SessionIdentifier sessionIdentifier;
     private final Goal goal;
-    private final Date date;
+    private final LocalDate date;
 
-    public Session(SessionIdentifier sessionIdentifier, Goal goal, Date date) {
+    public Session(SessionIdentifier sessionIdentifier, Goal goal, LocalDate date) {
         this.sessionIdentifier = sessionIdentifier;
         this.goal = goal;
         this.date = date;
@@ -21,7 +22,7 @@ public class Session implements Identifieable {
         return goal;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -30,11 +31,7 @@ public class Session implements Identifieable {
     }
 
     public int getWeekOfYear() {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-
-        return calendar.get(Calendar.WEEK_OF_YEAR);
+        return date.get(WeekFields.of(Locale.getDefault()).weekOfYear());
     }
 
     @Override

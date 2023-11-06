@@ -17,9 +17,8 @@ import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.LogEntry;
 import com.slinger.bodygoals.ui.dtos.SessionDto;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 public class WeeklyLog extends Fragment {
@@ -60,8 +59,8 @@ public class WeeklyLog extends Fragment {
 
         binding.switchCalendarWeekComponent.setCalendarWeekLiveData(viewModel.getSelectedDate());
 
-        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousDate(Calendar.WEEK_OF_YEAR));
-        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextDate(Calendar.WEEK_OF_YEAR));
+        binding.switchCalendarWeekComponent.registerPreviousWeekButtonAction(() -> viewModel.selectPreviousWeekOfYear());
+        binding.switchCalendarWeekComponent.registerNextWeekButtonAction(() -> viewModel.selectNextWeekOfYear());
     }
 
     @Override
@@ -74,7 +73,7 @@ public class WeeklyLog extends Fragment {
         viewModel.getSelectedDate().observe(this, this::updateWeeklyLogList);
     }
 
-    private void updateWeeklyLogList(Date date) {
+    private void updateWeeklyLogList(LocalDate date) {
 
         List<SessionDto> sessionDtos = viewModel.getSessionsWeekOfYear(date);
         sessionDtos.sort(Comparator.comparing(SessionDto::getDate));

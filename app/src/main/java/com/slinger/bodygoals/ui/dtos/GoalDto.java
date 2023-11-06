@@ -8,16 +8,15 @@ import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.GoalIdentifier;
 import com.slinger.bodygoals.model.MuscleGroup;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 public class GoalDto implements Comparable<GoalDto> {
 
-    public static GoalDto EMPTY = new GoalDto(GoalIdentifier.of(-1), "", 0, Calendar.getInstance().getTime(), new ArrayList<>());
+    public static GoalDto EMPTY = new GoalDto(GoalIdentifier.of(-1), "", 0, LocalDate.now(), new ArrayList<>());
 
     private final GoalIdentifier goalIdentifier;
 
@@ -25,9 +24,9 @@ public class GoalDto implements Comparable<GoalDto> {
     private final int frequency;
     private final List<MuscleGroup> muscleGroups;
 
-    private final Date creationDate;
+    private final LocalDate creationDate;
 
-    public GoalDto(@NonNull GoalIdentifier goalIdentifier, @NonNull String name, int frequency, @NonNull Date creationDate,
+    public GoalDto(@NonNull GoalIdentifier goalIdentifier, @NonNull String name, int frequency, @NonNull LocalDate creationDate,
                    @NonNull List<MuscleGroup> muscleGroups) {
 
         this.goalIdentifier = goalIdentifier;
@@ -39,7 +38,7 @@ public class GoalDto implements Comparable<GoalDto> {
         this.muscleGroups = muscleGroups;
     }
 
-    public static GoalDto of(@NonNull GoalIdentifier goalIdentifier, @NonNull String name, int frequency, @NonNull Date creationDate,
+    public static GoalDto of(@NonNull GoalIdentifier goalIdentifier, @NonNull String name, int frequency, @NonNull LocalDate creationDate,
                              @NonNull List<MuscleGroup> muscleGroups) {
         return new GoalDto(goalIdentifier, name, frequency, creationDate, muscleGroups);
     }
@@ -50,7 +49,7 @@ public class GoalDto implements Comparable<GoalDto> {
 
     public Goal to() {
 
-        Goal goal = new Goal(GoalIdentifier.of(goalIdentifier.getId()), name, frequency, new Date(creationDate.getTime()));
+        Goal goal = new Goal(GoalIdentifier.of(goalIdentifier.getId()), name, frequency, creationDate);
 
         for (MuscleGroup muscleGroup : getMuscleGroupsCopy())
             goal.addMuscleGroup(muscleGroup);
@@ -92,7 +91,7 @@ public class GoalDto implements Comparable<GoalDto> {
         return goalIdentifier;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
@@ -101,6 +100,6 @@ public class GoalDto implements Comparable<GoalDto> {
     }
 
     public int getCreationWeek() {
-        return DateUtil.getFromDate(creationDate, Calendar.WEEK_OF_YEAR);
+        return DateUtil.getWeekOfYear(creationDate);
     }
 }

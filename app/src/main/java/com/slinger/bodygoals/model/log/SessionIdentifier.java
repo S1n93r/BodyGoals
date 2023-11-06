@@ -1,4 +1,6 @@
-package com.slinger.bodygoals.model;
+package com.slinger.bodygoals.model.log;
+
+import com.slinger.bodygoals.model.Identifier;
 
 import java.util.Objects;
 

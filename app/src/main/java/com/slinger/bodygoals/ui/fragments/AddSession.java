@@ -13,7 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentAddSessionBinding;
-import com.slinger.bodygoals.model.SessionIdentifier;
+import com.slinger.bodygoals.model.log.SessionIdentifier;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.DatePickerFragment;
 import com.slinger.bodygoals.ui.components.GoalCheckBox;

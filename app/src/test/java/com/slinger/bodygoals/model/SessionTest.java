@@ -2,6 +2,9 @@ package com.slinger.bodygoals.model;
 
 import static org.junit.Assert.assertEquals;
 
+import com.slinger.bodygoals.model.log.Session;
+import com.slinger.bodygoals.model.log.SessionIdentifier;
+
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -22,7 +25,7 @@ public class SessionTest {
         assertEquals(1, sut.getSessionIdentifier().getId());
 
         assertEquals(goal, sut.getGoal());
-        
+
         assertEquals(today, sut.getDate());
         assertEquals(DateUtil.getFromDate(today, Calendar.WEEK_OF_YEAR), sut.getWeekOfYear());
     }

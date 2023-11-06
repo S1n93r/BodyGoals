@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
+import com.slinger.bodygoals.model.log.SessionLog;
 import com.slinger.bodygoals.model.util.IdentifierUtil;
 
 import java.time.LocalDate;

@@ -1,5 +1,7 @@
-package com.slinger.bodygoals.model;
+package com.slinger.bodygoals.model.log;
 
+import com.slinger.bodygoals.model.Goal;
+import com.slinger.bodygoals.model.Identifier;
 import com.slinger.bodygoals.ui.dtos.Identifieable;
 
 import java.time.LocalDate;

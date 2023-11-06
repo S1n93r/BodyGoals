@@ -1,7 +1,7 @@
 package com.slinger.bodygoals.ui.dtos;
 
-import com.slinger.bodygoals.model.Session;
-import com.slinger.bodygoals.model.SessionIdentifier;
+import com.slinger.bodygoals.model.log.Session;
+import com.slinger.bodygoals.model.log.SessionIdentifier;
 
 import java.time.LocalDate;
 

@@ -3,10 +3,11 @@ package com.slinger.bodygoals.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import com.slinger.bodygoals.model.log.SessionLog;
+
 import org.junit.Test;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class SessionLogTest {
@@ -17,14 +18,12 @@ public class SessionLogTest {
         /* Given */
         SessionLog sessionLog = new SessionLog();
 
-        Calendar calendar = Calendar.getInstance();
-
-        Date date = calendar.getTime();
+        LocalDate date = LocalDate.now();
 
         /* When */
-        sessionLog.logSession(Goal.of(GoalIdentifier.of(1), "Push", 2, date), calendar.getTime());
-        sessionLog.logSession(Goal.of(GoalIdentifier.of(2), "Pull", 2, date), calendar.getTime());
-        sessionLog.logSession(Goal.of(GoalIdentifier.of(3), "Legs", 2, date), calendar.getTime());
+        sessionLog.logSession(Goal.of(GoalIdentifier.of(1), "Push", 2, date), date);
+        sessionLog.logSession(Goal.of(GoalIdentifier.of(2), "Pull", 2, date), date);
+        sessionLog.logSession(Goal.of(GoalIdentifier.of(3), "Legs", 2, date), date);
 
         /* Then */
         assertEquals(1, sessionLog.getLoggedWeeks().size());
@@ -37,20 +36,18 @@ public class SessionLogTest {
         /* Given */
         SessionLog sessionLog = new SessionLog();
 
-        Calendar calendar = Calendar.getInstance();
-
-        Date date = calendar.getTime();
+        LocalDate date = LocalDate.now();
 
         Goal push = Goal.of(GoalIdentifier.of(1), "Push", 2, date);
         Goal pull = Goal.of(GoalIdentifier.of(2), "Pull", 2, date);
         Goal legs = Goal.of(GoalIdentifier.of(3), "Legs", 2, date);
 
         /* When */
-        sessionLog.logSession(push, calendar.getTime());
-        sessionLog.logSession(pull, calendar.getTime());
-        sessionLog.logSession(legs, calendar.getTime());
-        sessionLog.logSession(push, calendar.getTime());
-        sessionLog.logSession(pull, calendar.getTime());
+        sessionLog.logSession(push, date);
+        sessionLog.logSession(pull, date);
+        sessionLog.logSession(legs, date);
+        sessionLog.logSession(push, date);
+        sessionLog.logSession(pull, date);
 
         /* Then */
         assertEquals(2, sessionLog.getNumberOfSessionsLoggedWeekOfYear(date, GoalIdentifier.of(1)));
@@ -64,9 +61,7 @@ public class SessionLogTest {
         /* Given */
         SessionLog sessionLog = new SessionLog();
 
-        Calendar calendar = Calendar.getInstance();
-
-        Date date = calendar.getTime();
+        LocalDate date = LocalDate.now();
 
         Goal push = Goal.of(GoalIdentifier.of(1), "Push", 3, date);
         Goal pull = Goal.of(GoalIdentifier.of(2), "Pull", 2, date);
@@ -91,9 +86,7 @@ public class SessionLogTest {
         /* Given */
         SessionLog sut = new SessionLog();
 
-        Calendar calendar = Calendar.getInstance();
-
-        Date date = calendar.getTime();
+        LocalDate date = LocalDate.now();
 
         Goal push = Goal.of(GoalIdentifier.of(1), "Push", 3, date);
         push.addMuscleGroup(MuscleGroup.CHEST);
@@ -154,9 +147,7 @@ public class SessionLogTest {
         /* Given */
         SessionLog sut = new SessionLog();
 
-        Calendar calendar = Calendar.getInstance();
-
-        Date date = calendar.getTime();
+        LocalDate date = LocalDate.now();
 
         Goal push = Goal.of(GoalIdentifier.of(1), "Push", 3, date);
         push.addMuscleGroup(MuscleGroup.CHEST);
@@ -179,9 +170,9 @@ public class SessionLogTest {
         sut.logSession(pull, date);
 
         /* When */
-        Map<Integer, Integer> overallMonthlyProgresses = sut.getOverallMonthlyProgresses(DateUtil.getFromDate(date, Calendar.YEAR));
+        Map<Integer, Integer> overallMonthlyProgresses = sut.getOverallMonthlyProgresses(date.getYear());
 
-        Integer actualProgress = overallMonthlyProgresses.get(DateUtil.getFromDate(date, Calendar.MONTH));
+        Integer actualProgress = overallMonthlyProgresses.get(date.getMonthValue());
 
         /* Then */
         assertNotNull(actualProgress);

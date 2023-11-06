@@ -1,8 +1,14 @@
-package com.slinger.bodygoals.model;
+package com.slinger.bodygoals.model.log;
 
 import androidx.room.ColumnInfo;
 import androidx.room.TypeConverters;
 
+import com.slinger.bodygoals.model.DateUtil;
+import com.slinger.bodygoals.model.FirstWeekLastWeek;
+import com.slinger.bodygoals.model.Goal;
+import com.slinger.bodygoals.model.GoalIdentifier;
+import com.slinger.bodygoals.model.MuscleGroup;
+import com.slinger.bodygoals.model.Progress;
 import com.slinger.bodygoals.model.util.IdentifierUtil;
 
 import java.time.LocalDate;
@@ -19,9 +25,15 @@ import java8.util.stream.StreamSupport;
 
 public class SessionLog {
 
+    /* TODO: Switch to using years/weeks. */
+    @Deprecated
     @ColumnInfo(name = "logged_sessions")
     @TypeConverters({SessionListConverter.class})
     private List<Session> loggedSessions = new ArrayList<>();
+
+    @ColumnInfo(name = "logged_years")
+    @TypeConverters({LoggedYearListConverter.class})
+    private List<LoggedYear> loggedYears = new ArrayList<>();
 
     public void logSession(Goal sessionGoal, LocalDate sessionDate) {
 
@@ -157,6 +169,14 @@ public class SessionLog {
 
     public void setLoggedSessions(List<Session> loggedSessions) {
         this.loggedSessions = loggedSessions;
+    }
+
+    public List<LoggedYear> getLoggedYears() {
+        return loggedYears;
+    }
+
+    public void setLoggedYears(List<LoggedYear> loggedYears) {
+        this.loggedYears = loggedYears;
     }
 
     public void removeLogSession(SessionIdentifier sessionIdentifier) {

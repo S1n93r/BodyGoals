@@ -1,6 +1,6 @@
 package com.slinger.bodygoals.ui.dtos;
 
-import com.slinger.bodygoals.model.SessionLog;
+import com.slinger.bodygoals.model.log.SessionLog;
 
 import java.util.Calendar;
 import java.util.HashMap;

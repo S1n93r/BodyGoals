@@ -1,4 +1,6 @@
-package com.slinger.bodygoals.model;
+package com.slinger.bodygoals.model.util;
+
+import com.slinger.bodygoals.model.FirstWeekLastWeek;
 
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;

@@ -14,7 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentAddGoalBinding;
-import com.slinger.bodygoals.model.DateUtil;
+import com.slinger.bodygoals.model.util.DateUtil;
 import com.slinger.bodygoals.model.GoalIdentifier;
 import com.slinger.bodygoals.model.MuscleGroup;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;

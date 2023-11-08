@@ -3,7 +3,7 @@ package com.slinger.bodygoals.model.log;
 import androidx.room.ColumnInfo;
 import androidx.room.TypeConverters;
 
-import com.slinger.bodygoals.model.DateUtil;
+import com.slinger.bodygoals.model.util.DateUtil;
 import com.slinger.bodygoals.model.FirstWeekLastWeek;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.GoalIdentifier;

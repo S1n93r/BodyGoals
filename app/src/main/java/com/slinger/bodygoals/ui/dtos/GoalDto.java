@@ -3,7 +3,7 @@ package com.slinger.bodygoals.ui.dtos;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.slinger.bodygoals.model.DateUtil;
+import com.slinger.bodygoals.model.util.DateUtil;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.GoalIdentifier;
 import com.slinger.bodygoals.model.MuscleGroup;

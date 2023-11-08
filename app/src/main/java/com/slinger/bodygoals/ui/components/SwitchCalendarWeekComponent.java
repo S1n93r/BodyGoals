@@ -12,7 +12,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 
 import com.slinger.bodygoals.R;
-import com.slinger.bodygoals.model.DateUtil;
+import com.slinger.bodygoals.model.util.DateUtil;
 
 import java.time.LocalDate;
 

@@ -2,6 +2,7 @@ package com.slinger.bodygoals.model;
 
 import androidx.annotation.Nullable;
 
+import com.slinger.bodygoals.model.util.DateUtil;
 import com.slinger.bodygoals.ui.dtos.Identifieable;
 
 import java.time.LocalDate;

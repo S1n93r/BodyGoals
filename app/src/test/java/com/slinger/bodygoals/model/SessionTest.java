@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.slinger.bodygoals.model.log.Session;
 import com.slinger.bodygoals.model.log.SessionIdentifier;
+import com.slinger.bodygoals.model.util.DateUtil;
 
 import org.junit.Test;
 

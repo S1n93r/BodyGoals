@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentAddGoalBinding;
+import com.slinger.bodygoals.model.DateUtil;
 import com.slinger.bodygoals.model.GoalIdentifier;
 import com.slinger.bodygoals.model.MuscleGroup;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
@@ -24,7 +25,6 @@ import com.slinger.bodygoals.ui.exceptions.NoFrequencyException;
 import com.slinger.bodygoals.ui.exceptions.NoGoalNameException;
 import com.slinger.bodygoals.ui.exceptions.NoMuscleGroupException;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -180,12 +180,8 @@ public class AddGoal extends Fragment {
 
     private void registerLiveDataObserver() {
 
-        datePickerFragment.getSelectedDateLiveData().observe(this, date -> {
-
-            String weekString = new SimpleDateFormat("w").format(date);
-
-            binding.selectedDateText.setText(weekString);
-        });
+        datePickerFragment.getSelectedDateLiveData().observe(this, localDate ->
+                binding.selectedDateText.setText(String.valueOf(DateUtil.getWeekOfYear(localDate))));
 
         viewModel.getSelectedGoal().observe(this, this::update);
 

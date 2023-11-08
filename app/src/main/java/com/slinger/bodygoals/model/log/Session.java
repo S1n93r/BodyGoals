@@ -1,11 +1,7 @@
 package com.slinger.bodygoals.model.log;
 
-import androidx.room.ColumnInfo;
-import androidx.room.TypeConverters;
-
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.Identifier;
-import com.slinger.bodygoals.model.LocalDateConverter;
 import com.slinger.bodygoals.ui.dtos.Identifieable;
 
 import java.time.LocalDate;
@@ -17,9 +13,6 @@ public class Session implements Identifieable {
     private final SessionIdentifier sessionIdentifier;
     private final Goal goal;
 
-    /* FIXME: Conversion doesn't work */
-    @ColumnInfo(name = "date")
-    @TypeConverters({LocalDateConverter.class})
     private final LocalDate date;
 
     public Session(SessionIdentifier sessionIdentifier, Goal goal, LocalDate date) {

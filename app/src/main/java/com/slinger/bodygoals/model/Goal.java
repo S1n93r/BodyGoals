@@ -1,8 +1,6 @@
 package com.slinger.bodygoals.model;
 
 import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
-import androidx.room.TypeConverters;
 
 import com.slinger.bodygoals.ui.dtos.Identifieable;
 

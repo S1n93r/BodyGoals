@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.ui.dtos.SessionDto;
 
-import java.text.DateFormat;
+import java.time.format.DateTimeFormatter;
 
 public class LogEntry extends RelativeLayout {
 
@@ -61,8 +61,9 @@ public class LogEntry extends RelativeLayout {
 
     public void setSession(SessionDto sessionDto) {
 
-        DateFormat dateFormat = DateFormat.getInstance();
-        String dateString = dateFormat.format(sessionDto.getDate());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+        String dateString = sessionDto.getDate().format(formatter);
 
         String weeklyLogEntry = String.format(getResources().getString(R.string.weekly_log_entry),
                 dateString, sessionDto.getGoal().getName());

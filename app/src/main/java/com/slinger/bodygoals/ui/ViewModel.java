@@ -250,12 +250,7 @@ public class ViewModel extends AndroidViewModel {
         if (selectedDate == null)
             throw new IllegalStateException("Selected Date should never be null.");
 
-        selectedDate.minusWeeks(1);
-
-        this.selectedDate.setValue(LocalDate.of(
-                selectedDate.getYear(),
-                selectedDate.getMonthValue(),
-                selectedDate.getDayOfMonth()));
+        this.selectedDate.setValue(selectedDate.minusWeeks(1));
     }
 
     public void selectNextWeekOfYear() {
@@ -265,12 +260,7 @@ public class ViewModel extends AndroidViewModel {
         if (selectedDate == null)
             throw new IllegalStateException("Selected Date should never be null.");
 
-        selectedDate.plusWeeks(1);
-
-        this.selectedDate.setValue(LocalDate.of(
-                selectedDate.getYear(),
-                selectedDate.getMonthValue(),
-                selectedDate.getDayOfMonth()));
+        this.selectedDate.setValue(selectedDate.plusWeeks(1));
     }
 
     public void selectPreviousYear() {
@@ -282,10 +272,7 @@ public class ViewModel extends AndroidViewModel {
 
         selectedDate.minusYears(1);
 
-        this.selectedDate.setValue(LocalDate.of(
-                selectedDate.getYear(),
-                selectedDate.getMonthValue(),
-                selectedDate.getDayOfMonth()));
+        this.selectedDate.setValue(selectedDate.minusYears(1));
     }
 
     public void selectNextYear() {
@@ -295,12 +282,7 @@ public class ViewModel extends AndroidViewModel {
         if (selectedDate == null)
             throw new IllegalStateException("Selected Date should never be null.");
 
-        selectedDate.plusYears(1);
-
-        this.selectedDate.setValue(LocalDate.of(
-                selectedDate.getYear(),
-                selectedDate.getMonthValue(),
-                selectedDate.getDayOfMonth()));
+        this.selectedDate.setValue(selectedDate.plusYears(1));
     }
 
     public Map<MuscleGroup, Progress> getProgressPerMuscleGroup(LocalDate date) {

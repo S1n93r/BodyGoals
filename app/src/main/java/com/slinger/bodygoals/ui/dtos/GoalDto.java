@@ -26,8 +26,8 @@ public class GoalDto implements Comparable<GoalDto> {
 
     private final LocalDate creationDate;
 
-    public GoalDto(@NonNull GoalIdentifier goalIdentifier, @NonNull String name, int frequency, @NonNull LocalDate creationDate,
-                   @NonNull List<MuscleGroup> muscleGroups) {
+    private GoalDto(@NonNull GoalIdentifier goalIdentifier, @NonNull String name, int frequency, @NonNull LocalDate creationDate,
+                    @NonNull List<MuscleGroup> muscleGroups) {
 
         this.goalIdentifier = goalIdentifier;
 

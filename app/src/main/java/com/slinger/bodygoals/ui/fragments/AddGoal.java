@@ -66,10 +66,12 @@ public class AddGoal extends Fragment {
 
             try {
 
+                GoalDto goalDto = collectGoalFromUI();
+
                 if (Boolean.TRUE.equals(viewModel.getGoalEditMode().getValue()))
-                    viewModel.editGoal(collectGoalFromUI());
+                    viewModel.editGoal(goalDto);
                 else
-                    viewModel.addGoal(collectGoalFromUI());
+                    viewModel.addGoal(goalDto);
 
                 navigateToGoalsList();
 

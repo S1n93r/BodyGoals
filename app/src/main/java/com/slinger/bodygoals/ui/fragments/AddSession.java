@@ -20,8 +20,8 @@ import com.slinger.bodygoals.ui.components.GoalCheckBox;
 import com.slinger.bodygoals.ui.dtos.GoalDto;
 import com.slinger.bodygoals.ui.dtos.SessionDto;
 
-import java.text.DateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,11 +123,11 @@ public class AddSession extends Fragment {
             }
         });
 
-        datePickerFragment.getSelectedDateLiveData().observe(this, date -> {
+        datePickerFragment.getSelectedDateLiveData().observe(this, localDate -> {
 
-            DateFormat dateFormat = DateFormat.getInstance();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-            binding.selectedDateText.setText(dateFormat.format(date));
+            binding.selectedDateText.setText(localDate.format(formatter));
         });
     }
 }

@@ -1,6 +1,8 @@
 package com.slinger.bodygoals.model;
 
 import androidx.annotation.Nullable;
+import androidx.room.ColumnInfo;
+import androidx.room.TypeConverters;
 
 import com.slinger.bodygoals.ui.dtos.Identifieable;
 
@@ -20,6 +22,9 @@ public class Goal implements Identifieable {
     private int frequency;
     private List<MuscleGroup> muscleGroups = new ArrayList<>();
 
+    /* FIXME: Conversion doesn't work */
+    @ColumnInfo(name = "starting_date")
+    @TypeConverters({LocalDateConverter.class})
     private LocalDate startingDate;
 
     public Goal(GoalIdentifier goalIdentifier, String name, int frequency, LocalDate startingDate) {

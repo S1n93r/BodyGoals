@@ -10,8 +10,11 @@ android {
         applicationId "com.slinger.bodygoals"
         minSdk 30
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+
+        def versionCode_ = generateVersionCode()
+
+        versionCode versionCode_
+        versionName "1." + versionCode_
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -72,4 +75,14 @@ dependencies {
             because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
         }
     }
+}
+
+static int generateVersionCode() {
+
+    def revisions = "git rev-list HEAD --count".execute().text.trim() //unix
+    if (revisions.empty) revisions = "PowerShell -Command git rev-list HEAD --count".execute().text.trim()
+    //windows
+    if (revisions.empty) throw new RuntimeException("Could not generate versioncode on this platform? Cmd output: ${revisions.text}")
+
+    return revisions.toInteger()
 }

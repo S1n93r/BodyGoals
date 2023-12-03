@@ -20,6 +20,9 @@ import com.slinger.bodygoals.ui.ViewModel;
 
 public class RunSession extends Fragment {
 
+    /* TODO: Can be added to configurable values later. */
+    private static final int DEFAULT_MAX_SETS = 6;
+
     private final MutableLiveData<Integer> currentSets = new MutableLiveData<>(0);
 
     private final MutableLiveData<Integer> maxSets = new MutableLiveData<>(0);
@@ -72,6 +75,7 @@ public class RunSession extends Fragment {
         });
 
         binding.editMaxSets.addTextChangedListener(new MaxSetsChangedWatcher());
+        binding.editMaxSets.setText(String.valueOf(DEFAULT_MAX_SETS));
     }
 
     @Override

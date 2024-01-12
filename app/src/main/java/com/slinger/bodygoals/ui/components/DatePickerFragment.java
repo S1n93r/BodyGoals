@@ -22,7 +22,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
         LocalDate localDate = selectedDateLiveData.getValue();
 
-        return new DatePickerDialog(getActivity(), this, localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
+        return new DatePickerDialog(getActivity(), this, localDate.getYear(), localDate.getMonthValue() - 1, localDate.getDayOfMonth());
     }
 
     @Override

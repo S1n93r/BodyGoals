@@ -58,9 +58,6 @@
         <action
             android:id="@+id/action_AddSessionFragment_to_TimePickerFragment"
             app:destination="@id/TimePickerFragment" />
-        <action
-            android:id="@+id/action_AddSessionFragment_to_run_session_fragment"
-            app:destination="@id/run_session_fragment" />
     </fragment>
     <fragment
         android:id="@+id/CoverageFragment"
@@ -86,18 +83,6 @@
         <action
             android:id="@+id/action_goals_list_fragment_to_OverviewFragment"
             app:destination="@id/OverviewFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/run_session_fragment"
-        android:name="com.slinger.bodygoals.ui.fragments.RunSession"
-        android:label="@string/title_run_session"
-        tools:layout="@layout/fragment_run_session">
-        <action
-            android:id="@+id/action_run_session_fragment_to_OverviewFragment"
-            app:destination="@id/OverviewFragment" />
-        <action
-            android:id="@+id/action_run_session_fragment_to_AddSessionFragment"
-            app:destination="@id/AddSessionFragment" />
     </fragment>
     <fragment
         android:id="@+id/yearly_summary_fragment"

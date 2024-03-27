@@ -58,8 +58,6 @@ public class ViewModel extends AndroidViewModel {
 
     private final BodyGoalDatabase database;
 
-    private List<SessionDto> preSavedSessions;
-
     public ViewModel(@NonNull Application application) {
 
         super(application);
@@ -233,14 +231,6 @@ public class ViewModel extends AndroidViewModel {
         currentUser.setValue(UserDto.from(user));
 
         saveUserToDatabase(user);
-    }
-
-    public List<SessionDto> getPreSavedSessions() {
-        return preSavedSessions;
-    }
-
-    public void setPreSavedSessions(List<SessionDto> preSavedSessions) {
-        this.preSavedSessions = preSavedSessions;
     }
 
     public void selectPreviousWeekOfYear() {

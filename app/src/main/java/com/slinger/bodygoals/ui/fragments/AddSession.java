@@ -65,12 +65,12 @@ public class AddSession extends Fragment {
                 NavHostFragment.findNavController(AddSession.this).navigate(
                         R.id.action_AddSessionFragment_to_OverviewFragment));
 
-        binding.buttonStart.setOnClickListener(addSessionView -> {
+        binding.buttonAdd.setOnClickListener(addSessionView -> {
 
-            viewModel.setPreSavedSessions(collectSessionsFromUI());
+            viewModel.addSessions(collectSessionsFromUI());
 
             NavHostFragment.findNavController(AddSession.this).navigate(
-                    R.id.action_AddSessionFragment_to_run_session_fragment);
+                    R.id.action_AddSessionFragment_to_OverviewFragment);
         });
 
         binding.selectedDateText.setOnClickListener(addSessionView -> {

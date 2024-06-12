@@ -16,8 +16,11 @@ import com.slinger.bodygoals.model.util.DateUtil;
 
 import java.time.LocalDate;
 
+import lombok.Setter;
+
 public class SwitchCalendarWeekComponent extends ConstraintLayout {
 
+    @Setter
     private LifecycleOwner lifecycleOwner;
 
     private TextView weekText;
@@ -65,10 +68,6 @@ public class SwitchCalendarWeekComponent extends ConstraintLayout {
         toNextWeekButton = innerView.findViewById(R.id.button_next_week);
 
         this.addView(innerView);
-    }
-
-    public void setLifecycleOwner(LifecycleOwner lifecycleOwner) {
-        this.lifecycleOwner = lifecycleOwner;
     }
 
     private void updateTexts(LocalDate date) {

@@ -3,10 +3,10 @@ package com.slinger.bodygoals.ui.dtos;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.slinger.bodygoals.model.util.DateUtil;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.GoalIdentifier;
 import com.slinger.bodygoals.model.MuscleGroup;
+import com.slinger.bodygoals.model.util.DateUtil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,16 +14,24 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import lombok.Getter;
+
 public class GoalDto implements Comparable<GoalDto> {
 
     public static GoalDto EMPTY = new GoalDto(GoalIdentifier.of(-1), "", 0, LocalDate.now(), new ArrayList<>());
 
+    @Getter
     private final GoalIdentifier goalIdentifier;
 
+    @Getter
     private final String name;
+
+    @Getter
     private final int frequency;
+    
     private final List<MuscleGroup> muscleGroups;
 
+    @Getter
     private final LocalDate creationDate;
 
     private GoalDto(@NonNull GoalIdentifier goalIdentifier, @NonNull String name, int frequency, @NonNull LocalDate creationDate,
@@ -57,14 +65,6 @@ public class GoalDto implements Comparable<GoalDto> {
         return goal;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getFrequency() {
-        return frequency;
-    }
-
     @Override
     public boolean equals(@Nullable Object o) {
 
@@ -85,14 +85,6 @@ public class GoalDto implements Comparable<GoalDto> {
     @Override
     public int compareTo(GoalDto o) {
         return name.toLowerCase().compareTo(o.name.toLowerCase());
-    }
-
-    public GoalIdentifier getGoalIdentifier() {
-        return goalIdentifier;
-    }
-
-    public LocalDate getCreationDate() {
-        return creationDate;
     }
 
     public List<MuscleGroup> getMuscleGroupsCopy() {

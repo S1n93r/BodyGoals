@@ -47,8 +47,6 @@ public class ViewModel extends AndroidViewModel {
 
     private final MutableLiveData<LocalDate> selectedDate = new MutableLiveData<>(LocalDate.now());
 
-    private final MutableLiveData<LocalDate> sessionDate = new MutableLiveData<>(LocalDate.now());
-
     private final MutableLiveData<YearlySummaryDto> yearlySummaryDtoMutableLiveData =
             new MutableLiveData<>(YearlySummaryDto.EMPTY);
 
@@ -84,14 +82,6 @@ public class ViewModel extends AndroidViewModel {
 
     public LiveData<LocalDate> getSelectedDate() {
         return selectedDate;
-    }
-
-    public LiveData<LocalDate> getSessionDate() {
-        return sessionDate;
-    }
-
-    public void setSessionDate(LocalDate date) {
-        sessionDate.setValue(date);
     }
 
     public void addGoal(@NonNull GoalDto goalDto) throws GoalAlreadyExistsException {

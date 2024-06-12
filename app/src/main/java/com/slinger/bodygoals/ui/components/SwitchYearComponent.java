@@ -15,8 +15,11 @@ import com.slinger.bodygoals.R;
 
 import java.time.LocalDate;
 
+import lombok.Setter;
+
 public class SwitchYearComponent extends ConstraintLayout {
 
+    @Setter
     private LifecycleOwner lifecycleOwner;
 
     private TextView yearText;
@@ -62,10 +65,6 @@ public class SwitchYearComponent extends ConstraintLayout {
         toNextWeekButton = innerView.findViewById(R.id.next_year_button);
 
         this.addView(innerView);
-    }
-
-    public void setLifecycleOwner(LifecycleOwner lifecycleOwner) {
-        this.lifecycleOwner = lifecycleOwner;
     }
 
     private void updateTexts(LocalDate date) {

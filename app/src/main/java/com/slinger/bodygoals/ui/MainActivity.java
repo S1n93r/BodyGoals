@@ -4,9 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.slinger.bodygoals.R;
-import com.slinger.bodygoals.databinding.ActivityMainBinding;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -14,19 +11,18 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.slinger.bodygoals.R;
+import com.slinger.bodygoals.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity {
 
-    private ViewModel viewModel;
-
     private AppBarConfiguration appBarConfiguration;
-
-    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.slinger.bodygoals.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
@@ -35,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        viewModel = new ViewModelProvider(this).get(ViewModel.class);
+        ViewModel viewModel = new ViewModelProvider(this).get(ViewModel.class);
         viewModel.loadUser();
     }
 

@@ -1,5 +1,8 @@
 package com.slinger.bodygoals.model;
 
+import lombok.Getter;
+
+@Getter
 public class Progress {
 
     private final int max;
@@ -12,14 +15,6 @@ public class Progress {
 
     public static Progress of(int max, int current) {
         return new Progress(max, current);
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public int getCurrent() {
-        return current;
     }
 
     public int getCurrentPercent() {

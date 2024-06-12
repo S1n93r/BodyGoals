@@ -11,11 +11,14 @@ import java.util.Objects;
 import java8.util.Lists;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
+import lombok.Getter;
 
+@Getter
 public class UserDto {
 
     public static UserDto EMPTY = UserDto.of(UserIdentifier.of(123), Lists.of(), Lists.of());
 
+    /* Getters */
     private final UserIdentifier userIdentifier;
 
     private final List<SessionDto> loggedSessions;
@@ -67,16 +70,4 @@ public class UserDto {
         return user;
     }
 
-    /* Getters */
-    public UserIdentifier getUserIdentifier() {
-        return userIdentifier;
-    }
-
-    public List<SessionDto> getLoggedSessions() {
-        return loggedSessions;
-    }
-
-    public List<GoalDto> getGoalDtos() {
-        return goalDtos;
-    }
 }

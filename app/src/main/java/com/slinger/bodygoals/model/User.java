@@ -17,7 +17,11 @@ import java.util.Set;
 
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 public class User {
 
@@ -78,30 +82,6 @@ public class User {
 
         if (goalNames.contains(goal.getName()))
             throw new GoalAlreadyExistsException();
-    }
-
-    public SessionLog getSessionLog() {
-        return sessionLog;
-    }
-
-    public void setSessionLog(SessionLog sessionLog) {
-        this.sessionLog = sessionLog;
-    }
-
-    public List<Goal> getGoals() {
-        return goals;
-    }
-
-    public void setGoals(List<Goal> goals) {
-        this.goals = goals;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public void removeGoal(GoalIdentifier goalIdentifier) {

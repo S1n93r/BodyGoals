@@ -5,10 +5,15 @@ import com.slinger.bodygoals.model.log.SessionIdentifier;
 
 import java.time.LocalDate;
 
+import lombok.Getter;
+
 public class SessionDto {
 
+    @Getter
     private final SessionIdentifier sessionIdentifier;
     private final GoalDto goalDto;
+    
+    @Getter
     private final LocalDate date;
 
     public SessionDto(SessionIdentifier sessionIdentifier, GoalDto goalDto, LocalDate date) {
@@ -27,14 +32,6 @@ public class SessionDto {
 
     public GoalDto getGoal() {
         return goalDto;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public SessionIdentifier getSessionIdentifier() {
-        return sessionIdentifier;
     }
 
     public Session to() {

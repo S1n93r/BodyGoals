@@ -8,6 +8,9 @@ import androidx.annotation.Nullable;
 
 import com.slinger.bodygoals.ui.dtos.GoalDto;
 
+import lombok.Getter;
+
+@Getter
 public class GoalCheckBox extends androidx.appcompat.widget.AppCompatCheckBox {
 
     private GoalDto goal;
@@ -24,10 +27,6 @@ public class GoalCheckBox extends androidx.appcompat.widget.AppCompatCheckBox {
         super(context, attrs, defStyleAttr);
     }
 
-
-    public GoalDto getGoal() {
-        return goal;
-    }
 
     public void setGoal(GoalDto goal) {
 

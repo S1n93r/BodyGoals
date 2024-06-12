@@ -6,11 +6,14 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
+
 public class YearlySummaryDto {
 
     public static YearlySummaryDto EMPTY = of(1990, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0);
 
+    @Getter
     private final int year;
 
     private final Map<Integer, MonthlySummaryDto> monthlySummaryMap;
@@ -55,10 +58,6 @@ public class YearlySummaryDto {
                 monthlySummaryMap.put(month, MonthlySummaryDto.of(year, month, progress)));
 
         return new YearlySummaryDto(year, monthlySummaryMap);
-    }
-
-    public int getYear() {
-        return year;
     }
 
     public MonthlySummaryDto getMonthlyProgress(int month) {

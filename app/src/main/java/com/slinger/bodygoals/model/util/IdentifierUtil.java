@@ -1,6 +1,7 @@
 package com.slinger.bodygoals.model.util;
 
-import com.slinger.bodygoals.ui.dtos.Identifieable;
+import com.slinger.bodygoals.model.Goal;
+import com.slinger.bodygoals.model.log.Session;
 
 import java.util.List;
 
@@ -13,11 +14,22 @@ public final class IdentifierUtil {
         /* Util */
     }
 
-    public static int getNextId(List<? extends Identifieable> identifieableList) {
+    public static int getNextGoalId(List<Goal> goals) {
 
         int maxId = 0;
 
-        for (int id : StreamSupport.stream(identifieableList).map(identifieable -> identifieable.getIdentifier().getId()).collect(Collectors.toSet()))
+        for (int id : StreamSupport.stream(goals).map(goal -> goal.getGoalIdentifier().getId()).collect(Collectors.toSet()))
+            if (id > maxId)
+                maxId = id;
+
+        return maxId + 1;
+    }
+
+    public static int getNextSessionId(List<Session> sessions) {
+
+        int maxId = 0;
+
+        for (int id : StreamSupport.stream(sessions).map(session -> session.getSessionIdentifier().getId()).collect(Collectors.toSet()))
             if (id > maxId)
                 maxId = id;
 

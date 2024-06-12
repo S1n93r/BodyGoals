@@ -4,8 +4,6 @@ import com.slinger.bodygoals.model.FirstWeekLastWeek;
 
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public final class DateUtil {
@@ -16,14 +14,6 @@ public final class DateUtil {
 
     public static int getWeekOfYear(LocalDate date) {
         return date.get(WeekFields.of(Locale.getDefault()).weekOfYear());
-    }
-
-    public static int getFromDate(Date date, int field) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-
-        return calendar.get(field);
     }
 
     public static FirstWeekLastWeek getFirstWeekAndLastWeekOfMonth(LocalDate date) {

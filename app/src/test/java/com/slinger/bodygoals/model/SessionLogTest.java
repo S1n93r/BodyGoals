@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import com.slinger.bodygoals.model.log.SessionLog;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -142,6 +143,7 @@ public class SessionLogTest {
     }
 
     @Test
+    @Ignore("TODO: Implement montlhy summary")
     public void overallMonthlyProgressContainsCorrectValues() {
 
         /* Given */

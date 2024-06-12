@@ -33,7 +33,7 @@ public class User {
 
     public void addGoalWithNewId(String goalName, int frequency, LocalDate startingDate, List<MuscleGroup> muscleGroups) throws GoalAlreadyExistsException {
 
-        int id = IdentifierUtil.getNextId(goals);
+        int id = IdentifierUtil.getNextGoalId(goals);
 
         Goal goal = new Goal(GoalIdentifier.of(id), goalName, frequency, startingDate);
 

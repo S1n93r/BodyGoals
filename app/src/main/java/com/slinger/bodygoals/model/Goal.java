@@ -2,25 +2,33 @@ package com.slinger.bodygoals.model;
 
 import androidx.annotation.Nullable;
 
-import com.slinger.bodygoals.model.util.DateUtil;
-import com.slinger.bodygoals.ui.dtos.Identifieable;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Goal implements Identifieable {
+import lombok.Getter;
+import lombok.Setter;
 
-    public static Goal EMPTY = new Goal(GoalIdentifier.of(-1), "", 0, LocalDate.now());
+public class Goal {
 
+    @Getter
     private final GoalIdentifier goalIdentifier;
 
+    @Setter
+    @Getter
     private String name;
+
+    @Setter
+    @Getter
     private int frequency;
+
+    @Setter
     private List<MuscleGroup> muscleGroups = new ArrayList<>();
 
+    @Setter
+    @Getter
     private LocalDate startingDate;
 
     public Goal(GoalIdentifier goalIdentifier, String name, int frequency, LocalDate startingDate) {
@@ -38,22 +46,6 @@ public class Goal implements Identifieable {
 
     public void addMuscleGroup(MuscleGroup muscleGroup) {
         muscleGroups.add(muscleGroup);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
     }
 
     @Override
@@ -75,31 +67,5 @@ public class Goal implements Identifieable {
 
     public List<MuscleGroup> getMuscleGroupsCopy() {
         return Collections.unmodifiableList(muscleGroups);
-    }
-
-    public LocalDate getStartingDate() {
-        return startingDate;
-    }
-
-    public void setStartingDate(LocalDate startingDate) {
-        this.startingDate = startingDate;
-    }
-
-    /* TODO: Unused. */
-    public int getCreationWeek() {
-        return DateUtil.getWeekOfYear(startingDate);
-    }
-
-    public void setMuscleGroups(List<MuscleGroup> muscleGroups) {
-        this.muscleGroups = muscleGroups;
-    }
-
-    public GoalIdentifier getGoalIdentifier() {
-        return goalIdentifier;
-    }
-
-    @Override
-    public Identifier getIdentifier() {
-        return goalIdentifier;
     }
 }

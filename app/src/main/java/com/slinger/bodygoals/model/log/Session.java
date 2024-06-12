@@ -1,14 +1,12 @@
 package com.slinger.bodygoals.model.log;
 
 import com.slinger.bodygoals.model.Goal;
-import com.slinger.bodygoals.model.Identifier;
-import com.slinger.bodygoals.ui.dtos.Identifieable;
 
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
-public class Session implements Identifieable {
+public class Session {
 
     private final SessionIdentifier sessionIdentifier;
     private final Goal goal;
@@ -35,10 +33,5 @@ public class Session implements Identifieable {
 
     public int getWeekOfYear() {
         return date.get(WeekFields.of(Locale.getDefault()).weekOfYear());
-    }
-
-    @Override
-    public Identifier getIdentifier() {
-        return sessionIdentifier;
     }
 }

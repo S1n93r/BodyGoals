@@ -3,12 +3,12 @@ package com.slinger.bodygoals.model.log;
 import androidx.room.ColumnInfo;
 import androidx.room.TypeConverters;
 
-import com.slinger.bodygoals.model.util.DateUtil;
 import com.slinger.bodygoals.model.FirstWeekLastWeek;
 import com.slinger.bodygoals.model.Goal;
 import com.slinger.bodygoals.model.GoalIdentifier;
 import com.slinger.bodygoals.model.MuscleGroup;
 import com.slinger.bodygoals.model.Progress;
+import com.slinger.bodygoals.model.util.DateUtil;
 import com.slinger.bodygoals.model.util.IdentifierUtil;
 
 import java.time.LocalDate;
@@ -37,7 +37,7 @@ public class SessionLog {
 
     public void logSession(Goal sessionGoal, LocalDate sessionDate) {
 
-        int id = IdentifierUtil.getNextId(loggedSessions);
+        int id = IdentifierUtil.getNextSessionId(loggedSessions);
 
         loggedSessions.add(new Session(SessionIdentifier.of(id), sessionGoal, sessionDate));
     }

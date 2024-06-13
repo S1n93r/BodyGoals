@@ -25,6 +25,8 @@ public class Exercise {
     @Getter
     private final int repGoal;
 
+    private final List<Double> progressHistory = new ArrayList<>();
+
     private Exercise(ExerciseType type, String variant, ExerciseUnit unit, int repGoal) {
 
         this.exerciseIdentifier = ExerciseIdentifier.of(type, variant);
@@ -37,8 +39,6 @@ public class Exercise {
     public static Exercise of(ExerciseType type, String variant, ExerciseUnit unit, int repGoal) {
         return new Exercise(type, variant, unit, repGoal);
     }
-
-    private final List<Double> progressHistory = new ArrayList<>();
 
     public Stream<MuscleGroup> getMuscleGroupsStream() {
         return type.getMuscleGroupsStream();

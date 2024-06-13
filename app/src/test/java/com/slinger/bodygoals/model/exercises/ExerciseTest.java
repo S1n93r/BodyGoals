@@ -7,7 +7,6 @@ import com.slinger.bodygoals.model.MuscleGroup;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import java8.util.Lists;
 
@@ -18,8 +17,8 @@ public class ExerciseTest {
 
         Exercise sut = Exercise.of(ExerciseType.CHEST_PRESS, "dumbbells", ExerciseUnit.KG, 10);
 
-        List<MuscleGroup> expectedMuscleGroups = ExerciseType.CHEST_PRESS.getMuscleGroupsStream().collect(Collectors.toList());
-        List<MuscleGroup> actualMuscleGroups = sut.getMuscleGroupsStream().collect(Collectors.toList());
+        List<MuscleGroup> expectedMuscleGroups = ExerciseType.CHEST_PRESS.getMuscleGroupsStream().toList();
+        List<MuscleGroup> actualMuscleGroups = sut.getMuscleGroupsStream().toList();
 
         assertEquals(expectedMuscleGroups.get(0), actualMuscleGroups.get(0));
         assertEquals(expectedMuscleGroups.get(1), actualMuscleGroups.get(1));
@@ -39,6 +38,6 @@ public class ExerciseTest {
         sut.addProgress(45);
         sut.addProgress(50);
 
-        assertEquals(Lists.of(40.0, 45.0, 50.0), sut.getProgressHistoryStream().collect(Collectors.toList()));
+        assertEquals(Lists.of(40.0, 45.0, 50.0), sut.getProgressHistoryStream().toList());
     }
 }

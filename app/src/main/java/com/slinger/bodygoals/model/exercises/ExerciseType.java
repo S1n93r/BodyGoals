@@ -3,9 +3,10 @@ package com.slinger.bodygoals.model.exercises;
 import com.slinger.bodygoals.model.MuscleGroup;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import java8.util.Lists;
+import java8.util.stream.Stream;
+import java8.util.stream.StreamSupport;
 
 public enum ExerciseType {
 
@@ -32,6 +33,6 @@ public enum ExerciseType {
     }
 
     public Stream<MuscleGroup> getMuscleGroupsStream() {
-        return muscleGroups.stream();
+        return StreamSupport.stream(muscleGroups);
     }
 }

@@ -4,8 +4,9 @@ import com.slinger.bodygoals.model.MuscleGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
+import java8.util.stream.Stream;
+import java8.util.stream.StreamSupport;
 import lombok.Getter;
 
 public class Exercise {
@@ -48,6 +49,6 @@ public class Exercise {
     }
 
     public Stream<Double> getProgressHistoryStream() {
-        return progressHistory.stream();
+        return StreamSupport.stream(progressHistory);
     }
 }

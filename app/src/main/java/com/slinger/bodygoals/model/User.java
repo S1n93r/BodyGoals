@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
+import com.slinger.bodygoals.model.exercises.Exercise;
+import com.slinger.bodygoals.model.exercises.ExerciseIdentifier;
+import com.slinger.bodygoals.model.exercises.ExerciseListConverter;
 import com.slinger.bodygoals.model.log.SessionLog;
 import com.slinger.bodygoals.model.util.IdentifierUtil;
 
@@ -34,6 +37,10 @@ public class User {
     @ColumnInfo(name = "goals")
     @TypeConverters({GoalListConverter.class})
     private List<Goal> goals = new ArrayList<>();
+
+    @ColumnInfo(name = "exercises")
+    @TypeConverters({ExerciseListConverter.class})
+    private List<Exercise> exercises = new ArrayList<>();
 
     public void addGoalWithNewId(String goalName, int frequency, LocalDate startingDate, List<MuscleGroup> muscleGroups) throws GoalAlreadyExistsException {
 
@@ -86,5 +93,23 @@ public class User {
 
     public void removeGoal(GoalIdentifier goalIdentifier) {
         goals.removeIf(goal -> goal.getGoalIdentifier().equals(goalIdentifier));
+    }
+
+    public void addExercise(Exercise exercise) {
+
+        long matchingIdentifier = StreamSupport.stream(exercises)
+                .map(Exercise::getExerciseIdentifier)
+                .filter(exerciseIdentifier -> exercise.getExerciseIdentifier().equals(exerciseIdentifier))
+                .count();
+
+        if (matchingIdentifier > 0)
+            throw new IllegalStateException(String.format("An exercise with the identifier %s was already added.",
+                    exercise.getExerciseIdentifier()));
+
+        exercises.add(exercise);
+    }
+
+    public void removeExercise(ExerciseIdentifier exerciseIdentifier) {
+        exercises.removeIf(exercise -> exercise.getExerciseIdentifier().equals(exerciseIdentifier));
     }
 }

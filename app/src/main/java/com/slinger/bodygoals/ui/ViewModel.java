@@ -17,6 +17,7 @@ import com.slinger.bodygoals.model.Progress;
 import com.slinger.bodygoals.model.User;
 import com.slinger.bodygoals.model.UserIdentifier;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
+import com.slinger.bodygoals.model.exercises.Exercise;
 import com.slinger.bodygoals.ui.dtos.GoalDto;
 import com.slinger.bodygoals.ui.dtos.SessionDto;
 import com.slinger.bodygoals.ui.dtos.UserDto;
@@ -57,9 +58,6 @@ public class ViewModel extends AndroidViewModel {
 
     private final MutableLiveData<Boolean> goalEditMode = new MutableLiveData<>(false);
 
-    @Getter
-    private final MutableLiveData<ExerciseDto> selectedExercise = new MutableLiveData<>();
-
     private final BodyGoalDatabase database;
 
     public ViewModel(@NonNull Application application) {
@@ -80,6 +78,25 @@ public class ViewModel extends AndroidViewModel {
 //
 //            yearlySummaryDtoMutableLiveData.setValue(YearlySummaryDto.fromSessionLog(year, user.getSessionLog()));
         });
+    }
+
+    public void addExerciseToCurrentUser(ExerciseDto exerciseDto) {
+
+        UserDto userDto = currentUser.getValue();
+
+        assert userDto != null;
+
+        UserIdentifier userIdentifier = userDto.getUserIdentifier();
+
+        assert userIdentifier != null;
+
+        User user = userMap.get(currentUser.getValue().getUserIdentifier());
+
+        assert user != null;
+
+        user.addExercise(Exercise.from(exerciseDto));
+
+        saveUserToDatabase(user);
     }
 
     public LiveData<UserDto> getCurrentUser() {

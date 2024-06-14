@@ -93,6 +93,7 @@
             android:gravity="center" />
 
         <Spinner
+            android:id="@+id/type_spinner"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:hint="@string/new_exercise_type"
@@ -112,6 +113,7 @@
             android:textSize="18sp" />
 
         <Spinner
+            android:id="@+id/unit_spinner"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:hint="@string/new_exercise_unit"
@@ -127,6 +129,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:inputType="number"
             android:hint="@string/new_exercise_rep_goal"
             android:textSize="18sp" />
 

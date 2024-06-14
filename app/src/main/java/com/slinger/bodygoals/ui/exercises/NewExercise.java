@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,9 +17,17 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentNewExerciseBinding;
-import com.slinger.bodygoals.model.MuscleGroup;
+import com.slinger.bodygoals.model.exercises.ExerciseIdentifier;
+import com.slinger.bodygoals.model.exercises.ExerciseType;
+import com.slinger.bodygoals.model.exercises.ExerciseUnit;
 import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.exceptions.NoFrequencyException;
+
+import java.util.Arrays;
+import java.util.List;
+
+import java8.util.Lists;
+import java8.util.stream.StreamSupport;
 
 public class NewExercise extends Fragment {
 
@@ -23,14 +35,16 @@ public class NewExercise extends Fragment {
 
     private FragmentNewExerciseBinding binding;
 
+    private Spinner typeSpinner;
+
+    private Spinner unitSpinner;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getActivity() != null)
             viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
-
-        registerLiveDataObserver();
     }
 
     @Override
@@ -39,6 +53,10 @@ public class NewExercise extends Fragment {
             Bundle savedInstanceState) {
 
         binding = FragmentNewExerciseBinding.inflate(inflater, container, false);
+
+        typeSpinner = binding.typeSpinner;
+        unitSpinner = binding.unitSpinner;
+
         return binding.getRoot();
     }
 
@@ -46,14 +64,57 @@ public class NewExercise extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonSave.setOnClickListener(addGoalView -> saveExercise(collectExerciseFromUI()));
-        binding.buttonCancel.setOnClickListener(addGoalView -> backToOverview());
+        binding.buttonCancel.setOnClickListener(addGoalView -> backToExercises());
+
+        setUpTypeSpinner();
+        setUpUnitSpinner();
+    }
+
+    private void setUpTypeSpinner() {
+
+        assert getActivity() != null;
+
+        List<String> typesAsStrings = StreamSupport.stream(Arrays.asList(ExerciseType.values())).map(Enum::name).toList();
+
+        SpinnerAdapter typeSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, typesAsStrings);
+
+        typeSpinner.setAdapter(typeSpinnerAdapter);
+    }
+
+    private void setUpUnitSpinner() {
+
+        assert getActivity() != null;
+
+        List<String> unitsAsStrings = StreamSupport.stream(Arrays.asList(ExerciseUnit.values())).map(Enum::name).toList();
+
+        SpinnerAdapter typeSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, unitsAsStrings);
+
+        unitSpinner.setAdapter(typeSpinnerAdapter);
     }
 
     private void saveExercise(ExerciseDto exerciseDto) {
-        /* TODO: Implement saving ExerciseDto to database. */
+
+        viewModel.addExerciseToCurrentUser(exerciseDto);
+
+        backToExercises();
     }
 
-    private void backToOverview() {
+    private boolean checkFormFilledAndToast() {
+
+        if (binding.variantValue.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), R.string.toast_new_exercise_no_variant, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (binding.repGoalValue.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), R.string.toast_new_exercise_no_rep_goal, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void backToExercises() {
         NavHostFragment.findNavController(NewExercise.this)
                 .navigate(R.id.action_new_exercise_fragment_to_exercises_fragment);
     }
@@ -65,31 +126,18 @@ public class NewExercise extends Fragment {
     }
 
     private ExerciseDto collectExerciseFromUI() throws NoFrequencyException {
-        /* TODO: Implement fetching data for ExerciseDto from view. */
-        return ExerciseDto.of(null, null, null, null, 10, null);
-    }
 
-    private void registerLiveDataObserver() {
+        if (!checkFormFilledAndToast())
+            return null;
 
-        viewModel.getSelectedExercise().observe(this, this::update);
+        ExerciseType exerciseType = ExerciseType.valueOf((String) binding.typeSpinner.getSelectedItem());
+        ExerciseUnit unit = ExerciseUnit.valueOf((String) binding.unitSpinner.getSelectedItem());
 
-        viewModel.getGoalEditMode().observe(this, editModeEnabled -> {
+        String variant = binding.variantValue.getText().toString();
+        String repGoalString = binding.repGoalValue.getText().toString();
 
-            if (editModeEnabled)
-                binding.buttonSave.setText(R.string.save);
-            else
-                binding.buttonSave.setText(R.string.add);
-        });
-    }
+        int repGoal = Integer.parseInt(repGoalString);
 
-    private void update(ExerciseDto exerciseDto) {
-
-        StringBuilder musclesStringBuilder = new StringBuilder();
-
-        exerciseDto.getExerciseIdentifier().getExerciseType().getMuscleGroupsStream()
-                .map(MuscleGroup::getName)
-                .forEach(musclesStringBuilder::append);
-
-        binding.musclesValue.setText(musclesStringBuilder.toString());
+        return ExerciseDto.of(ExerciseIdentifier.of(exerciseType, variant), exerciseType, variant, unit, repGoal, StreamSupport.stream(Lists.of()));
     }
 }

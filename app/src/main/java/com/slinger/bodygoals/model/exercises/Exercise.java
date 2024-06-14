@@ -1,6 +1,7 @@
 package com.slinger.bodygoals.model.exercises;
 
 import com.slinger.bodygoals.model.MuscleGroup;
+import com.slinger.bodygoals.ui.exercises.ExerciseDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,5 +51,9 @@ public class Exercise {
 
     public Stream<Double> getProgressHistoryStream() {
         return StreamSupport.stream(progressHistory);
+    }
+
+    public static Exercise from(ExerciseDto exerciseDto) {
+        return Exercise.of(exerciseDto.getType(), exerciseDto.getVariant(), exerciseDto.getUnit(), exerciseDto.getRepGoal());
     }
 }

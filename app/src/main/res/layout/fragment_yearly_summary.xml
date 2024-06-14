@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.WeeklyLog">
+    tools:context=".ui.fragments.YearlySummary">
 
     <com.slinger.bodygoals.ui.components.SwitchYearComponent
         android:id="@+id/switchYearComponent"

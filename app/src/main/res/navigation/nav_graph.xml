@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_OverviewFragment_to_yearly_summary_fragment"
             app:destination="@id/yearly_summary_fragment" />
+        <action
+            android:id="@+id/action_OverviewFragment_to_new_exercise_fragment"
+            app:destination="@id/new_exercise_fragment" />
     </fragment>
     <fragment
         android:id="@+id/WeeklyLogFragment"
@@ -91,6 +94,15 @@
         tools:layout="@layout/fragment_yearly_summary">
         <action
             android:id="@+id/action_yearly_summary_fragment_to_OverviewFragment"
+            app:destination="@id/OverviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/new_exercise_fragment"
+        android:name="com.slinger.bodygoals.ui.exercises.NewExercise"
+        android:label="@string/title_new_exercise"
+        tools:layout="@layout/fragment_new_exercise">
+        <action
+            android:id="@+id/action_new_exercise_fragment_to_OverviewFragment"
             app:destination="@id/OverviewFragment" />
     </fragment>
 </navigation>

@@ -3,21 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".ui.fragments.Overview">
 
     <TextView
         android:id="@+id/entry_text"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/overall"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textAlignment="viewStart" />
-
-    <ProgressBar
-        android:id="@+id/overview_entry_progress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="200dp"
-        android:layout_height="match_parent" />
 
 </LinearLayout>

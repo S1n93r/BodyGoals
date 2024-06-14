@@ -7,7 +7,7 @@
     tools:context=".ui.exercises.NewExercise">
 
     <LinearLayout
-        android:id="@+id/linearLayout8"
+        android:id="@+id/exercise_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"

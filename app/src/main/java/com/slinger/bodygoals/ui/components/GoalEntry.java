@@ -58,7 +58,7 @@ public class GoalEntry extends RelativeLayout {
 
         View innerView = inflate(context, R.layout.component_goal_entry, null);
 
-        textView = innerView.findViewById(R.id.overview_entry_text);
+        textView = innerView.findViewById(R.id.entry_text);
 
         originalTextColor = textView.getCurrentTextColor();
 

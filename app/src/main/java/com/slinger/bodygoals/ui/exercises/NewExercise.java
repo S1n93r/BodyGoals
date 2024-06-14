@@ -76,7 +76,7 @@ public class NewExercise extends Fragment {
 
         List<String> typesAsStrings = StreamSupport.stream(Arrays.asList(ExerciseType.values())).map(Enum::name).toList();
 
-        SpinnerAdapter typeSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, typesAsStrings);
+        SpinnerAdapter typeSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.component_spinner_item, typesAsStrings);
 
         typeSpinner.setAdapter(typeSpinnerAdapter);
     }
@@ -87,7 +87,7 @@ public class NewExercise extends Fragment {
 
         List<String> unitsAsStrings = StreamSupport.stream(Arrays.asList(ExerciseUnit.values())).map(Enum::name).toList();
 
-        SpinnerAdapter typeSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, unitsAsStrings);
+        SpinnerAdapter typeSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.component_spinner_item, unitsAsStrings);
 
         unitSpinner.setAdapter(typeSpinnerAdapter);
     }

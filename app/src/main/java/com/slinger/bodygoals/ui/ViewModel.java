@@ -97,6 +97,7 @@ public class ViewModel extends AndroidViewModel {
         user.addExercise(Exercise.from(exerciseDto));
 
         saveUserToDatabase(user);
+        updateUserDto(user);
     }
 
     public LiveData<UserDto> getCurrentUser() {
@@ -115,10 +116,9 @@ public class ViewModel extends AndroidViewModel {
 
         Objects.requireNonNull(user).addGoalWithNewId(goalDto.getName(), goalDto.getFrequency(), goalDto.getCreationDate(), goalDto.getMuscleGroupsCopy());
 
-        currentUser.setValue(UserDto.from(user));
-
         /* TODO: Do on app closed. */
         saveUserToDatabase(user);
+        updateUserDto(user);
     }
 
     public void editGoal(@NonNull GoalDto goalDto) throws GoalAlreadyExistsException {
@@ -130,10 +130,9 @@ public class ViewModel extends AndroidViewModel {
         Objects.requireNonNull(user).editGoal(Objects.requireNonNull(selectedGoal.getValue()).getGoalIdentifier(),
                 goalDto.getName(), goalDto.getFrequency(), goalDto.getCreationDate(), goalDto.getMuscleGroupsCopy());
 
-        currentUser.setValue(UserDto.from(user));
-
         /* TODO: Do on app closed. */
         saveUserToDatabase(user);
+        updateUserDto(user);
     }
 
     public void addSessions(List<SessionDto> sessionDtos) {
@@ -228,9 +227,8 @@ public class ViewModel extends AndroidViewModel {
 
         Objects.requireNonNull(user).removeGoal(goalDto.getGoalIdentifier());
 
-        currentUser.setValue(UserDto.from(user));
-
         saveUserToDatabase(user);
+        updateUserDto(user);
     }
 
     public void removeLogEntry(SessionDto sessionDto) {
@@ -319,5 +317,9 @@ public class ViewModel extends AndroidViewModel {
 
     public void disableGoalEditMode() {
         goalEditMode.setValue(false);
+    }
+
+    private void updateUserDto(User user) {
+        currentUser.setValue(UserDto.from(user));
     }
 }

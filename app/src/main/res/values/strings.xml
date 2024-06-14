@@ -10,7 +10,6 @@
     <string name="title_add_session">Add Session</string>
     <string name="title_run_session">Run Session</string>
     <string name="title_yearly_summary">Yearly Summary</string>
-    <string name="title_new_exercise">New Exercise</string>
     <string name="title_coverage">Coverage</string>
     <!-- Labels -->
     <string name="overall">Overall</string>
@@ -48,11 +47,14 @@
     <string name="december_short">Dec</string>
     <string name="selected_year_placeholder">[Year]</string>
     <!--  New Exercise  -->
+    <string name="title_new_exercise">New Exercise</string>
+    <string name="title_exercises">Exercises</string>
     <string name="new_exercise_type">Exercise</string>
     <string name="new_exercise_variant">Variant</string>
     <string name="new_exercise_muscles">Muscles</string>
     <string name="new_exercise_unit">Unit</string>
     <string name="new_exercise_rep_goal">Rep Goal</string>
+    <string name="exercises_new_exercise">New Exercise</string>
     <!-- Buttons -->
     <string name="previous_week">&lt;</string>
     <string name="next_week">&gt;</string>
@@ -63,6 +65,7 @@
     <string name="button_add_session">Add Session</string>
     <string name="button_overview">Overview</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_back">Back</string>
     <string name="datetime_placeholder">[datetime]</string>
     <!-- ComboBoxes -->
     <string name="cb_shoulders">Shoulders</string>

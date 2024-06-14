@@ -12,17 +12,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
-import com.slinger.bodygoals.databinding.FragmentAddGoalBinding;
+import com.slinger.bodygoals.databinding.FragmentNewExerciseBinding;
 import com.slinger.bodygoals.model.MuscleGroup;
 import com.slinger.bodygoals.ui.ViewModel;
-import com.slinger.bodygoals.ui.dtos.GoalDto;
 import com.slinger.bodygoals.ui.exceptions.NoFrequencyException;
 
 public class NewExercise extends Fragment {
 
     private ViewModel viewModel;
 
-    private FragmentAddGoalBinding binding;
+    private FragmentNewExerciseBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +38,7 @@ public class NewExercise extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-        binding = FragmentAddGoalBinding.inflate(inflater, container, false);
+        binding = FragmentNewExerciseBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -56,7 +55,7 @@ public class NewExercise extends Fragment {
 
     private void backToOverview() {
         NavHostFragment.findNavController(NewExercise.this)
-                .navigate(R.id.action_new_exercise_fragment_to_OverviewFragment);
+                .navigate(R.id.action_new_exercise_fragment_to_exercises_fragment);
     }
 
     @Override
@@ -72,7 +71,7 @@ public class NewExercise extends Fragment {
 
     private void registerLiveDataObserver() {
 
-        viewModel.getSelectedGoal().observe(this, this::update);
+        viewModel.getSelectedExercise().observe(this, this::update);
 
         viewModel.getGoalEditMode().observe(this, editModeEnabled -> {
 
@@ -83,49 +82,14 @@ public class NewExercise extends Fragment {
         });
     }
 
-    private void update(GoalDto goalDto) {
+    private void update(ExerciseDto exerciseDto) {
 
-        binding.goalNameText.setText(goalDto.getName());
-        binding.frequencyTextView.setText(String.valueOf(goalDto.getFrequency()));
-        binding.selectedDateText.setText(String.valueOf(goalDto.getCreationWeek()));
+        StringBuilder musclesStringBuilder = new StringBuilder();
 
-        for (MuscleGroup muscleGroup : goalDto.getMuscleGroupsCopy()) {
+        exerciseDto.getExerciseIdentifier().getExerciseType().getMuscleGroupsStream()
+                .map(MuscleGroup::getName)
+                .forEach(musclesStringBuilder::append);
 
-            if (muscleGroup == MuscleGroup.ABS)
-                binding.cbAbs.setChecked(true);
-
-            if (muscleGroup == MuscleGroup.BICEPS)
-                binding.cbBiceps.setChecked(true);
-
-            if (muscleGroup == MuscleGroup.CALVES)
-                binding.cbCalves.setChecked(true);
-
-            if (muscleGroup == MuscleGroup.CHEST)
-                binding.cbChest.setChecked(true);
-
-            if (muscleGroup == MuscleGroup.FOREARMS)
-                binding.cbForearms.setChecked(true);
-
-            if (muscleGroup == MuscleGroup.HARM_STRINGS)
-                binding.cbHarmstring.setChecked(true);
-
-            if (muscleGroup == MuscleGroup.LATS)
-                binding.cbLats.setChecked(true);
-
-            if (muscleGroup == MuscleGroup.LOWER_BACK)
-                binding.cbLowerBack.setChecked(true);
-
-            if (muscleGroup == MuscleGroup.NECK)
-                binding.cbNeck.setChecked(true);
-
-            if (muscleGroup == MuscleGroup.QUADS)
-                binding.cbQuads.setChecked(true);
-
-            if (muscleGroup == MuscleGroup.SHOULDERS)
-                binding.cbShoulders.setChecked(true);
-
-            if (muscleGroup == MuscleGroup.TRICEPS)
-                binding.cbTriceps.setChecked(true);
-        }
+        binding.musclesValue.setText(musclesStringBuilder.toString());
     }
 }

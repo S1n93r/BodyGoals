@@ -21,6 +21,7 @@ import com.slinger.bodygoals.ui.dtos.GoalDto;
 import com.slinger.bodygoals.ui.dtos.SessionDto;
 import com.slinger.bodygoals.ui.dtos.UserDto;
 import com.slinger.bodygoals.ui.dtos.YearlySummaryDto;
+import com.slinger.bodygoals.ui.exercises.ExerciseDto;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ import java8.util.Lists;
 import java8.util.Sets;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
+import lombok.Getter;
 
 public class ViewModel extends AndroidViewModel {
 
@@ -50,9 +52,13 @@ public class ViewModel extends AndroidViewModel {
     private final MutableLiveData<YearlySummaryDto> yearlySummaryDtoMutableLiveData =
             new MutableLiveData<>(YearlySummaryDto.EMPTY);
 
+    @Getter
     private final MutableLiveData<GoalDto> selectedGoal = new MutableLiveData<>(GoalDto.EMPTY);
 
     private final MutableLiveData<Boolean> goalEditMode = new MutableLiveData<>(false);
+
+    @Getter
+    private final MutableLiveData<ExerciseDto> selectedExercise = new MutableLiveData<>();
 
     private final BodyGoalDatabase database;
 
@@ -276,10 +282,6 @@ public class ViewModel extends AndroidViewModel {
 
     public LiveData<YearlySummaryDto> getYearlySummaryDtoMutableLiveData() {
         return yearlySummaryDtoMutableLiveData;
-    }
-
-    public LiveData<GoalDto> getSelectedGoal() {
-        return selectedGoal;
     }
 
     public void selectGoal(GoalDto goal) {

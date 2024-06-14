@@ -47,6 +47,12 @@
     <string name="november_short">Nov</string>
     <string name="december_short">Dec</string>
     <string name="selected_year_placeholder">[Year]</string>
+    <!--  New Exercise  -->
+    <string name="new_exercise_type">Exercise</string>
+    <string name="new_exercise_variant">Variant</string>
+    <string name="new_exercise_muscles">Muscles</string>
+    <string name="new_exercise_unit">Unit</string>
+    <string name="new_exercise_rep_goal">Rep Goal</string>
     <!-- Buttons -->
     <string name="previous_week">&lt;</string>
     <string name="next_week">&gt;</string>

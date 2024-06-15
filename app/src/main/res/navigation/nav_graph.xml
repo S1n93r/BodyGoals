@@ -126,7 +126,7 @@
         android:label="@string/title_add_exercise_progress"
         tools:layout="@layout/fragment_add_exercise_progress">
         <action
-            android:id="@+id/action_add_exercise_progress_fragment_to_exercises_fragment2"
+            android:id="@+id/action_add_exercise_progress_fragment_to_exercises_fragment"
             app:destination="@id/exercises_fragment" />
     </fragment>
 </navigation>

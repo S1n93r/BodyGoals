@@ -102,7 +102,7 @@ public class AddExerciseProgress extends Fragment {
 
     private void backToExercises() {
         NavHostFragment.findNavController(AddExerciseProgress.this)
-                .navigate(R.id.action_new_exercise_fragment_to_exercises_fragment);
+                .navigate(R.id.action_add_exercise_progress_fragment_to_exercises_fragment);
     }
 
     @Override

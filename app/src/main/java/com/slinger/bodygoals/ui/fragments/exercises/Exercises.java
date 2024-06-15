@@ -45,8 +45,11 @@ public class Exercises extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonNewExercise.setOnClickListener(addGoalView -> toNewExercise());
-        binding.buttonBack.setOnClickListener(addGoalView -> backToOverview());
+        binding.buttonNewExercise.setOnClickListener(exercisesView -> toNewExercise());
+        binding.buttonBack.setOnClickListener(exercisesView -> backToOverview());
+
+        /* TODO: Move to ExerciseDetails as soon as view was build. */
+        binding.buttonAddExerciseProgress.setOnClickListener(exercisesView -> toAddExerciseProgress());
     }
 
     private void backToOverview() {
@@ -57,6 +60,11 @@ public class Exercises extends Fragment {
     private void toNewExercise() {
         NavHostFragment.findNavController(Exercises.this)
                 .navigate(R.id.action_exercises_fragment_to_new_exercise_fragment);
+    }
+
+    private void toAddExerciseProgress() {
+        NavHostFragment.findNavController(Exercises.this)
+                .navigate(R.id.action_exercises_fragment_to_add_exercise_progress_fragment);
     }
 
     @Override

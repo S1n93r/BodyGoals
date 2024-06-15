@@ -112,4 +112,17 @@ public class User {
     public void removeExercise(ExerciseIdentifier exerciseIdentifier) {
         exercises.removeIf(exercise -> exercise.getExerciseIdentifier().equals(exerciseIdentifier));
     }
+
+    public Exercise getExercise(ExerciseIdentifier exerciseIdentifier) {
+
+        List<Exercise> foundExercise = StreamSupport.stream(exercises).filter(exercise -> exercise.getExerciseIdentifier() == exerciseIdentifier).toList();
+
+        if (foundExercise.isEmpty())
+            throw new IllegalStateException(String.format("Exercise with id %s not found!", exerciseIdentifier));
+
+        if (foundExercise.size() > 1)
+            throw new IllegalStateException(String.format("Multiple Exercises for id %s found!", exerciseIdentifier));
+
+        return foundExercise.get(0);
+    }
 }

@@ -49,14 +49,19 @@
     <!--  New Exercise  -->
     <string name="title_new_exercise">New Exercise</string>
     <string name="title_exercises">Exercises</string>
+    <string name="title_add_exercise_progress">Add Exercise Progress</string>
     <string name="new_exercise_type">Exercise</string>
     <string name="new_exercise_variant">Variant</string>
     <string name="new_exercise_muscles">Muscles</string>
+    <string name="rep_goal">Rep Goal</string>
+    <string name="max_effort">Max. Effort</string>
+    <string name="exercise_id">Exercise</string>
     <string name="new_exercise_unit">Unit</string>
     <string name="new_exercise_rep_goal">Rep Goal</string>
     <string name="exercises_new_exercise">New Exercise</string>
     <string name="toast_new_exercise_no_variant">Variant name missing</string>
     <string name="toast_new_exercise_no_rep_goal">Rep goal missing</string>
+    <string name="toast_add_exercise_progress_no_max_effort">Variant name missing</string>
     <!-- Buttons -->
     <string name="previous_week">&lt;</string>
     <string name="next_week">&gt;</string>

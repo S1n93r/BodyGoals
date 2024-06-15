@@ -1,4 +1,4 @@
-package com.slinger.bodygoals.ui.exercises;
+package com.slinger.bodygoals.ui.fragments.exercises;
 
 import android.content.Context;
 import android.util.AttributeSet;

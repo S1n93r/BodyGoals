@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.slinger.bodygoals.model.User;
 import com.slinger.bodygoals.model.UserIdentifier;
-import com.slinger.bodygoals.ui.exercises.ExerciseDto;
+import com.slinger.bodygoals.ui.fragments.exercises.ExerciseDto;
 import com.slinger.bodygoals.viewmodel.ExerciseConverter;
 
 import java.util.List;

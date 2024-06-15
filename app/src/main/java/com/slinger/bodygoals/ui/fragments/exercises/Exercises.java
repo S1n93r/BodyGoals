@@ -1,4 +1,4 @@
-package com.slinger.bodygoals.ui.exercises;
+package com.slinger.bodygoals.ui.fragments.exercises;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

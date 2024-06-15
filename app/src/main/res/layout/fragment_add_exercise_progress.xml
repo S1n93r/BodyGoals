@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.exercises.NewExercise">
+    tools:context=".ui.fragments.exercises.AddExerciseProgress">
 
     <LinearLayout
         android:id="@+id/linearLayout8"
@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="@string/new_exercise_muscles"
+            android:text="@string/exercise_id"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="@string/new_exercise_type"
+            android:text="@string/max_effort"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
@@ -41,27 +41,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="@string/new_exercise_variant"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:textSize="18sp"
-            android:gravity="center" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="@string/new_exercise_unit"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:textSize="18sp"
-            android:gravity="center" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="@string/new_exercise_rep_goal"
+            android:text="@string/rep_goal"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
@@ -81,19 +61,8 @@
         app:layout_constraintStart_toEndOf="@+id/linearLayout8"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/muscles_value"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="@string/new_exercise_muscles"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="16dp"
-            android:textSize="18sp"
-            android:gravity="center" />
-
         <Spinner
-            android:id="@+id/type_spinner"
+            android:id="@+id/exercise_id_spinner"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:hint="@string/new_exercise_type"
@@ -103,35 +72,26 @@
             android:gravity="center" />
 
         <EditText
-            android:id="@+id/variant_value"
+            android:id="@+id/max_effort_value"
             android:layout_width="160dp"
             android:layout_height="50dp"
-            android:hint="@string/new_exercise_variant"
+            android:hint="@string/max_effort"
             android:layout_marginTop="16dp"
             android:layout_marginStart="8dp"
-            android:layout_marginBottom="16dp"
-            android:textSize="18sp" />
-
-        <Spinner
-            android:id="@+id/unit_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="@string/new_exercise_unit"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center" />
-
-        <EditText
-            android:id="@+id/rep_goal_value"
-            android:layout_width="160dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:inputType="number"
-            android:hint="@string/new_exercise_rep_goal"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/rep_goal_value"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:hint="@string/rep_goal"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="18sp"
+            android:gravity="center" />
 
     </LinearLayout>
 

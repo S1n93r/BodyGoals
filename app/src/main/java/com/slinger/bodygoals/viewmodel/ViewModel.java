@@ -17,11 +17,13 @@ import com.slinger.bodygoals.model.Progress;
 import com.slinger.bodygoals.model.User;
 import com.slinger.bodygoals.model.UserIdentifier;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
+import com.slinger.bodygoals.model.exercises.Exercise;
+import com.slinger.bodygoals.model.exercises.ExerciseIdentifier;
 import com.slinger.bodygoals.ui.dtos.GoalDto;
 import com.slinger.bodygoals.ui.dtos.SessionDto;
 import com.slinger.bodygoals.ui.dtos.UserDto;
 import com.slinger.bodygoals.ui.dtos.YearlySummaryDto;
-import com.slinger.bodygoals.ui.exercises.ExerciseDto;
+import com.slinger.bodygoals.ui.fragments.exercises.ExerciseDto;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -81,6 +83,31 @@ public class ViewModel extends AndroidViewModel {
 
     public void addExerciseToCurrentUser(ExerciseDto exerciseDto) {
 
+        User user = getUser();
+
+        user.addExercise(ExerciseConverter.from(exerciseDto));
+
+        persistAndUpdate(user);
+    }
+
+    public void addExerciseProgress(ExerciseIdentifier exerciseIdentifier, double maxEffort) {
+
+        User user = getUser();
+
+        Exercise exercise = user.getExercise(exerciseIdentifier);
+
+        exercise.addProgress(maxEffort);
+
+        persistAndUpdate(user);
+    }
+
+    private void persistAndUpdate(User user) {
+        saveUserToDatabase(user);
+        updateUserDto(user);
+    }
+
+    private User getUser() {
+
         UserDto userDto = currentUser.getValue();
 
         assert userDto != null;
@@ -93,10 +120,7 @@ public class ViewModel extends AndroidViewModel {
 
         assert user != null;
 
-        user.addExercise(ExerciseConverter.from(exerciseDto));
-
-        saveUserToDatabase(user);
-        updateUserDto(user);
+        return user;
     }
 
     public LiveData<UserDto> getCurrentUser() {
@@ -116,8 +140,7 @@ public class ViewModel extends AndroidViewModel {
         Objects.requireNonNull(user).addGoalWithNewId(goalDto.getName(), goalDto.getFrequency(), goalDto.getCreationDate(), goalDto.getMuscleGroupsCopy());
 
         /* TODO: Do on app closed. */
-        saveUserToDatabase(user);
-        updateUserDto(user);
+        persistAndUpdate(user);
     }
 
     public void editGoal(@NonNull GoalDto goalDto) throws GoalAlreadyExistsException {
@@ -130,8 +153,7 @@ public class ViewModel extends AndroidViewModel {
                 goalDto.getName(), goalDto.getFrequency(), goalDto.getCreationDate(), goalDto.getMuscleGroupsCopy());
 
         /* TODO: Do on app closed. */
-        saveUserToDatabase(user);
-        updateUserDto(user);
+        persistAndUpdate(user);
     }
 
     public void addSessions(List<SessionDto> sessionDtos) {

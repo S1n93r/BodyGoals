@@ -98,7 +98,7 @@
     </fragment>
     <fragment
         android:id="@+id/new_exercise_fragment"
-        android:name="com.slinger.bodygoals.ui.exercises.NewExercise"
+        android:name="com.slinger.bodygoals.ui.fragments.exercises.NewExercise"
         android:label="@string/title_new_exercise"
         tools:layout="@layout/fragment_new_exercise">
         <action
@@ -107,7 +107,7 @@
     </fragment>
     <fragment
         android:id="@+id/exercises_fragment"
-        android:name="com.slinger.bodygoals.ui.exercises.Exercises"
+        android:name="com.slinger.bodygoals.ui.fragments.exercises.Exercises"
         android:label="@string/title_exercises"
         tools:layout="@layout/fragment_exercises">
         <action
@@ -116,5 +116,17 @@
         <action
             android:id="@+id/action_exercises_fragment_to_new_exercise_fragment"
             app:destination="@id/new_exercise_fragment" />
+        <action
+            android:id="@+id/action_exercises_fragment_to_add_exercise_progress_fragment"
+            app:destination="@id/add_exercise_progress_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/add_exercise_progress_fragment"
+        android:name="com.slinger.bodygoals.ui.fragments.exercises.AddExerciseProgress"
+        android:label="@string/title_add_exercise_progress"
+        tools:layout="@layout/fragment_add_exercise_progress">
+        <action
+            android:id="@+id/action_add_exercise_progress_fragment_to_exercises_fragment2"
+            app:destination="@id/exercises_fragment" />
     </fragment>
 </navigation>

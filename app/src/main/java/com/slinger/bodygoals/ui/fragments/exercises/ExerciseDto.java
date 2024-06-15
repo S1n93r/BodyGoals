@@ -1,4 +1,4 @@
-package com.slinger.bodygoals.ui.exercises;
+package com.slinger.bodygoals.ui.fragments.exercises;
 
 import com.slinger.bodygoals.model.exercises.ExerciseIdentifier;
 import com.slinger.bodygoals.model.exercises.ExerciseType;
@@ -25,5 +25,5 @@ public class ExerciseDto {
     Stream<Double> progressHistory;
 
     double trend;
-
+ 
 }

@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,7 @@ import com.slinger.bodygoals.ui.dtos.UserDto;
 import com.slinger.bodygoals.viewmodel.ViewModel;
 
 import java.util.List;
+import java.util.Optional;
 
 import java8.util.stream.StreamSupport;
 
@@ -35,6 +38,8 @@ public class AddExerciseProgress extends Fragment {
     private Spinner exerciseIdSpinner;
 
     private EditText maxEffortTextEdit;
+
+    private TextView repGoalTextView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,10 +69,20 @@ public class AddExerciseProgress extends Fragment {
         binding.buttonCancel.setOnClickListener(addGoalView -> backToExercises());
 
         setUpExerciseIdSpinner();
+
+        repGoalTextView = binding.repGoalValue;
+
+        viewModel.getSelectedExerciseDto().observe(getViewLifecycleOwner(), exerciseDtoOptional ->
+                exerciseDtoOptional.ifPresent(exerciseDto -> repGoalTextView.setText(String.valueOf(exerciseDto.getRepGoal()))));
+
+        exerciseIdSpinner.setOnItemSelectedListener(new ExerciseDtoSelectedListener());
     }
 
     private ExerciseIdentifier collectExerciseIdFromUI() {
-        return (ExerciseIdentifier) exerciseIdSpinner.getSelectedItem();
+
+        return viewModel.getSelectedExerciseDto().getValue()
+                .map(ExerciseDto::getExerciseIdentifier)
+                .orElseThrow(() -> new IllegalStateException("Selected ExerciseDto is null!"));
     }
 
     private double collectMaxEffortFromUI() {
@@ -109,5 +124,29 @@ public class AddExerciseProgress extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private class ExerciseDtoSelectedListener implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            UserDto userDto = viewModel.getCurrentUser().getValue();
+
+            assert userDto != null;
+
+            List<ExerciseDto> exerciseDtos = userDto.getExerciseDtos();
+
+            assert exerciseDtos != null;
+
+            ExerciseDto exerciseDto = exerciseDtos.get(position);
+
+            viewModel.getSelectedExerciseDto().setValue(Optional.of(exerciseDto));
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            viewModel.getSelectedExerciseDto().setValue(Optional.empty());
+        }
     }
 }

@@ -139,6 +139,6 @@ public class NewExercise extends Fragment {
         int repGoal = Integer.parseInt(repGoalString);
 
         /* Trend 0 is okay here, because saving it via view model will update the dto via the model class. */
-        return ExerciseDto.of(ExerciseIdentifier.of(exerciseType, variant), exerciseType, variant, unit, repGoal, StreamSupport.stream(Lists.of()), 0);
+        return ExerciseDto.of(ExerciseIdentifier.of(exerciseType, variant), exerciseType, variant, unit, repGoal, Lists.of(), 0);
     }
 }

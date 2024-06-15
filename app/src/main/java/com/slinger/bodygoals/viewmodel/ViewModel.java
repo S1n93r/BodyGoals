@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -58,6 +59,9 @@ public class ViewModel extends AndroidViewModel {
     private final MutableLiveData<GoalDto> selectedGoal = new MutableLiveData<>(GoalDto.EMPTY);
 
     private final MutableLiveData<Boolean> goalEditMode = new MutableLiveData<>(false);
+
+    @Getter
+    private final MutableLiveData<Optional<ExerciseDto>> selectedExerciseDto = new MutableLiveData<>(Optional.empty());
 
     private final BodyGoalDatabase database;
 

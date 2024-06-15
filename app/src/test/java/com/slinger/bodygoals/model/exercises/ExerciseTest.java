@@ -66,8 +66,9 @@ public class ExerciseTest {
 
         sut.addProgress(60);
         sut.addProgress(70);
+        sut.addProgress(80);
 
-        assertEquals(16.67, sut.getTrend());
+        assertEquals(14.29, sut.getTrend());
     }
 
     @Test
@@ -77,7 +78,8 @@ public class ExerciseTest {
 
         sut.addProgress(70);
         sut.addProgress(60);
+        sut.addProgress(50);
 
-        assertEquals(-14.29, sut.getTrend());
+        assertEquals(-16.67, sut.getTrend());
     }
 }

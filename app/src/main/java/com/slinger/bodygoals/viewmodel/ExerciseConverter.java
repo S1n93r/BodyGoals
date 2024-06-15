@@ -20,7 +20,7 @@ public final class ExerciseConverter {
                 exercise.getVariant(),
                 exercise.getUnit(),
                 exercise.getRepGoal(),
-                exercise.getProgressHistoryStream(),
+                exercise.getProgressHistoryStream().toList(),
                 exercise.getTrend()
         );
     }

@@ -4,10 +4,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    tools:context=".ui.fragments.Overview">
+    tools:context=".ui.exercises.Exercises">
 
     <TextView
-        android:id="@+id/entry_text"
+        android:id="@+id/exercise_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textAlignment="viewStart" />
+
+    <TextView
+        android:id="@+id/trend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"

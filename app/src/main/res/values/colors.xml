@@ -5,4 +5,6 @@
     <color name="calendar_tile_bright">#BF7EFC</color>
     <color name="calendar_tile_dark">#9626FF</color>
     <color name="calendar_dark_tile_text">#FFFFFFFF</color>
+    <color name="green">#05fc05</color>
+    <color name="red">#fc0505</color>
 </resources>

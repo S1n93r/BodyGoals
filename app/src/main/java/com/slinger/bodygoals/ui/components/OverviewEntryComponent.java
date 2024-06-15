@@ -51,7 +51,7 @@ public class OverviewEntryComponent extends RelativeLayout {
 
         View innerView = inflate(context, R.layout.component_labeled_progress, null);
 
-        textView = innerView.findViewById(R.id.entry_text);
+        textView = innerView.findViewById(R.id.exercise_name);
 
         progressBar = innerView.findViewById(R.id.overview_entry_progress);
 

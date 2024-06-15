@@ -7,12 +7,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.slinger.bodygoals.R;
 
 public class ExerciseEntry extends RelativeLayout {
 
-    private TextView textView;
+    private TextView exerciseName;
+    private TextView trend;
 
     public ExerciseEntry(Context context) {
 
@@ -47,7 +49,9 @@ public class ExerciseEntry extends RelativeLayout {
 
         View innerView = inflate(context, R.layout.component_exercise_entry, null);
 
-        textView = innerView.findViewById(R.id.entry_text);
+        exerciseName = innerView.findViewById(R.id.exercise_name);
+
+        trend = innerView.findViewById(R.id.trend);
 
         this.addView(innerView);
     }
@@ -56,6 +60,21 @@ public class ExerciseEntry extends RelativeLayout {
 
         String text = String.format("%s (%s)", exerciseDto.getType(), exerciseDto.getVariant());
 
-        textView.setText(text);
+        exerciseName.setText(text);
+
+        double trend = exerciseDto.getTrend();
+
+        int colorIdRed = ContextCompat.getColor(getContext(), R.color.red);
+        int colorIdBlack = ContextCompat.getColor(getContext(), R.color.black);
+        int colorIdGreen = ContextCompat.getColor(getContext(), R.color.green);
+
+        if (trend < 0)
+            exerciseName.setTextColor(colorIdRed);
+        else if (trend == 0)
+            exerciseName.setTextColor(colorIdBlack);
+        else
+            exerciseName.setTextColor(colorIdGreen);
+
+        exerciseName.setText(String.format("%s %%", trend));
     }
 }

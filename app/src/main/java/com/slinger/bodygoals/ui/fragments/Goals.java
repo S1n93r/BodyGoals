@@ -13,9 +13,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentGoalsBinding;
-import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.GoalEntry;
 import com.slinger.bodygoals.ui.dtos.GoalDto;
+import com.slinger.bodygoals.viewmodel.ViewModel;
 
 import java.util.List;
 

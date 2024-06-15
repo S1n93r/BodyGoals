@@ -1,6 +1,5 @@
 package com.slinger.bodygoals.ui.exercises;
 
-import com.slinger.bodygoals.model.exercises.Exercise;
 import com.slinger.bodygoals.model.exercises.ExerciseIdentifier;
 import com.slinger.bodygoals.model.exercises.ExerciseType;
 import com.slinger.bodygoals.model.exercises.ExerciseUnit;
@@ -25,15 +24,6 @@ public class ExerciseDto {
 
     Stream<Double> progressHistory;
 
-    public static ExerciseDto from(Exercise exercise) {
+    double trend;
 
-        return ExerciseDto.of(
-                exercise.getExerciseIdentifier(),
-                exercise.getExerciseIdentifier().getExerciseType(),
-                exercise.getVariant(),
-                exercise.getUnit(),
-                exercise.getRepGoal(),
-                exercise.getProgressHistoryStream()
-        );
-    }
 }

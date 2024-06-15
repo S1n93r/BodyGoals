@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.slinger.bodygoals.model.User;
 import com.slinger.bodygoals.model.UserIdentifier;
 import com.slinger.bodygoals.ui.exercises.ExerciseDto;
+import com.slinger.bodygoals.viewmodel.ExerciseConverter;
 
 import java.util.List;
 import java.util.Objects;
@@ -62,7 +63,7 @@ public class UserDto {
 
         List<SessionDto> sessionDtos = StreamSupport.stream(user.getSessionLog().getLoggedSessions()).map(SessionDto::from).collect(Collectors.toList());
         List<GoalDto> goalDtos = StreamSupport.stream(user.getGoals()).map(GoalDto::from).collect(Collectors.toList());
-        List<ExerciseDto> exerciseDtos = StreamSupport.stream(user.getExercises()).map(ExerciseDto::from).collect(Collectors.toList());
+        List<ExerciseDto> exerciseDtos = StreamSupport.stream(user.getExercises()).map(ExerciseConverter::to).collect(Collectors.toList());
 
         return UserDto.of(UserIdentifier.of(user.getUserId()), sessionDtos, goalDtos, exerciseDtos);
     }

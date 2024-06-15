@@ -13,9 +13,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentYearlySummaryBinding;
-import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.SwitchYearComponent;
 import com.slinger.bodygoals.ui.dtos.YearlySummaryDto;
+import com.slinger.bodygoals.viewmodel.ViewModel;
 
 import java.util.Calendar;
 

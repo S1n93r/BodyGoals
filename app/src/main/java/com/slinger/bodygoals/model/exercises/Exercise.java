@@ -1,7 +1,6 @@
 package com.slinger.bodygoals.model.exercises;
 
 import com.slinger.bodygoals.model.MuscleGroup;
-import com.slinger.bodygoals.ui.exercises.ExerciseDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +52,17 @@ public class Exercise {
         return StreamSupport.stream(progressHistory);
     }
 
-    public static Exercise from(ExerciseDto exerciseDto) {
-        return Exercise.of(exerciseDto.getType(), exerciseDto.getVariant(), exerciseDto.getUnit(), exerciseDto.getRepGoal());
+    public double getTrend() {
+
+        if (progressHistory.isEmpty())
+            return 0;
+
+        if (progressHistory.size() == 1)
+            return 100;
+
+        double currentRecord = progressHistory.get(progressHistory.size() - 1);
+        double previousRecord = progressHistory.get(progressHistory.size() - 2);
+
+        return (double) Math.round(((currentRecord - previousRecord) / previousRecord * 100) * 100) / 100;
     }
 }

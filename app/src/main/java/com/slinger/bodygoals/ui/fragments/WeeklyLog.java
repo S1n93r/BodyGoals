@@ -13,9 +13,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentWeeklyLogBinding;
-import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.LogEntry;
 import com.slinger.bodygoals.ui.dtos.SessionDto;
+import com.slinger.bodygoals.viewmodel.ViewModel;
 
 import java.time.LocalDate;
 import java.util.Comparator;

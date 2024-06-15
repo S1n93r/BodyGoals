@@ -20,8 +20,8 @@ import com.slinger.bodygoals.databinding.FragmentNewExerciseBinding;
 import com.slinger.bodygoals.model.exercises.ExerciseIdentifier;
 import com.slinger.bodygoals.model.exercises.ExerciseType;
 import com.slinger.bodygoals.model.exercises.ExerciseUnit;
-import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.exceptions.NoFrequencyException;
+import com.slinger.bodygoals.viewmodel.ViewModel;
 
 import java.util.Arrays;
 import java.util.List;
@@ -138,6 +138,7 @@ public class NewExercise extends Fragment {
 
         int repGoal = Integer.parseInt(repGoalString);
 
-        return ExerciseDto.of(ExerciseIdentifier.of(exerciseType, variant), exerciseType, variant, unit, repGoal, StreamSupport.stream(Lists.of()));
+        /* Trend 0 is okay here, because saving it via view model will update the dto via the model class. */
+        return ExerciseDto.of(ExerciseIdentifier.of(exerciseType, variant), exerciseType, variant, unit, repGoal, StreamSupport.stream(Lists.of()), 0);
     }
 }

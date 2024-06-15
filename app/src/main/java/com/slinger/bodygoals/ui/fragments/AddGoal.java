@@ -14,16 +14,16 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentAddGoalBinding;
-import com.slinger.bodygoals.model.util.DateUtil;
 import com.slinger.bodygoals.model.GoalIdentifier;
 import com.slinger.bodygoals.model.MuscleGroup;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
-import com.slinger.bodygoals.ui.ViewModel;
+import com.slinger.bodygoals.model.util.DateUtil;
 import com.slinger.bodygoals.ui.components.DatePickerFragment;
 import com.slinger.bodygoals.ui.dtos.GoalDto;
 import com.slinger.bodygoals.ui.exceptions.NoFrequencyException;
 import com.slinger.bodygoals.ui.exceptions.NoGoalNameException;
 import com.slinger.bodygoals.ui.exceptions.NoMuscleGroupException;
+import com.slinger.bodygoals.viewmodel.ViewModel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

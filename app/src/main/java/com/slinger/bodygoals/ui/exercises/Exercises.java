@@ -14,8 +14,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentExercisesBinding;
-import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.dtos.UserDto;
+import com.slinger.bodygoals.viewmodel.ViewModel;
 
 public class Exercises extends Fragment {
 

@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.ActivityMainBinding;
+import com.slinger.bodygoals.viewmodel.ViewModel;
 
 public class MainActivity extends AppCompatActivity {
 

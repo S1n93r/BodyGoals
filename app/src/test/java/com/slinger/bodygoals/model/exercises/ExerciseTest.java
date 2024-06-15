@@ -40,4 +40,44 @@ public class ExerciseTest {
 
         assertEquals(Lists.of(40.0, 45.0, 50.0), sut.getProgressHistoryStream().toList());
     }
+
+    @Test
+    public void noTrendCalculatedCorrectly() {
+
+        Exercise sut = Exercise.of(ExerciseType.CHEST_PRESS, "dumbbells", ExerciseUnit.KG, 10);
+
+        assertEquals(0, sut.getTrend());
+    }
+
+    @Test
+    public void maxTrendCalculatedCorrectly() {
+
+        Exercise sut = Exercise.of(ExerciseType.CHEST_PRESS, "dumbbells", ExerciseUnit.KG, 10);
+
+        sut.addProgress(60);
+
+        assertEquals(100, sut.getTrend());
+    }
+
+    @Test
+    public void positiveTrendCalculatedCorrectly() {
+
+        Exercise sut = Exercise.of(ExerciseType.CHEST_PRESS, "dumbbells", ExerciseUnit.KG, 10);
+
+        sut.addProgress(60);
+        sut.addProgress(70);
+
+        assertEquals(16.67, sut.getTrend());
+    }
+
+    @Test
+    public void negativeTrendCalculatedCorrectly() {
+
+        Exercise sut = Exercise.of(ExerciseType.CHEST_PRESS, "dumbbells", ExerciseUnit.KG, 10);
+
+        sut.addProgress(70);
+        sut.addProgress(60);
+
+        assertEquals(-14.29, sut.getTrend());
+    }
 }

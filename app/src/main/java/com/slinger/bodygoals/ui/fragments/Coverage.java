@@ -18,7 +18,7 @@ import com.slinger.bodygoals.databinding.FragmentCoverageBinding;
 import com.slinger.bodygoals.model.MuscleGroup;
 import com.slinger.bodygoals.model.Progress;
 import com.slinger.bodygoals.model.ProgressStatus;
-import com.slinger.bodygoals.ui.ViewModel;
+import com.slinger.bodygoals.viewmodel.ViewModel;
 
 import java.time.LocalDate;
 import java.util.Map;

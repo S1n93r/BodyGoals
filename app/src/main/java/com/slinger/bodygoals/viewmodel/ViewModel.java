@@ -1,4 +1,4 @@
-package com.slinger.bodygoals.ui;
+package com.slinger.bodygoals.viewmodel;
 
 import android.app.Application;
 import android.os.Handler;
@@ -17,7 +17,6 @@ import com.slinger.bodygoals.model.Progress;
 import com.slinger.bodygoals.model.User;
 import com.slinger.bodygoals.model.UserIdentifier;
 import com.slinger.bodygoals.model.exceptions.GoalAlreadyExistsException;
-import com.slinger.bodygoals.model.exercises.Exercise;
 import com.slinger.bodygoals.ui.dtos.GoalDto;
 import com.slinger.bodygoals.ui.dtos.SessionDto;
 import com.slinger.bodygoals.ui.dtos.UserDto;
@@ -94,7 +93,7 @@ public class ViewModel extends AndroidViewModel {
 
         assert user != null;
 
-        user.addExercise(Exercise.from(exerciseDto));
+        user.addExercise(ExerciseConverter.from(exerciseDto));
 
         saveUserToDatabase(user);
         updateUserDto(user);

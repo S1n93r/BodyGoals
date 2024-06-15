@@ -14,9 +14,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentOverviewBinding;
 import com.slinger.bodygoals.model.util.DateUtil;
-import com.slinger.bodygoals.ui.ViewModel;
 import com.slinger.bodygoals.ui.components.OverviewEntryComponent;
 import com.slinger.bodygoals.ui.dtos.GoalDto;
+import com.slinger.bodygoals.viewmodel.ViewModel;
 
 import java.time.LocalDate;
 import java.util.HashSet;

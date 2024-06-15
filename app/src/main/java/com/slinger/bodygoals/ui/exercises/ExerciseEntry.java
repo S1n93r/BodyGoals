@@ -11,10 +11,13 @@ import androidx.core.content.ContextCompat;
 
 import com.slinger.bodygoals.R;
 
+import java.util.List;
+
 public class ExerciseEntry extends RelativeLayout {
 
-    private TextView exerciseName;
-    private TextView trend;
+    private TextView exerciseNameTextView;
+    private TextView unitAndRepsTextView;
+    private TextView trendTextView;
 
     public ExerciseEntry(Context context) {
 
@@ -49,18 +52,31 @@ public class ExerciseEntry extends RelativeLayout {
 
         View innerView = inflate(context, R.layout.component_exercise_entry, null);
 
-        exerciseName = innerView.findViewById(R.id.exercise_name);
-
-        trend = innerView.findViewById(R.id.trend);
+        exerciseNameTextView = innerView.findViewById(R.id.exercise_name);
+        unitAndRepsTextView = innerView.findViewById(R.id.unit_and_reps);
+        trendTextView = innerView.findViewById(R.id.trend);
 
         this.addView(innerView);
     }
 
     public void setExerciseDto(ExerciseDto exerciseDto) {
 
+        /* Name */
         String text = String.format("%s (%s)", exerciseDto.getType(), exerciseDto.getVariant());
 
-        exerciseName.setText(text);
+        exerciseNameTextView.setText(text);
+
+        /* Unit and Reps */
+        double currentRecord = 0;
+
+        List<Double> records = exerciseDto.getProgressHistory().toList();
+
+        if (!records.isEmpty())
+            currentRecord = records.get(0);
+
+        unitAndRepsTextView.setText(String.format("%s%s (%s)", currentRecord, exerciseDto.getUnit(), exerciseDto.getRepGoal()));
+
+        /* Trend */
 
         double trend = exerciseDto.getTrend();
 
@@ -69,12 +85,12 @@ public class ExerciseEntry extends RelativeLayout {
         int colorIdGreen = ContextCompat.getColor(getContext(), R.color.green);
 
         if (trend < 0)
-            exerciseName.setTextColor(colorIdRed);
+            trendTextView.setTextColor(colorIdRed);
         else if (trend == 0)
-            exerciseName.setTextColor(colorIdBlack);
+            trendTextView.setTextColor(colorIdBlack);
         else
-            exerciseName.setTextColor(colorIdGreen);
+            trendTextView.setTextColor(colorIdGreen);
 
-        exerciseName.setText(String.format("%s %%", trend));
+        trendTextView.setText(String.format("%s %%", trend));
     }
 }

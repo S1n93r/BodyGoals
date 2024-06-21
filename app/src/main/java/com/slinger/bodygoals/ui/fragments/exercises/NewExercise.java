@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -17,6 +18,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.slinger.bodygoals.R;
 import com.slinger.bodygoals.databinding.FragmentNewExerciseBinding;
+import com.slinger.bodygoals.model.MuscleGroup;
 import com.slinger.bodygoals.model.exercises.ExerciseIdentifier;
 import com.slinger.bodygoals.model.exercises.ExerciseType;
 import com.slinger.bodygoals.model.exercises.ExerciseUnit;
@@ -65,6 +67,8 @@ public class NewExercise extends Fragment {
 
         binding.buttonSave.setOnClickListener(addGoalView -> saveExercise(collectExerciseFromUI()));
         binding.buttonCancel.setOnClickListener(addGoalView -> backToExercises());
+
+        typeSpinner.setOnItemSelectedListener(new TypeSelectedListener());
 
         setUpTypeSpinner();
         setUpUnitSpinner();
@@ -143,5 +147,31 @@ public class NewExercise extends Fragment {
 
         /* Trend 0 is okay here, because saving it via view model will update the dto via the model class. */
         return ExerciseDto.of(ExerciseIdentifier.of(exerciseType, variant), exerciseType, variant, unit, repGoal, Lists.of(), 0);
+    }
+
+    private class TypeSelectedListener implements android.widget.AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            StringBuilder muscleGroupsString = new StringBuilder();
+
+            List<MuscleGroup> muscleGroups = ExerciseType.values()[position].getMuscleGroupsStream().toList();
+
+            for (MuscleGroup muscleGroup : muscleGroups) {
+
+                muscleGroupsString.append(muscleGroup.getName());
+
+                if (muscleGroups.indexOf(muscleGroup) < muscleGroups.size() - 1)
+                    muscleGroupsString.append(", ");
+            }
+
+            binding.musclesValue.setText(muscleGroupsString);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            binding.musclesValue.setText("");
+        }
     }
 }

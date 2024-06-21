@@ -59,6 +59,7 @@
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/rep_goal_label"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:text="@string/new_exercise_rep_goal"
@@ -67,6 +68,18 @@
             android:layout_marginBottom="16dp"
             android:textSize="18sp"
             android:gravity="center" />
+
+        <TextView
+            android:id="@+id/kg_goal_label"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="@string/new_exercise_kg_goal"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -132,6 +145,18 @@
             android:inputType="number"
             android:hint="@string/new_exercise_rep_goal"
             android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/kg_goal_value"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="number"
+            android:hint="@string/new_exercise_kg_goal"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

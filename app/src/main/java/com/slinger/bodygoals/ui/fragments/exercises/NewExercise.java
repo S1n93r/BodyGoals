@@ -69,6 +69,7 @@ public class NewExercise extends Fragment {
         binding.buttonCancel.setOnClickListener(addGoalView -> backToExercises());
 
         typeSpinner.setOnItemSelectedListener(new TypeSelectedListener());
+        unitSpinner.setOnItemSelectedListener(new UnitSelectedListener());
 
         setUpTypeSpinner();
         setUpUnitSpinner();
@@ -113,7 +114,14 @@ public class NewExercise extends Fragment {
             return false;
         }
 
-        if (binding.repGoalValue.getText().toString().isEmpty()) {
+        ExerciseUnit unit = ExerciseUnit.fromName((String) binding.unitSpinner.getSelectedItem());
+
+        if (unit == ExerciseUnit.KG && binding.repGoalValue.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), R.string.toast_new_exercise_no_rep_goal, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (unit == ExerciseUnit.REPS && binding.kgGoalValue.getText().toString().isEmpty()) {
             Toast.makeText(getContext(), R.string.toast_new_exercise_no_rep_goal, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -141,15 +149,18 @@ public class NewExercise extends Fragment {
         ExerciseUnit unit = ExerciseUnit.fromName((String) binding.unitSpinner.getSelectedItem());
 
         String variant = binding.variantValue.getText().toString();
-        String repGoalString = binding.repGoalValue.getText().toString();
 
-        int repGoal = Integer.parseInt(repGoalString);
+        String goalString = unit == ExerciseUnit.KG
+                ? binding.repGoalValue.getText().toString()
+                : binding.kgGoalValue.getText().toString();
+
+        int repGoal = Integer.parseInt(goalString);
 
         /* Trend 0 is okay here, because saving it via view model will update the dto via the model class. */
         return ExerciseDto.of(ExerciseIdentifier.of(exerciseType, variant), exerciseType, variant, unit, repGoal, Lists.of(), 0);
     }
 
-    private class TypeSelectedListener implements android.widget.AdapterView.OnItemSelectedListener {
+    private class TypeSelectedListener implements AdapterView.OnItemSelectedListener {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -172,6 +183,51 @@ public class NewExercise extends Fragment {
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
             binding.musclesValue.setText("");
+        }
+    }
+
+    private class UnitSelectedListener implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            List<ExerciseUnit> exerciseUnits = Arrays.asList(ExerciseUnit.values());
+
+            ExerciseUnit exerciseUnit = exerciseUnits.get(position);
+
+            switch (exerciseUnit) {
+
+                case KG:
+                    binding.repGoalValue.setVisibility(View.VISIBLE);
+                    binding.repGoalLabel.setVisibility(View.VISIBLE);
+
+                    binding.kgGoalValue.setVisibility(View.GONE);
+                    binding.kgGoalLabel.setVisibility(View.GONE);
+
+                    break;
+
+                case REPS:
+                    binding.kgGoalValue.setVisibility(View.VISIBLE);
+                    binding.kgGoalLabel.setVisibility(View.VISIBLE);
+
+                    binding.repGoalValue.setVisibility(View.GONE);
+                    binding.repGoalLabel.setVisibility(View.GONE);
+
+                    break;
+
+                default:
+                    throw new IllegalStateException("Unexpected value: " + exerciseUnit);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+            binding.repGoalValue.setVisibility(View.GONE);
+            binding.kgGoalValue.setVisibility(View.GONE);
+
+            binding.repGoalLabel.setVisibility(View.GONE);
+            binding.kgGoalLabel.setVisibility(View.GONE);
         }
     }
 }

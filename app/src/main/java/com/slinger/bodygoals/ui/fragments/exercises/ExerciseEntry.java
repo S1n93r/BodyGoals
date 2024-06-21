@@ -72,9 +72,13 @@ public class ExerciseEntry extends RelativeLayout {
         List<Double> records = exerciseDto.getProgressHistory().toList();
 
         if (!records.isEmpty())
-            currentRecord = records.get(0);
+            currentRecord = records.get(records.size() - 1);
 
-        unitAndRepsTextView.setText(String.format("%s %s\n(%s)", currentRecord, exerciseDto.getUnit().getName(), exerciseDto.getRepGoal()));
+        int goal = exerciseDto.getRepGoal();
+
+        String goalString = goal == 0 ? "body weight" : String.valueOf(goal);
+
+        unitAndRepsTextView.setText(String.format("%s %s\n(%s)", currentRecord, exerciseDto.getUnit().getName(), goalString));
 
         /* Trend */
         double trend = exerciseDto.getTrend();

@@ -94,6 +94,9 @@ public class NewExercise extends Fragment {
 
     private void saveExercise(ExerciseDto exerciseDto) {
 
+        if (exerciseDto == null)
+            return;
+
         viewModel.addExerciseToCurrentUser(exerciseDto);
 
         backToExercises();

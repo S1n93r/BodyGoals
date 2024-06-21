@@ -74,7 +74,7 @@ public class ExerciseEntry extends RelativeLayout {
         if (!records.isEmpty())
             currentRecord = records.get(0);
 
-        unitAndRepsTextView.setText(String.format("%s%s\n(%s)", currentRecord, exerciseDto.getUnit().getName(), exerciseDto.getRepGoal()));
+        unitAndRepsTextView.setText(String.format("%s %s\n(%s)", currentRecord, exerciseDto.getUnit().getName(), exerciseDto.getRepGoal()));
 
         /* Trend */
         double trend = exerciseDto.getTrend();

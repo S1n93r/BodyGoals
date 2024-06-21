@@ -32,4 +32,8 @@ public class ExerciseDto {
     public Stream<Double> getProgressHistory() {
         return StreamSupport.stream(progressHistory);
     }
+
+    public String getName() {
+        return String.format("%s (%s)", exerciseIdentifier.getExerciseType().getName(), exerciseIdentifier.getVariant());
+    }
 }

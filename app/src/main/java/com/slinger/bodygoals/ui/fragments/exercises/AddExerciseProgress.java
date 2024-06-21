@@ -101,9 +101,9 @@ public class AddExerciseProgress extends Fragment {
 
         assert userDto != null;
 
-        List<ExerciseIdentifier> exerciseIds = StreamSupport.stream(userDto.getExerciseDtos()).map(ExerciseDto::getExerciseIdentifier).toList();
+        List<String> exerciseIdStrings = StreamSupport.stream(userDto.getExerciseDtos()).map(ExerciseDto::getName).toList();
 
-        SpinnerAdapter typeSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.component_spinner_item, exerciseIds);
+        SpinnerAdapter typeSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.component_spinner_item, exerciseIdStrings);
 
         exerciseIdSpinner.setAdapter(typeSpinnerAdapter);
     }

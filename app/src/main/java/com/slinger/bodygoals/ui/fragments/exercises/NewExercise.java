@@ -78,7 +78,7 @@ public class NewExercise extends Fragment {
 
         assert getActivity() != null;
 
-        List<String> typesAsStrings = StreamSupport.stream(Arrays.asList(ExerciseType.values())).map(Enum::name).toList();
+        List<String> typesAsStrings = StreamSupport.stream(Arrays.asList(ExerciseType.values())).map(ExerciseType::getName).toList();
 
         SpinnerAdapter typeSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.component_spinner_item, typesAsStrings);
 
@@ -89,7 +89,7 @@ public class NewExercise extends Fragment {
 
         assert getActivity() != null;
 
-        List<String> unitsAsStrings = StreamSupport.stream(Arrays.asList(ExerciseUnit.values())).map(Enum::name).toList();
+        List<String> unitsAsStrings = StreamSupport.stream(Arrays.asList(ExerciseUnit.values())).map(ExerciseUnit::getName).toList();
 
         SpinnerAdapter typeSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.component_spinner_item, unitsAsStrings);
 

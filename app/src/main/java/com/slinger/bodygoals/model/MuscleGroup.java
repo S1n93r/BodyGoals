@@ -16,6 +16,6 @@ public enum MuscleGroup {
     TRICEPS;
 
     public String getName() {
-        return name().charAt(0) + name().substring(1).toLowerCase();
+        return name().replaceAll("_", " ").toLowerCase();
     }
 }

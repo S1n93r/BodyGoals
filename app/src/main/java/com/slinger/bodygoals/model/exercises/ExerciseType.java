@@ -35,4 +35,8 @@ public enum ExerciseType {
     public Stream<MuscleGroup> getMuscleGroupsStream() {
         return StreamSupport.stream(muscleGroups);
     }
+
+    public String getName() {
+        return name().replaceAll("_", " ").toLowerCase();
+    }
 }

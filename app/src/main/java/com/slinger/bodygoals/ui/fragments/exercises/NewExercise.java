@@ -137,8 +137,8 @@ public class NewExercise extends Fragment {
         if (!checkFormFilledAndToast())
             return null;
 
-        ExerciseType exerciseType = ExerciseType.valueOf((String) binding.typeSpinner.getSelectedItem());
-        ExerciseUnit unit = ExerciseUnit.valueOf((String) binding.unitSpinner.getSelectedItem());
+        ExerciseType exerciseType = ExerciseType.fromName((String) binding.typeSpinner.getSelectedItem());
+        ExerciseUnit unit = ExerciseUnit.fromName((String) binding.unitSpinner.getSelectedItem());
 
         String variant = binding.variantValue.getText().toString();
         String repGoalString = binding.repGoalValue.getText().toString();

@@ -18,4 +18,8 @@ public enum MuscleGroup {
     public String getName() {
         return name().replaceAll("_", " ").toLowerCase();
     }
+
+    public static MuscleGroup fromName(String name) {
+        return MuscleGroup.valueOf(name.toUpperCase().replaceAll(" ", "_"));
+    }
 }

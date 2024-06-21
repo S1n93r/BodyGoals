@@ -62,7 +62,7 @@ public class ExerciseEntry extends RelativeLayout {
     public void setExerciseDto(ExerciseDto exerciseDto) {
 
         /* Name */
-        String text = String.format("%s\n(%s)", exerciseDto.getType(), exerciseDto.getVariant());
+        String text = String.format("%s\n(%s)", exerciseDto.getType().getName(), exerciseDto.getVariant());
 
         exerciseNameTextView.setText(text);
 
@@ -74,7 +74,7 @@ public class ExerciseEntry extends RelativeLayout {
         if (!records.isEmpty())
             currentRecord = records.get(0);
 
-        unitAndRepsTextView.setText(String.format("%s%s\n(%s)", currentRecord, exerciseDto.getUnit(), exerciseDto.getRepGoal()));
+        unitAndRepsTextView.setText(String.format("%s%s\n(%s)", currentRecord, exerciseDto.getUnit().getName(), exerciseDto.getRepGoal()));
 
         /* Trend */
         double trend = exerciseDto.getTrend();

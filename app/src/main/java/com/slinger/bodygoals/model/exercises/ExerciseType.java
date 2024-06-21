@@ -39,4 +39,8 @@ public enum ExerciseType {
     public String getName() {
         return name().replaceAll("_", " ").toLowerCase();
     }
+
+    public static ExerciseType fromName(String name) {
+        return ExerciseType.valueOf(name.toUpperCase().replaceAll(" ", "_"));
+    }
 }

@@ -8,23 +8,23 @@
 
     <TextView
         android:id="@+id/exercise_name"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textAlignment="viewStart" />
 
     <TextView
         android:id="@+id/unit_and_reps"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textAlignment="viewStart" />
 
     <TextView
         android:id="@+id/trend"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textAlignment="viewStart" />
 
 </LinearLayout>

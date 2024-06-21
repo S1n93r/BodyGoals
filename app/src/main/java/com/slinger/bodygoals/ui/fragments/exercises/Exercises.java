@@ -88,6 +88,8 @@ public class Exercises extends Fragment {
             ExerciseEntry exerciseEntry = new ExerciseEntry(getContext());
             exerciseEntry.setExerciseDto(exerciseDto);
 
+            exerciseEntry.setPadding(0, 0, 0, 16);
+
             exerciseList.addView(exerciseEntry);
         }
     }
